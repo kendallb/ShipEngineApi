@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1169
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShipEngineTest", "ShipEngineTest\ShipEngineTest.csproj", "{EB6E42FE-92E1-42D6-A328-A75AFB1F49EC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{50A3AF37-627B-4E34-96BD-83D31DFD2569}"
+ProjectSection(SolutionItems) = preProject
+	..\.gitignore = ..\.gitignore
+	..\LICENSE = ..\LICENSE
+	..\pack.bat = ..\pack.bat
+	..\README.md = ..\README.md
+	ShipEngineApi\ShipEngineApi.nuspec = ShipEngineApi\ShipEngineApi.nuspec
+EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShipEngineApi", "ShipEngineApi\ShipEngineApi.csproj", "{989EE347-B7B6-442D-8C86-6F754F12B091}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EB6E42FE-92E1-42D6-A328-A75AFB1F49EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB6E42FE-92E1-42D6-A328-A75AFB1F49EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB6E42FE-92E1-42D6-A328-A75AFB1F49EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB6E42FE-92E1-42D6-A328-A75AFB1F49EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{989EE347-B7B6-442D-8C86-6F754F12B091}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{989EE347-B7B6-442D-8C86-6F754F12B091}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{989EE347-B7B6-442D-8C86-6F754F12B091}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{989EE347-B7B6-442D-8C86-6F754F12B091}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B074BBB3-597A-4568-9F11-61F04C808475}
+	EndGlobalSection
+EndGlobal
