@@ -13,6 +13,7 @@
 namespace ShipEngineAPI
 {
     using System = global::System;
+    using System.Linq;
 
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.7.0.0 (NJsonSchema v10.1.24.0 (Newtonsoft.Json v11.0.0.0))")]
     public partial interface IShipEngineClient

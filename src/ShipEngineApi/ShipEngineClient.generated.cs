@@ -15,6 +15,7 @@ using ShipEngineAPI;
 namespace ShipEngineAPI
 {
     using System = global::System;
+    using System.Linq;
 
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.7.0.0 (NJsonSchema v10.1.24.0 (Newtonsoft.Json v11.0.0.0))")]
     public partial class ShipEngineClient : IShipEngineClient
@@ -78,58 +79,66 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ParseAddressResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ParseAddressResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -166,58 +175,66 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.IList<AddressValidationResult>>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.IList<AddressValidationResult>>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -272,58 +289,66 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ListBatchesResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ListBatchesResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -360,58 +385,66 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<CreateBatchResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<CreateBatchResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -446,68 +479,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<GetBatchByExternalIdResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<GetBatchByExternalIdResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -543,68 +584,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 204)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 204)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -640,68 +689,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<GetBatchByIdResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<GetBatchByIdResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -738,68 +795,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 204)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 204)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -841,68 +906,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 204)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 204)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -948,68 +1021,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ListBatchErrorsResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ListBatchErrorsResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -1051,68 +1132,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 204)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 204)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -1154,68 +1243,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 204)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 204)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -1246,68 +1343,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<GetCarriersResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<GetCarriersResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -1343,68 +1448,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<GetCarrierByIdResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<GetCarrierByIdResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -1446,68 +1559,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<AddFundsToCarrierResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<AddFundsToCarrierResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -1543,68 +1664,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<GetCarrierOptionsResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<GetCarrierOptionsResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -1640,68 +1769,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ListCarrierPackageTypesResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ListCarrierPackageTypesResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -1737,68 +1874,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ListCarrierServicesResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ListCarrierServicesResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -1840,68 +1985,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ConnectCarrierResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ConnectCarrierResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -1942,58 +2095,66 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 204)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 204)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -2034,58 +2195,66 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<GetCarrierSettingsResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<GetCarrierSettingsResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -2132,58 +2301,66 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 204)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 204)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -2214,58 +2391,66 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<DisconnectInsurerResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<DisconnectInsurerResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -2302,58 +2487,66 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ConnectInsurerResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ConnectInsurerResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -2401,66 +2594,74 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200 || status_ == 206)
-                        {
-                            var responseStream_ = response_.Content == null ? System.IO.Stream.Null : await response_.Content.ReadAsStreamAsync().ConfigureAwait(false);
-                            var fileResponse_ = new FileResponse(status_, headers_, responseStream_, null, response_);
-                            client_ = null; response_ = null; // response and client are disposed by FileResponse
-                            return fileResponse_;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200 || status_ == 206)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var responseStream_ = response_.Content == null ? System.IO.Stream.Null : await response_.Content.ReadAsStreamAsync().ConfigureAwait(false);
+                                var fileResponse_ = new FileResponse(status_, headers_, responseStream_, null, response_);
+                                client_ = null; response_ = null; // response and client are disposed by FileResponse
+                                return fileResponse_;
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 500)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -2491,58 +2692,66 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.IList<Webhook>>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.IList<Webhook>>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -2579,68 +2788,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<CreateWebhookResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<CreateWebhookResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 409)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 409)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request conflicts with an existing resource.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request conflicts with an existing resource.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -2676,68 +2893,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<GetWebhookByIdResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<GetWebhookByIdResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -2779,68 +3004,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 204)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 204)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -2876,68 +3109,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 204)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 204)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -2974,58 +3215,66 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<AddFundsToInsuranceResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<AddFundsToInsuranceResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -3056,58 +3305,66 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<GetInsuranceBalanceResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<GetInsuranceBalanceResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -3209,58 +3466,66 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ListLabelsResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ListLabelsResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -3297,68 +3562,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<CreateLabelResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<CreateLabelResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -3398,68 +3671,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<GetLabelByExternalShipmentIdResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<GetLabelByExternalShipmentIdResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -3501,68 +3782,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<CreateLabelFromRateResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<CreateLabelFromRateResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -3604,68 +3893,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<CreateLabelFromShipmentResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<CreateLabelFromShipmentResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -3706,68 +4003,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<GetLabelByIdResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<GetLabelByIdResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -3809,68 +4114,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<CreateReturnLabelResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<CreateReturnLabelResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -3906,68 +4219,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<GetTrackingLogFromLabelResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<GetTrackingLogFromLabelResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -4004,68 +4325,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<VoidLabelResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<VoidLabelResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -4141,68 +4470,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ListManifestsResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ListManifestsResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -4239,58 +4576,66 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<CreateManifestResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<CreateManifestResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -4326,68 +4671,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<GetManifestByIdResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<GetManifestByIdResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -4418,68 +4771,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ListPackageTypesResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ListPackageTypesResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -4516,58 +4877,66 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<CreatePackageTypeResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<CreatePackageTypeResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -4603,68 +4972,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<GetPackageTypeByIdResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<GetPackageTypeByIdResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -4706,68 +5083,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 204)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 204)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -4803,68 +5188,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 204)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 204)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -4901,58 +5294,66 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<CalculateRatesResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<CalculateRatesResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -4989,58 +5390,66 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.IList<BulkRate>>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.IList<BulkRate>>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -5077,58 +5486,66 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.IList<Rate>>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.IList<Rate>>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -5164,68 +5581,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<GetRateByIdResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<GetRateByIdResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -5315,68 +5740,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ListShipmentsResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ListShipmentsResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -5413,58 +5846,66 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<CreateShipmentsResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<CreateShipmentsResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -5499,68 +5940,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<GetShipmentByExternalIdResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<GetShipmentByExternalIdResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -5598,58 +6047,66 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ParseShipmentResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ParseShipmentResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -5685,68 +6142,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<GetShipmentByIdResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<GetShipmentByIdResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -5788,68 +6253,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<UpdateShipmentResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<UpdateShipmentResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -5886,68 +6359,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 204)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 204)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -5993,68 +6474,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ListShipmentErrorsResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ListShipmentErrorsResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -6096,68 +6585,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ListShipmentRatesResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ListShipmentRatesResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -6198,68 +6695,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<TagShipmentResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<TagShipmentResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -6299,68 +6804,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 204)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 204)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -6391,68 +6904,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ListTagsResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ListTagsResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -6488,68 +7009,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<CreateTagResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<CreateTagResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -6584,68 +7113,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 204)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 204)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -6685,68 +7222,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 204)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 204)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -6788,68 +7333,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<GetTrackingLogResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<GetTrackingLogResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -6892,68 +7445,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 204)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 204)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -6996,68 +7557,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 204)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 204)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -7088,68 +7657,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ListWarehousesResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ListWarehousesResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -7186,68 +7763,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<CreateWarehouseResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<CreateWarehouseResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -7283,68 +7868,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 200)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<GetWarehouseByIdResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<GetWarehouseByIdResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -7386,68 +7979,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 204)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 204)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }
@@ -7483,68 +8084,76 @@ namespace ShipEngineAPI
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
     
-                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
-                    try
+                    while (true)
                     {
-                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
-                        if (response_.Content != null && response_.Content.Headers != null)
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
                         {
-                            foreach (var item_ in response_.Content.Headers)
-                                headers_[item_.Key] = item_.Value;
-                        }
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
     
-                        ProcessResponse(client_, response_);
+                            ProcessResponse(client_, response_);
     
-                        var status_ = (int)response_.StatusCode;
-                        if (status_ == 204)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 204)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
-                            return objectResponse_.Object;
-                        }
-                        else
-                        if (status_ == 400)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 400)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 404)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 404)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == 500)
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
-                            if (objectResponse_.Object == null)
+                            else
+                            if (status_ == 500)
                             {
-                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                             }
-                            throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
                         }
-                        else
+                        finally
                         {
-                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
-                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            if (response_ != null)
+                                response_.Dispose();
                         }
-                    }
-                    finally
-                    {
-                        if (response_ != null)
-                            response_.Dispose();
                     }
                 }
             }

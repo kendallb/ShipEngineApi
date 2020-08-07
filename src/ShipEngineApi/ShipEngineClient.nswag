@@ -19,6 +19,8 @@
       "clientBaseInterface": null,
       "injectHttpClient": true,
       "disposeHttpClient": true,
+      "enableRateLimitHandling": true,
+      "rateLimitRetryHeader": "Retry-After",
       "protectedMethods": [],
       "generateExceptionClasses": true,
       "exceptionClass": "ApiException",

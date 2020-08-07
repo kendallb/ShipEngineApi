@@ -32,10 +32,10 @@ namespace ShipEngineTest
                 var validated = await client.ValidateAddress(new [] {
                     new AddressToValidate
                     {
-                        AddressLine1 = "424 Otterson Drive, Suite 100",
+                        AddressLine1 = "100 Unknown Street",
                         CityLocality = "Chico",
                         StateProvince = "CA",
-                        PostalCode = "95928",
+                        PostalCode = "95973",
                         CountryCode = "US",
                     },
                 });
