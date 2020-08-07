@@ -4,7 +4,6 @@
  */
 
 using System;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using ShipEngineAPI;
@@ -22,10 +21,7 @@ namespace ShipEngineTest
             try
             {
                 using var httpClient = new SingleInstanceHttpClient();
-                var client = new ShipEngineClient(httpClient)
-                {
-                    APIKey = "TEST_UviO3xlrk2l3tdqyTLUZ9flQuDtVwRBTUlVZgZmCQA4",
-                };
+                var client = new ShipEngineClient(httpClient, "TEST_UviO3xlrk2l3tdqyTLUZ9flQuDtVwRBTUlVZgZmCQA4");
                 var response = await client.ParseAddress(new ParseAddressRequestBody
                 {
                     Text = toParse,

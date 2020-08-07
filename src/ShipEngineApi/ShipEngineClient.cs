@@ -3,6 +3,7 @@
  * All Rights Reserved
  */
 
+using System;
 using System.Net.Http;
 // ReSharper disable UnusedParameterInPartialMethod
 
@@ -10,10 +11,18 @@ namespace ShipEngineAPI
 {
     public partial class ShipEngineClient
     {
+        private readonly string _apiKey;
+
         /// <summary>
-        /// Sets the API key used to communicate with ShipEngine
+        /// Constructor for the ShipEngineClient class
         /// </summary>
-        public string APIKey { get; set; }
+        /// <param name="httpClient">Reference to the shared HttpClient class to use</param>
+        /// <param name="apiKey">Reference to the API keys to use for the API calls</param>
+        public ShipEngineClient(IHttpClient httpClient, string apiKey)
+            : this(httpClient)
+        {
+            _apiKey = apiKey;
+        }
 
         /// <summary>
         /// Internal function to prepare the request
@@ -23,7 +32,11 @@ namespace ShipEngineAPI
         /// <param name="url">Url for the request</param>
         partial void PrepareRequest(IHttpClient client, HttpRequestMessage request, string url)
         {
-            request.Headers.Add("API-Key", APIKey);
+            if (string.IsNullOrWhiteSpace(_apiKey))
+            {
+                throw new ArgumentException("API key was not provided. Please include the API key when you create the ShipEngineClient instance!");
+            }
+            request.Headers.Add("API-Key", _apiKey);
         }
     }
 }

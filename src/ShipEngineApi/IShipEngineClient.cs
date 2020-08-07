@@ -7,9 +7,5 @@ namespace ShipEngineAPI
 {
     public partial interface IShipEngineClient
     {
-        /// <summary>
-        /// Sets the API key used to communicate with ShipEngine
-        /// </summary>
-        public string APIKey { get; set; }
     }
 }
