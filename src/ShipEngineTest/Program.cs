@@ -21,7 +21,7 @@ namespace ShipEngineTest
 
             try
             {
-                using var httpClient = new HttpClient();
+                using var httpClient = new SingleInstanceHttpClient();
                 var client = new ShipEngineClient(httpClient)
                 {
                     APIKey = "TEST_UviO3xlrk2l3tdqyTLUZ9flQuDtVwRBTUlVZgZmCQA4",

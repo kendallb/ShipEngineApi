@@ -21,7 +21,7 @@ namespace ShipEngineAPI
         /// <param name="client">HttpClient being used</param>
         /// <param name="request">HttpRequestMessage for this request</param>
         /// <param name="url">Url for the request</param>
-        partial void PrepareRequest(HttpClient client, HttpRequestMessage request, string url)
+        partial void PrepareRequest(IHttpClient client, HttpRequestMessage request, string url)
         {
             request.Headers.Add("API-Key", APIKey);
         }

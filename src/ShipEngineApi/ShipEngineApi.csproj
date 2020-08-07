@@ -7,7 +7,7 @@
     <ProjectGuid>{989EE347-B7B6-442D-8C86-6F754F12B091}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ShipEngineApi</RootNamespace>
+    <RootNamespace>ShipEngineAPI</RootNamespace>
     <AssemblyName>ShipEngineApi</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -46,11 +46,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IHttpClient.cs" />
     <Compile Include="IShipEngineClient.cs" />
     <Compile Include="IShipEngineClient.generated.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShipEngineClient.cs" />
     <Compile Include="ShipEngineClient.generated.cs" />
+    <Compile Include="SingleInstanceHttpClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ShipEngineApi.snk" />
