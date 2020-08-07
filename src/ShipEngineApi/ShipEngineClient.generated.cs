@@ -151,7 +151,7 @@ namespace ShipEngineAPI
         /// <summary>Validate An Address</summary>
         /// <returns>The request was a success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<System.Collections.Generic.IList<AddressValidationResult>> ValidateAddress(System.Collections.Generic.IEnumerable<AddressToValidate> body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<System.Collections.Generic.List<AddressValidationResult>> ValidateAddress(System.Collections.Generic.IEnumerable<AddressToValidate> body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (body == null)
                 throw new System.ArgumentNullException("body");
@@ -192,7 +192,7 @@ namespace ShipEngineAPI
                             var status_ = (int)response_.StatusCode;
                             if (status_ == 200)
                             {
-                                var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.IList<AddressValidationResult>>(response_, headers_).ConfigureAwait(false);
+                                var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.List<AddressValidationResult>>(response_, headers_).ConfigureAwait(false);
                                 if (objectResponse_.Object == null)
                                 {
                                     throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -2674,7 +2674,7 @@ namespace ShipEngineAPI
         /// <summary>List Webhooks</summary>
         /// <returns>The request was a success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<System.Collections.Generic.IList<Webhook>> ListWebhooks(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<System.Collections.Generic.List<Webhook>> ListWebhooks(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/environment/webhooks");
@@ -2709,7 +2709,7 @@ namespace ShipEngineAPI
                             var status_ = (int)response_.StatusCode;
                             if (status_ == 200)
                             {
-                                var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.IList<Webhook>>(response_, headers_).ConfigureAwait(false);
+                                var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.List<Webhook>>(response_, headers_).ConfigureAwait(false);
                                 if (objectResponse_.Object == null)
                                 {
                                     throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -5366,7 +5366,7 @@ namespace ShipEngineAPI
         /// <summary>Get Bulk Rates</summary>
         /// <returns>The request was a success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<System.Collections.Generic.IList<BulkRate>> CompareBulkRates(CompareBulkRatesRequestBody body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<System.Collections.Generic.List<BulkRate>> CompareBulkRates(CompareBulkRatesRequestBody body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (body == null)
                 throw new System.ArgumentNullException("body");
@@ -5407,7 +5407,7 @@ namespace ShipEngineAPI
                             var status_ = (int)response_.StatusCode;
                             if (status_ == 200)
                             {
-                                var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.IList<BulkRate>>(response_, headers_).ConfigureAwait(false);
+                                var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.List<BulkRate>>(response_, headers_).ConfigureAwait(false);
                                 if (objectResponse_.Object == null)
                                 {
                                     throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -5462,7 +5462,7 @@ namespace ShipEngineAPI
         /// <summary>Estimate Rates</summary>
         /// <returns>The request was a success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<System.Collections.Generic.IList<Rate>> EstimateRates(EstimateRatesRequestBody body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<System.Collections.Generic.List<Rate>> EstimateRates(EstimateRatesRequestBody body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (body == null)
                 throw new System.ArgumentNullException("body");
@@ -5503,7 +5503,7 @@ namespace ShipEngineAPI
                             var status_ = (int)response_.StatusCode;
                             if (status_ == 200)
                             {
-                                var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.IList<Rate>>(response_, headers_).ConfigureAwait(false);
+                                var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.List<Rate>>(response_, headers_).ConfigureAwait(false);
                                 if (objectResponse_.Object == null)
                                 {
                                     throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
