@@ -15,40 +15,40 @@ using ShipEngineAPI;
 namespace ShipEngineAPI
 {
     using System = global::System;
-
+    
     [System.CodeDom.Compiler.GeneratedCode("NSwag", "13.7.0.0 (NJsonSchema v10.1.24.0 (Newtonsoft.Json v11.0.0.0))")]
     public partial class ShipEngineClient : IShipEngineClient
     {
         private string _baseUrl = "https://api.shipengine.com";
         private IHttpClient _httpClient;
         private System.Lazy<Newtonsoft.Json.JsonSerializerSettings> _settings;
-
+    
         public ShipEngineClient(IHttpClient httpClient)
         {
             _httpClient = httpClient;
             _settings = new System.Lazy<Newtonsoft.Json.JsonSerializerSettings>(CreateSerializerSettings);
         }
-
+    
         private Newtonsoft.Json.JsonSerializerSettings CreateSerializerSettings()
         {
             var settings = new Newtonsoft.Json.JsonSerializerSettings();
             UpdateJsonSerializerSettings(settings);
             return settings;
         }
-
+    
         public string BaseUrl
         {
             get { return _baseUrl; }
             set { _baseUrl = value; }
         }
-
+    
         protected Newtonsoft.Json.JsonSerializerSettings JsonSerializerSettings { get { return _settings.Value; } }
-
+    
         partial void UpdateJsonSerializerSettings(Newtonsoft.Json.JsonSerializerSettings settings);
         partial void PrepareRequest(IHttpClient client, System.Net.Http.HttpRequestMessage request, string url);
         partial void PrepareRequest(IHttpClient client, System.Net.Http.HttpRequestMessage request, System.Text.StringBuilder urlBuilder);
         partial void ProcessResponse(IHttpClient client, System.Net.Http.HttpResponseMessage response);
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Parse an address</summary>
         /// <param name="body">The only required field is `text`, which is the text to be parsed. You can optionally also provide an `address` containing already-known values. For example, you may already know the recipient's name, city, and country, and only want to parse the street address into separate lines.</param>
@@ -58,10 +58,10 @@ namespace ShipEngineAPI
         {
             if (body == null)
                 throw new System.ArgumentNullException("body");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/addresses/recognize");
-
+    
             var client_ = _httpClient;
             try
             {
@@ -72,12 +72,12 @@ namespace ShipEngineAPI
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -87,9 +87,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -137,19 +137,19 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Validate An Address</summary>
         /// <returns>The request was a success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<AddressValidationResult>> ValidateAddress(System.Collections.Generic.IEnumerable<AddressToValidate> body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<System.Collections.Generic.IList<AddressValidationResult>> ValidateAddress(System.Collections.Generic.IEnumerable<AddressToValidate> body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (body == null)
                 throw new System.ArgumentNullException("body");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/addresses/validate");
-
+    
             var client_ = _httpClient;
             try
             {
@@ -160,12 +160,12 @@ namespace ShipEngineAPI
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -175,13 +175,13 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<AddressValidationResult>>(response_, headers_).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.IList<AddressValidationResult>>(response_, headers_).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -225,7 +225,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>List Batches</summary>
         /// <param name="page">Return a specific page of results. Defaults to the first page. If set to a number that's greater than the number of pages of results, an empty page is returned.</param>
@@ -258,7 +258,7 @@ namespace ShipEngineAPI
                 urlBuilder_.Append(System.Uri.EscapeDataString("sort_by") + "=").Append(System.Uri.EscapeDataString(ConvertToString(sort_by, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
             urlBuilder_.Length--;
-
+    
             var client_ = _httpClient;
             try
             {
@@ -266,12 +266,12 @@ namespace ShipEngineAPI
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -281,9 +281,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -331,7 +331,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Create A Batch</summary>
         /// <returns>The requested object creation was a success.</returns>
@@ -340,10 +340,10 @@ namespace ShipEngineAPI
         {
             if (body == null)
                 throw new System.ArgumentNullException("body");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/batches");
-
+    
             var client_ = _httpClient;
             try
             {
@@ -354,12 +354,12 @@ namespace ShipEngineAPI
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -369,9 +369,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -419,7 +419,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Get Batch By External ID</summary>
         /// <returns>The request was a success.</returns>
@@ -428,11 +428,11 @@ namespace ShipEngineAPI
         {
             if (external_batch_id == null)
                 throw new System.ArgumentNullException("external_batch_id");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/batches/external_batch_id/{external_batch_id}");
             urlBuilder_.Replace("{external_batch_id}", System.Uri.EscapeDataString(ConvertToString(external_batch_id, System.Globalization.CultureInfo.InvariantCulture)));
-
+    
             var client_ = _httpClient;
             try
             {
@@ -440,12 +440,12 @@ namespace ShipEngineAPI
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -455,9 +455,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -515,7 +515,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Delete Batch By Id</summary>
         /// <param name="batch_id">Batch ID</param>
@@ -525,11 +525,11 @@ namespace ShipEngineAPI
         {
             if (batch_id == null)
                 throw new System.ArgumentNullException("batch_id");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/batches/{batch_id}");
             urlBuilder_.Replace("{batch_id}", System.Uri.EscapeDataString(ConvertToString(batch_id, System.Globalization.CultureInfo.InvariantCulture)));
-
+    
             var client_ = _httpClient;
             try
             {
@@ -537,12 +537,12 @@ namespace ShipEngineAPI
                 {
                     request_.Method = new System.Net.Http.HttpMethod("DELETE");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -552,9 +552,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 204)
                         {
@@ -612,7 +612,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Get Batch By ID</summary>
         /// <param name="batch_id">Batch ID</param>
@@ -622,11 +622,11 @@ namespace ShipEngineAPI
         {
             if (batch_id == null)
                 throw new System.ArgumentNullException("batch_id");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/batches/{batch_id}");
             urlBuilder_.Replace("{batch_id}", System.Uri.EscapeDataString(ConvertToString(batch_id, System.Globalization.CultureInfo.InvariantCulture)));
-
+    
             var client_ = _httpClient;
             try
             {
@@ -634,12 +634,12 @@ namespace ShipEngineAPI
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -649,9 +649,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -709,7 +709,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Update Batch By Id</summary>
         /// <param name="batch_id">Batch ID</param>
@@ -719,11 +719,11 @@ namespace ShipEngineAPI
         {
             if (batch_id == null)
                 throw new System.ArgumentNullException("batch_id");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/batches/{batch_id}");
             urlBuilder_.Replace("{batch_id}", System.Uri.EscapeDataString(ConvertToString(batch_id, System.Globalization.CultureInfo.InvariantCulture)));
-
+    
             var client_ = _httpClient;
             try
             {
@@ -732,12 +732,12 @@ namespace ShipEngineAPI
                     request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "text/plain");
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -747,9 +747,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 204)
                         {
@@ -807,7 +807,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Add to a Batch</summary>
         /// <param name="batch_id">Batch ID</param>
@@ -817,14 +817,14 @@ namespace ShipEngineAPI
         {
             if (batch_id == null)
                 throw new System.ArgumentNullException("batch_id");
-
+    
             if (body == null)
                 throw new System.ArgumentNullException("body");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/batches/{batch_id}/add");
             urlBuilder_.Replace("{batch_id}", System.Uri.EscapeDataString(ConvertToString(batch_id, System.Globalization.CultureInfo.InvariantCulture)));
-
+    
             var client_ = _httpClient;
             try
             {
@@ -835,12 +835,12 @@ namespace ShipEngineAPI
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -850,9 +850,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 204)
                         {
@@ -910,7 +910,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Get Batch Errors</summary>
         /// <param name="batch_id">Batch ID</param>
@@ -921,7 +921,7 @@ namespace ShipEngineAPI
         {
             if (batch_id == null)
                 throw new System.ArgumentNullException("batch_id");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/batches/{batch_id}/errors?");
             urlBuilder_.Replace("{batch_id}", System.Uri.EscapeDataString(ConvertToString(batch_id, System.Globalization.CultureInfo.InvariantCulture)));
@@ -934,7 +934,7 @@ namespace ShipEngineAPI
                 urlBuilder_.Append(System.Uri.EscapeDataString("pagesize") + "=").Append(System.Uri.EscapeDataString(ConvertToString(pagesize, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
             urlBuilder_.Length--;
-
+    
             var client_ = _httpClient;
             try
             {
@@ -942,12 +942,12 @@ namespace ShipEngineAPI
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -957,9 +957,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -1017,7 +1017,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Process Batch ID Labels</summary>
         /// <param name="batch_id">Batch ID</param>
@@ -1027,14 +1027,14 @@ namespace ShipEngineAPI
         {
             if (batch_id == null)
                 throw new System.ArgumentNullException("batch_id");
-
+    
             if (body == null)
                 throw new System.ArgumentNullException("body");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/batches/{batch_id}/process/labels");
             urlBuilder_.Replace("{batch_id}", System.Uri.EscapeDataString(ConvertToString(batch_id, System.Globalization.CultureInfo.InvariantCulture)));
-
+    
             var client_ = _httpClient;
             try
             {
@@ -1045,12 +1045,12 @@ namespace ShipEngineAPI
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -1060,9 +1060,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 204)
                         {
@@ -1120,7 +1120,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Remove From Batch</summary>
         /// <param name="batch_id">Batch ID</param>
@@ -1130,14 +1130,14 @@ namespace ShipEngineAPI
         {
             if (batch_id == null)
                 throw new System.ArgumentNullException("batch_id");
-
+    
             if (body == null)
                 throw new System.ArgumentNullException("body");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/batches/{batch_id}/remove");
             urlBuilder_.Replace("{batch_id}", System.Uri.EscapeDataString(ConvertToString(batch_id, System.Globalization.CultureInfo.InvariantCulture)));
-
+    
             var client_ = _httpClient;
             try
             {
@@ -1148,12 +1148,12 @@ namespace ShipEngineAPI
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -1163,9 +1163,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 204)
                         {
@@ -1223,7 +1223,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>List Carriers</summary>
         /// <returns>The request was a success.</returns>
@@ -1232,7 +1232,7 @@ namespace ShipEngineAPI
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/carriers");
-
+    
             var client_ = _httpClient;
             try
             {
@@ -1240,12 +1240,12 @@ namespace ShipEngineAPI
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -1255,9 +1255,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -1315,7 +1315,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Get Carrier By ID</summary>
         /// <param name="carrier_id">Carrier ID</param>
@@ -1325,11 +1325,11 @@ namespace ShipEngineAPI
         {
             if (carrier_id == null)
                 throw new System.ArgumentNullException("carrier_id");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/carriers/{carrier_id}");
             urlBuilder_.Replace("{carrier_id}", System.Uri.EscapeDataString(ConvertToString(carrier_id, System.Globalization.CultureInfo.InvariantCulture)));
-
+    
             var client_ = _httpClient;
             try
             {
@@ -1337,12 +1337,12 @@ namespace ShipEngineAPI
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -1352,9 +1352,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -1412,7 +1412,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Add Funds To Carrier</summary>
         /// <param name="carrier_id">Carrier ID</param>
@@ -1422,14 +1422,14 @@ namespace ShipEngineAPI
         {
             if (carrier_id == null)
                 throw new System.ArgumentNullException("carrier_id");
-
+    
             if (body == null)
                 throw new System.ArgumentNullException("body");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/carriers/{carrier_id}/add_funds");
             urlBuilder_.Replace("{carrier_id}", System.Uri.EscapeDataString(ConvertToString(carrier_id, System.Globalization.CultureInfo.InvariantCulture)));
-
+    
             var client_ = _httpClient;
             try
             {
@@ -1440,12 +1440,12 @@ namespace ShipEngineAPI
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -1455,9 +1455,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -1515,7 +1515,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Get Carrier Options</summary>
         /// <param name="carrier_id">Carrier ID</param>
@@ -1525,11 +1525,11 @@ namespace ShipEngineAPI
         {
             if (carrier_id == null)
                 throw new System.ArgumentNullException("carrier_id");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/carriers/{carrier_id}/options");
             urlBuilder_.Replace("{carrier_id}", System.Uri.EscapeDataString(ConvertToString(carrier_id, System.Globalization.CultureInfo.InvariantCulture)));
-
+    
             var client_ = _httpClient;
             try
             {
@@ -1537,12 +1537,12 @@ namespace ShipEngineAPI
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -1552,9 +1552,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -1612,7 +1612,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>List Carrier Package Types</summary>
         /// <param name="carrier_id">Carrier ID</param>
@@ -1622,11 +1622,11 @@ namespace ShipEngineAPI
         {
             if (carrier_id == null)
                 throw new System.ArgumentNullException("carrier_id");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/carriers/{carrier_id}/packages");
             urlBuilder_.Replace("{carrier_id}", System.Uri.EscapeDataString(ConvertToString(carrier_id, System.Globalization.CultureInfo.InvariantCulture)));
-
+    
             var client_ = _httpClient;
             try
             {
@@ -1634,12 +1634,12 @@ namespace ShipEngineAPI
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -1649,9 +1649,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -1709,7 +1709,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>List Carrier Services</summary>
         /// <param name="carrier_id">Carrier ID</param>
@@ -1719,11 +1719,11 @@ namespace ShipEngineAPI
         {
             if (carrier_id == null)
                 throw new System.ArgumentNullException("carrier_id");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/carriers/{carrier_id}/services");
             urlBuilder_.Replace("{carrier_id}", System.Uri.EscapeDataString(ConvertToString(carrier_id, System.Globalization.CultureInfo.InvariantCulture)));
-
+    
             var client_ = _httpClient;
             try
             {
@@ -1731,12 +1731,12 @@ namespace ShipEngineAPI
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -1746,9 +1746,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -1806,7 +1806,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Connect a carrier account</summary>
         /// <param name="carrier_name">The carrier name, such as `stamps_com`, `ups`, `fedex`, or `dhl_express`.</param>
@@ -1816,14 +1816,14 @@ namespace ShipEngineAPI
         {
             if (carrier_name == null)
                 throw new System.ArgumentNullException("carrier_name");
-
+    
             if (body == null)
                 throw new System.ArgumentNullException("body");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/connections/carriers/{carrier_name}");
             urlBuilder_.Replace("{carrier_name}", System.Uri.EscapeDataString(ConvertToString(carrier_name, System.Globalization.CultureInfo.InvariantCulture)));
-
+    
             var client_ = _httpClient;
             try
             {
@@ -1834,12 +1834,12 @@ namespace ShipEngineAPI
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -1849,9 +1849,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -1909,7 +1909,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Disconnect a carrier</summary>
         /// <param name="carrier_name">The carrier name, such as `stamps_com`, `ups`, `fedex`, or `dhl_express`.</param>
@@ -1920,15 +1920,15 @@ namespace ShipEngineAPI
         {
             if (carrier_name == null)
                 throw new System.ArgumentNullException("carrier_name");
-
+    
             if (carrier_id == null)
                 throw new System.ArgumentNullException("carrier_id");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/connections/carriers/{carrier_name}/{carrier_id}");
             urlBuilder_.Replace("{carrier_name}", System.Uri.EscapeDataString(ConvertToString(carrier_name, System.Globalization.CultureInfo.InvariantCulture)));
             urlBuilder_.Replace("{carrier_id}", System.Uri.EscapeDataString(ConvertToString(carrier_id, System.Globalization.CultureInfo.InvariantCulture)));
-
+    
             var client_ = _httpClient;
             try
             {
@@ -1936,12 +1936,12 @@ namespace ShipEngineAPI
                 {
                     request_.Method = new System.Net.Http.HttpMethod("DELETE");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -1951,9 +1951,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 204)
                         {
@@ -2001,7 +2001,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Get carrier settings</summary>
         /// <param name="carrier_name">The carrier name, such as `stamps_com`, `ups`, `fedex`, or `dhl_express`.</param>
@@ -2012,15 +2012,15 @@ namespace ShipEngineAPI
         {
             if (carrier_name == null)
                 throw new System.ArgumentNullException("carrier_name");
-
+    
             if (carrier_id == null)
                 throw new System.ArgumentNullException("carrier_id");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/connections/carriers/{carrier_name}/{carrier_id}/settings");
             urlBuilder_.Replace("{carrier_name}", System.Uri.EscapeDataString(ConvertToString(carrier_name, System.Globalization.CultureInfo.InvariantCulture)));
             urlBuilder_.Replace("{carrier_id}", System.Uri.EscapeDataString(ConvertToString(carrier_id, System.Globalization.CultureInfo.InvariantCulture)));
-
+    
             var client_ = _httpClient;
             try
             {
@@ -2028,12 +2028,12 @@ namespace ShipEngineAPI
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -2043,9 +2043,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -2093,7 +2093,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Update carrier settings</summary>
         /// <param name="carrier_name">The carrier name, such as `stamps_com`, `ups`, `fedex`, or `dhl_express`.</param>
@@ -2104,18 +2104,18 @@ namespace ShipEngineAPI
         {
             if (carrier_name == null)
                 throw new System.ArgumentNullException("carrier_name");
-
+    
             if (carrier_id == null)
                 throw new System.ArgumentNullException("carrier_id");
-
+    
             if (body == null)
                 throw new System.ArgumentNullException("body");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/connections/carriers/{carrier_name}/{carrier_id}/settings");
             urlBuilder_.Replace("{carrier_name}", System.Uri.EscapeDataString(ConvertToString(carrier_name, System.Globalization.CultureInfo.InvariantCulture)));
             urlBuilder_.Replace("{carrier_id}", System.Uri.EscapeDataString(ConvertToString(carrier_id, System.Globalization.CultureInfo.InvariantCulture)));
-
+    
             var client_ = _httpClient;
             try
             {
@@ -2126,12 +2126,12 @@ namespace ShipEngineAPI
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -2141,9 +2141,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 204)
                         {
@@ -2191,7 +2191,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Disconnect a Shipsurance Account</summary>
         /// <returns>The request was a success</returns>
@@ -2200,7 +2200,7 @@ namespace ShipEngineAPI
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/connections/insurance/shipsurance");
-
+    
             var client_ = _httpClient;
             try
             {
@@ -2208,12 +2208,12 @@ namespace ShipEngineAPI
                 {
                     request_.Method = new System.Net.Http.HttpMethod("DELETE");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -2223,9 +2223,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -2273,7 +2273,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Connect a Shipsurance Account</summary>
         /// <returns>The request was a success</returns>
@@ -2282,10 +2282,10 @@ namespace ShipEngineAPI
         {
             if (body == null)
                 throw new System.ArgumentNullException("body");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/connections/insurance/shipsurance");
-
+    
             var client_ = _httpClient;
             try
             {
@@ -2296,12 +2296,12 @@ namespace ShipEngineAPI
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -2311,9 +2311,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -2361,7 +2361,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Download File</summary>
         /// <returns>The request was a success</returns>
@@ -2370,13 +2370,13 @@ namespace ShipEngineAPI
         {
             if (subdir == null)
                 throw new System.ArgumentNullException("subdir");
-
+    
             if (filename == null)
                 throw new System.ArgumentNullException("filename");
-
+    
             if (dir == null)
                 throw new System.ArgumentNullException("dir");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/downloads/{dir}/{subdir}/{filename}?");
             urlBuilder_.Replace("{subdir}", System.Uri.EscapeDataString(ConvertToString(subdir, System.Globalization.CultureInfo.InvariantCulture)));
@@ -2387,7 +2387,7 @@ namespace ShipEngineAPI
                 urlBuilder_.Append(System.Uri.EscapeDataString("download") + "=").Append(System.Uri.EscapeDataString(ConvertToString(download, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
             urlBuilder_.Length--;
-
+    
             var client_ = _httpClient;
             try
             {
@@ -2395,12 +2395,12 @@ namespace ShipEngineAPI
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/pdf"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -2410,14 +2410,14 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200 || status_ == 206)
                         {
                             var responseStream_ = response_.Content == null ? System.IO.Stream.Null : await response_.Content.ReadAsStreamAsync().ConfigureAwait(false);
-                            var fileResponse_ = new FileResponse(status_, headers_, responseStream_, null, response_);
+                            var fileResponse_ = new FileResponse(status_, headers_, responseStream_, null, response_); 
                             client_ = null; response_ = null; // response and client are disposed by FileResponse
                             return fileResponse_;
                         }
@@ -2468,16 +2468,16 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>List Webhooks</summary>
         /// <returns>The request was a success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Webhook>> ListWebhooks(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<System.Collections.Generic.IList<Webhook>> ListWebhooks(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/environment/webhooks");
-
+    
             var client_ = _httpClient;
             try
             {
@@ -2485,12 +2485,12 @@ namespace ShipEngineAPI
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -2500,13 +2500,13 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<Webhook>>(response_, headers_).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.IList<Webhook>>(response_, headers_).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -2550,7 +2550,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Create a Webhook</summary>
         /// <returns>The request was a success.</returns>
@@ -2559,10 +2559,10 @@ namespace ShipEngineAPI
         {
             if (body == null)
                 throw new System.ArgumentNullException("body");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/environment/webhooks");
-
+    
             var client_ = _httpClient;
             try
             {
@@ -2573,12 +2573,12 @@ namespace ShipEngineAPI
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -2588,9 +2588,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -2648,7 +2648,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Get Webhook By ID</summary>
         /// <param name="webhook_id">Webhook ID</param>
@@ -2658,11 +2658,11 @@ namespace ShipEngineAPI
         {
             if (webhook_id == null)
                 throw new System.ArgumentNullException("webhook_id");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/environment/webhooks/{webhook_id}");
             urlBuilder_.Replace("{webhook_id}", System.Uri.EscapeDataString(ConvertToString(webhook_id, System.Globalization.CultureInfo.InvariantCulture)));
-
+    
             var client_ = _httpClient;
             try
             {
@@ -2670,12 +2670,12 @@ namespace ShipEngineAPI
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -2685,9 +2685,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -2745,7 +2745,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Update a Webhook</summary>
         /// <param name="webhook_id">Webhook ID</param>
@@ -2755,14 +2755,14 @@ namespace ShipEngineAPI
         {
             if (webhook_id == null)
                 throw new System.ArgumentNullException("webhook_id");
-
+    
             if (body == null)
                 throw new System.ArgumentNullException("body");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/environment/webhooks/{webhook_id}");
             urlBuilder_.Replace("{webhook_id}", System.Uri.EscapeDataString(ConvertToString(webhook_id, System.Globalization.CultureInfo.InvariantCulture)));
-
+    
             var client_ = _httpClient;
             try
             {
@@ -2773,12 +2773,12 @@ namespace ShipEngineAPI
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -2788,9 +2788,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 204)
                         {
@@ -2848,7 +2848,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Delete Webhook By ID</summary>
         /// <param name="webhook_id">Webhook ID</param>
@@ -2858,11 +2858,11 @@ namespace ShipEngineAPI
         {
             if (webhook_id == null)
                 throw new System.ArgumentNullException("webhook_id");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/environment/webhooks/{webhook_id}");
             urlBuilder_.Replace("{webhook_id}", System.Uri.EscapeDataString(ConvertToString(webhook_id, System.Globalization.CultureInfo.InvariantCulture)));
-
+    
             var client_ = _httpClient;
             try
             {
@@ -2870,12 +2870,12 @@ namespace ShipEngineAPI
                 {
                     request_.Method = new System.Net.Http.HttpMethod("DELETE");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -2885,9 +2885,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 204)
                         {
@@ -2945,7 +2945,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Add Funds To Insurance</summary>
         /// <returns>The request was a success.</returns>
@@ -2954,10 +2954,10 @@ namespace ShipEngineAPI
         {
             if (body == null)
                 throw new System.ArgumentNullException("body");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/insurance/shipsurance/add_funds");
-
+    
             var client_ = _httpClient;
             try
             {
@@ -2968,12 +2968,12 @@ namespace ShipEngineAPI
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("PATCH");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -2983,9 +2983,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -3033,7 +3033,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Get Insurance Funds Balance</summary>
         /// <returns>The request was a success.</returns>
@@ -3042,7 +3042,7 @@ namespace ShipEngineAPI
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/insurance/shipsurance/balance");
-
+    
             var client_ = _httpClient;
             try
             {
@@ -3050,12 +3050,12 @@ namespace ShipEngineAPI
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -3065,9 +3065,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -3115,7 +3115,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>List labels</summary>
         /// <param name="label_status">Only return labels that are currently in the specified status</param>
@@ -3195,7 +3195,7 @@ namespace ShipEngineAPI
                 urlBuilder_.Append(System.Uri.EscapeDataString("sort_by") + "=").Append(System.Uri.EscapeDataString(ConvertToString(sort_by, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
             urlBuilder_.Length--;
-
+    
             var client_ = _httpClient;
             try
             {
@@ -3203,12 +3203,12 @@ namespace ShipEngineAPI
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -3218,9 +3218,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -3268,7 +3268,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Purchase Label</summary>
         /// <returns>The requested object creation was a success.</returns>
@@ -3277,10 +3277,10 @@ namespace ShipEngineAPI
         {
             if (body == null)
                 throw new System.ArgumentNullException("body");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/labels");
-
+    
             var client_ = _httpClient;
             try
             {
@@ -3291,12 +3291,12 @@ namespace ShipEngineAPI
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -3306,9 +3306,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -3366,7 +3366,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Get Label By External Shipment ID</summary>
         /// <returns>The requested object creation was a success.</returns>
@@ -3375,7 +3375,7 @@ namespace ShipEngineAPI
         {
             if (external_shipment_id == null)
                 throw new System.ArgumentNullException("external_shipment_id");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/labels/external_shipment_id/{external_shipment_id}?");
             urlBuilder_.Replace("{external_shipment_id}", System.Uri.EscapeDataString(ConvertToString(external_shipment_id, System.Globalization.CultureInfo.InvariantCulture)));
@@ -3384,7 +3384,7 @@ namespace ShipEngineAPI
                 urlBuilder_.Append(System.Uri.EscapeDataString("label_download_type") + "=").Append(System.Uri.EscapeDataString(ConvertToString(label_download_type, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
             urlBuilder_.Length--;
-
+    
             var client_ = _httpClient;
             try
             {
@@ -3392,12 +3392,12 @@ namespace ShipEngineAPI
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -3407,9 +3407,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -3467,7 +3467,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Purchase Label with Rate ID</summary>
         /// <param name="rate_id">Rate ID</param>
@@ -3477,14 +3477,14 @@ namespace ShipEngineAPI
         {
             if (rate_id == null)
                 throw new System.ArgumentNullException("rate_id");
-
+    
             if (body == null)
                 throw new System.ArgumentNullException("body");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/labels/rates/{rate_id}");
             urlBuilder_.Replace("{rate_id}", System.Uri.EscapeDataString(ConvertToString(rate_id, System.Globalization.CultureInfo.InvariantCulture)));
-
+    
             var client_ = _httpClient;
             try
             {
@@ -3495,12 +3495,12 @@ namespace ShipEngineAPI
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -3510,9 +3510,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -3570,7 +3570,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Purchase Label with Shipment ID</summary>
         /// <param name="shipment_id">Shipment ID</param>
@@ -3580,14 +3580,14 @@ namespace ShipEngineAPI
         {
             if (shipment_id == null)
                 throw new System.ArgumentNullException("shipment_id");
-
+    
             if (body == null)
                 throw new System.ArgumentNullException("body");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/labels/shipment/{shipment_id}");
             urlBuilder_.Replace("{shipment_id}", System.Uri.EscapeDataString(ConvertToString(shipment_id, System.Globalization.CultureInfo.InvariantCulture)));
-
+    
             var client_ = _httpClient;
             try
             {
@@ -3598,12 +3598,12 @@ namespace ShipEngineAPI
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -3613,9 +3613,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -3673,7 +3673,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Get Label By ID</summary>
         /// <param name="label_id">Label ID</param>
@@ -3683,7 +3683,7 @@ namespace ShipEngineAPI
         {
             if (label_id == null)
                 throw new System.ArgumentNullException("label_id");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/labels/{label_id}?");
             urlBuilder_.Replace("{label_id}", System.Uri.EscapeDataString(ConvertToString(label_id, System.Globalization.CultureInfo.InvariantCulture)));
@@ -3692,7 +3692,7 @@ namespace ShipEngineAPI
                 urlBuilder_.Append(System.Uri.EscapeDataString("label_download_type") + "=").Append(System.Uri.EscapeDataString(ConvertToString(label_download_type, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
             urlBuilder_.Length--;
-
+    
             var client_ = _httpClient;
             try
             {
@@ -3700,12 +3700,12 @@ namespace ShipEngineAPI
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -3715,9 +3715,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -3775,7 +3775,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Create a return label</summary>
         /// <param name="label_id">Label ID</param>
@@ -3785,14 +3785,14 @@ namespace ShipEngineAPI
         {
             if (label_id == null)
                 throw new System.ArgumentNullException("label_id");
-
+    
             if (body == null)
                 throw new System.ArgumentNullException("body");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/labels/{label_id}/return");
             urlBuilder_.Replace("{label_id}", System.Uri.EscapeDataString(ConvertToString(label_id, System.Globalization.CultureInfo.InvariantCulture)));
-
+    
             var client_ = _httpClient;
             try
             {
@@ -3803,12 +3803,12 @@ namespace ShipEngineAPI
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -3818,9 +3818,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -3878,7 +3878,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Get Label Tracking Information</summary>
         /// <param name="label_id">Label ID</param>
@@ -3888,11 +3888,11 @@ namespace ShipEngineAPI
         {
             if (label_id == null)
                 throw new System.ArgumentNullException("label_id");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/labels/{label_id}/track");
             urlBuilder_.Replace("{label_id}", System.Uri.EscapeDataString(ConvertToString(label_id, System.Globalization.CultureInfo.InvariantCulture)));
-
+    
             var client_ = _httpClient;
             try
             {
@@ -3900,12 +3900,12 @@ namespace ShipEngineAPI
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -3915,9 +3915,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -3975,7 +3975,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Void a Label By ID</summary>
         /// <param name="label_id">Label ID</param>
@@ -3985,11 +3985,11 @@ namespace ShipEngineAPI
         {
             if (label_id == null)
                 throw new System.ArgumentNullException("label_id");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/labels/{label_id}/void");
             urlBuilder_.Replace("{label_id}", System.Uri.EscapeDataString(ConvertToString(label_id, System.Globalization.CultureInfo.InvariantCulture)));
-
+    
             var client_ = _httpClient;
             try
             {
@@ -3998,12 +3998,12 @@ namespace ShipEngineAPI
                     request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -4013,9 +4013,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -4073,7 +4073,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>List Manifests</summary>
         /// <param name="warehouse_id">Warehouse ID</param>
@@ -4127,7 +4127,7 @@ namespace ShipEngineAPI
                 foreach (var item_ in label_ids) { urlBuilder_.Append(System.Uri.EscapeDataString("label_ids") + "=").Append((item_ == null) ? "" : System.Uri.EscapeDataString(ConvertToString(item_, System.Globalization.CultureInfo.InvariantCulture))).Append("&"); }
             }
             urlBuilder_.Length--;
-
+    
             var client_ = _httpClient;
             try
             {
@@ -4135,12 +4135,12 @@ namespace ShipEngineAPI
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -4150,9 +4150,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -4210,7 +4210,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Create Manifest</summary>
         /// <returns>The request was a success.</returns>
@@ -4219,10 +4219,10 @@ namespace ShipEngineAPI
         {
             if (body == null)
                 throw new System.ArgumentNullException("body");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/manifests");
-
+    
             var client_ = _httpClient;
             try
             {
@@ -4233,12 +4233,12 @@ namespace ShipEngineAPI
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -4248,9 +4248,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -4298,7 +4298,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Get Manifest By Id</summary>
         /// <param name="manifest_id">The Manifest Id</param>
@@ -4308,11 +4308,11 @@ namespace ShipEngineAPI
         {
             if (manifest_id == null)
                 throw new System.ArgumentNullException("manifest_id");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/manifests/{manifest_id}");
             urlBuilder_.Replace("{manifest_id}", System.Uri.EscapeDataString(ConvertToString(manifest_id, System.Globalization.CultureInfo.InvariantCulture)));
-
+    
             var client_ = _httpClient;
             try
             {
@@ -4320,12 +4320,12 @@ namespace ShipEngineAPI
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -4335,9 +4335,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -4395,7 +4395,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>List Custom Package Types</summary>
         /// <returns>The request was a success.</returns>
@@ -4404,7 +4404,7 @@ namespace ShipEngineAPI
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/packages");
-
+    
             var client_ = _httpClient;
             try
             {
@@ -4412,12 +4412,12 @@ namespace ShipEngineAPI
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -4427,9 +4427,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -4487,7 +4487,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Create Custom Package Type</summary>
         /// <returns>The request was a success.</returns>
@@ -4496,10 +4496,10 @@ namespace ShipEngineAPI
         {
             if (body == null)
                 throw new System.ArgumentNullException("body");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/packages");
-
+    
             var client_ = _httpClient;
             try
             {
@@ -4510,12 +4510,12 @@ namespace ShipEngineAPI
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -4525,9 +4525,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -4575,7 +4575,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Get Custom Package Type By ID</summary>
         /// <param name="package_id">Package ID</param>
@@ -4585,11 +4585,11 @@ namespace ShipEngineAPI
         {
             if (package_id == null)
                 throw new System.ArgumentNullException("package_id");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/packages/{package_id}");
             urlBuilder_.Replace("{package_id}", System.Uri.EscapeDataString(ConvertToString(package_id, System.Globalization.CultureInfo.InvariantCulture)));
-
+    
             var client_ = _httpClient;
             try
             {
@@ -4597,12 +4597,12 @@ namespace ShipEngineAPI
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -4612,9 +4612,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -4672,7 +4672,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Update Custom Package Type By ID</summary>
         /// <param name="package_id">Package ID</param>
@@ -4682,14 +4682,14 @@ namespace ShipEngineAPI
         {
             if (package_id == null)
                 throw new System.ArgumentNullException("package_id");
-
+    
             if (body == null)
                 throw new System.ArgumentNullException("body");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/packages/{package_id}");
             urlBuilder_.Replace("{package_id}", System.Uri.EscapeDataString(ConvertToString(package_id, System.Globalization.CultureInfo.InvariantCulture)));
-
+    
             var client_ = _httpClient;
             try
             {
@@ -4700,12 +4700,12 @@ namespace ShipEngineAPI
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -4715,9 +4715,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 204)
                         {
@@ -4775,7 +4775,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Delete A Custom Package By ID</summary>
         /// <param name="package_id">Package ID</param>
@@ -4785,11 +4785,11 @@ namespace ShipEngineAPI
         {
             if (package_id == null)
                 throw new System.ArgumentNullException("package_id");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/packages/{package_id}");
             urlBuilder_.Replace("{package_id}", System.Uri.EscapeDataString(ConvertToString(package_id, System.Globalization.CultureInfo.InvariantCulture)));
-
+    
             var client_ = _httpClient;
             try
             {
@@ -4797,12 +4797,12 @@ namespace ShipEngineAPI
                 {
                     request_.Method = new System.Net.Http.HttpMethod("DELETE");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -4812,9 +4812,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 204)
                         {
@@ -4872,7 +4872,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Get Shipping Rates</summary>
         /// <returns>The request was a success.</returns>
@@ -4881,10 +4881,10 @@ namespace ShipEngineAPI
         {
             if (body == null)
                 throw new System.ArgumentNullException("body");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/rates");
-
+    
             var client_ = _httpClient;
             try
             {
@@ -4895,12 +4895,12 @@ namespace ShipEngineAPI
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -4910,9 +4910,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -4960,19 +4960,19 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Get Bulk Rates</summary>
         /// <returns>The request was a success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<BulkRate>> CompareBulkRates(CompareBulkRatesRequestBody body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<System.Collections.Generic.IList<BulkRate>> CompareBulkRates(CompareBulkRatesRequestBody body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (body == null)
                 throw new System.ArgumentNullException("body");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/rates/bulk");
-
+    
             var client_ = _httpClient;
             try
             {
@@ -4983,12 +4983,12 @@ namespace ShipEngineAPI
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -4998,13 +4998,13 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<BulkRate>>(response_, headers_).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.IList<BulkRate>>(response_, headers_).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -5048,19 +5048,19 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Estimate Rates</summary>
         /// <returns>The request was a success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<System.Collections.Generic.ICollection<Rate>> EstimateRates(EstimateRatesRequestBody body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<System.Collections.Generic.IList<Rate>> EstimateRates(EstimateRatesRequestBody body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (body == null)
                 throw new System.ArgumentNullException("body");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/rates/estimate");
-
+    
             var client_ = _httpClient;
             try
             {
@@ -5071,12 +5071,12 @@ namespace ShipEngineAPI
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -5086,13 +5086,13 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.ICollection<Rate>>(response_, headers_).ConfigureAwait(false);
+                            var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.IList<Rate>>(response_, headers_).ConfigureAwait(false);
                             if (objectResponse_.Object == null)
                             {
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -5136,7 +5136,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Get Rate By ID</summary>
         /// <param name="rate_id">Rate ID</param>
@@ -5146,11 +5146,11 @@ namespace ShipEngineAPI
         {
             if (rate_id == null)
                 throw new System.ArgumentNullException("rate_id");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/rates/{rate_id}");
             urlBuilder_.Replace("{rate_id}", System.Uri.EscapeDataString(ConvertToString(rate_id, System.Globalization.CultureInfo.InvariantCulture)));
-
+    
             var client_ = _httpClient;
             try
             {
@@ -5158,12 +5158,12 @@ namespace ShipEngineAPI
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -5173,9 +5173,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -5233,7 +5233,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>List Shipments</summary>
         /// <param name="batch_id">Batch ID</param>
@@ -5301,7 +5301,7 @@ namespace ShipEngineAPI
                 urlBuilder_.Append(System.Uri.EscapeDataString("sort_by") + "=").Append(System.Uri.EscapeDataString(ConvertToString(sort_by, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
             urlBuilder_.Length--;
-
+    
             var client_ = _httpClient;
             try
             {
@@ -5309,12 +5309,12 @@ namespace ShipEngineAPI
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -5324,9 +5324,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -5384,7 +5384,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Create Shipments</summary>
         /// <returns>The requested object creation was a success.</returns>
@@ -5393,10 +5393,10 @@ namespace ShipEngineAPI
         {
             if (body == null)
                 throw new System.ArgumentNullException("body");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/shipments");
-
+    
             var client_ = _httpClient;
             try
             {
@@ -5407,12 +5407,12 @@ namespace ShipEngineAPI
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -5422,9 +5422,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -5472,7 +5472,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Get Shipment By External ID</summary>
         /// <returns>The request was a success.</returns>
@@ -5481,11 +5481,11 @@ namespace ShipEngineAPI
         {
             if (external_shipment_id == null)
                 throw new System.ArgumentNullException("external_shipment_id");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/shipments/external_shipment_id/{external_shipment_id}");
             urlBuilder_.Replace("{external_shipment_id}", System.Uri.EscapeDataString(ConvertToString(external_shipment_id, System.Globalization.CultureInfo.InvariantCulture)));
-
+    
             var client_ = _httpClient;
             try
             {
@@ -5493,12 +5493,12 @@ namespace ShipEngineAPI
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -5508,9 +5508,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -5568,7 +5568,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Parse shipping info</summary>
         /// <param name="body">The only required field is `text`, which is the text to be parsed. You can optionally also provide a `shipment` containing any already-known values. For example, you probably already know the `ship_from` address, and you may also already know what carrier and service you want to use.</param>
@@ -5578,10 +5578,10 @@ namespace ShipEngineAPI
         {
             if (body == null)
                 throw new System.ArgumentNullException("body");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/shipments/recognize");
-
+    
             var client_ = _httpClient;
             try
             {
@@ -5592,12 +5592,12 @@ namespace ShipEngineAPI
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -5607,9 +5607,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -5657,7 +5657,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Get Shipment By ID</summary>
         /// <param name="shipment_id">Shipment ID</param>
@@ -5667,11 +5667,11 @@ namespace ShipEngineAPI
         {
             if (shipment_id == null)
                 throw new System.ArgumentNullException("shipment_id");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/shipments/{shipment_id}");
             urlBuilder_.Replace("{shipment_id}", System.Uri.EscapeDataString(ConvertToString(shipment_id, System.Globalization.CultureInfo.InvariantCulture)));
-
+    
             var client_ = _httpClient;
             try
             {
@@ -5679,12 +5679,12 @@ namespace ShipEngineAPI
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -5694,9 +5694,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -5754,7 +5754,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Update Shipment By ID</summary>
         /// <param name="shipment_id">Shipment ID</param>
@@ -5764,14 +5764,14 @@ namespace ShipEngineAPI
         {
             if (shipment_id == null)
                 throw new System.ArgumentNullException("shipment_id");
-
+    
             if (body == null)
                 throw new System.ArgumentNullException("body");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/shipments/{shipment_id}");
             urlBuilder_.Replace("{shipment_id}", System.Uri.EscapeDataString(ConvertToString(shipment_id, System.Globalization.CultureInfo.InvariantCulture)));
-
+    
             var client_ = _httpClient;
             try
             {
@@ -5782,12 +5782,12 @@ namespace ShipEngineAPI
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -5797,9 +5797,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -5857,7 +5857,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Cancel a Shipment</summary>
         /// <param name="shipment_id">Shipment ID</param>
@@ -5867,11 +5867,11 @@ namespace ShipEngineAPI
         {
             if (shipment_id == null)
                 throw new System.ArgumentNullException("shipment_id");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/shipments/{shipment_id}/cancel");
             urlBuilder_.Replace("{shipment_id}", System.Uri.EscapeDataString(ConvertToString(shipment_id, System.Globalization.CultureInfo.InvariantCulture)));
-
+    
             var client_ = _httpClient;
             try
             {
@@ -5880,12 +5880,12 @@ namespace ShipEngineAPI
                     request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "text/plain");
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -5895,9 +5895,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 204)
                         {
@@ -5955,7 +5955,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Get Shipment Errors</summary>
         /// <param name="shipment_id">Shipment ID</param>
@@ -5966,7 +5966,7 @@ namespace ShipEngineAPI
         {
             if (shipment_id == null)
                 throw new System.ArgumentNullException("shipment_id");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/shipments/{shipment_id}/errors?");
             urlBuilder_.Replace("{shipment_id}", System.Uri.EscapeDataString(ConvertToString(shipment_id, System.Globalization.CultureInfo.InvariantCulture)));
@@ -5979,7 +5979,7 @@ namespace ShipEngineAPI
                 urlBuilder_.Append(System.Uri.EscapeDataString("pagesize") + "=").Append(System.Uri.EscapeDataString(ConvertToString(pagesize, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
             urlBuilder_.Length--;
-
+    
             var client_ = _httpClient;
             try
             {
@@ -5987,12 +5987,12 @@ namespace ShipEngineAPI
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -6002,9 +6002,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -6062,7 +6062,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Get Shipment Rates</summary>
         /// <param name="shipment_id">Shipment ID</param>
@@ -6073,7 +6073,7 @@ namespace ShipEngineAPI
         {
             if (shipment_id == null)
                 throw new System.ArgumentNullException("shipment_id");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/shipments/{shipment_id}/rates?");
             urlBuilder_.Replace("{shipment_id}", System.Uri.EscapeDataString(ConvertToString(shipment_id, System.Globalization.CultureInfo.InvariantCulture)));
@@ -6082,7 +6082,7 @@ namespace ShipEngineAPI
                 urlBuilder_.Append(System.Uri.EscapeDataString("created_at_start") + "=").Append(System.Uri.EscapeDataString(created_at_start.Value.ToString("s", System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
             urlBuilder_.Length--;
-
+    
             var client_ = _httpClient;
             try
             {
@@ -6090,12 +6090,12 @@ namespace ShipEngineAPI
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -6105,9 +6105,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -6165,7 +6165,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Add Tag to Shipment</summary>
         /// <param name="shipment_id">Shipment ID</param>
@@ -6175,15 +6175,15 @@ namespace ShipEngineAPI
         {
             if (shipment_id == null)
                 throw new System.ArgumentNullException("shipment_id");
-
+    
             if (tag_name == null)
                 throw new System.ArgumentNullException("tag_name");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/shipments/{shipment_id}/tags/{tag_name}");
             urlBuilder_.Replace("{shipment_id}", System.Uri.EscapeDataString(ConvertToString(shipment_id, System.Globalization.CultureInfo.InvariantCulture)));
             urlBuilder_.Replace("{tag_name}", System.Uri.EscapeDataString(ConvertToString(tag_name, System.Globalization.CultureInfo.InvariantCulture)));
-
+    
             var client_ = _httpClient;
             try
             {
@@ -6192,12 +6192,12 @@ namespace ShipEngineAPI
                     request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -6207,9 +6207,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -6267,7 +6267,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Remove Tag from Shipment</summary>
         /// <param name="shipment_id">Shipment ID</param>
@@ -6277,15 +6277,15 @@ namespace ShipEngineAPI
         {
             if (shipment_id == null)
                 throw new System.ArgumentNullException("shipment_id");
-
+    
             if (tag_name == null)
                 throw new System.ArgumentNullException("tag_name");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/shipments/{shipment_id}/tags/{tag_name}");
             urlBuilder_.Replace("{shipment_id}", System.Uri.EscapeDataString(ConvertToString(shipment_id, System.Globalization.CultureInfo.InvariantCulture)));
             urlBuilder_.Replace("{tag_name}", System.Uri.EscapeDataString(ConvertToString(tag_name, System.Globalization.CultureInfo.InvariantCulture)));
-
+    
             var client_ = _httpClient;
             try
             {
@@ -6293,12 +6293,12 @@ namespace ShipEngineAPI
                 {
                     request_.Method = new System.Net.Http.HttpMethod("DELETE");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -6308,9 +6308,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 204)
                         {
@@ -6368,7 +6368,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Get Tags</summary>
         /// <returns>The request was a success.</returns>
@@ -6377,7 +6377,7 @@ namespace ShipEngineAPI
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/tags");
-
+    
             var client_ = _httpClient;
             try
             {
@@ -6385,12 +6385,12 @@ namespace ShipEngineAPI
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -6400,9 +6400,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -6460,7 +6460,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Create a New Tag</summary>
         /// <returns>The request was a success.</returns>
@@ -6469,11 +6469,11 @@ namespace ShipEngineAPI
         {
             if (tag_name == null)
                 throw new System.ArgumentNullException("tag_name");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/tags/{tag_name}");
             urlBuilder_.Replace("{tag_name}", System.Uri.EscapeDataString(ConvertToString(tag_name, System.Globalization.CultureInfo.InvariantCulture)));
-
+    
             var client_ = _httpClient;
             try
             {
@@ -6482,12 +6482,12 @@ namespace ShipEngineAPI
                     request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -6497,9 +6497,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -6557,7 +6557,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Delete Tag</summary>
         /// <returns>The request was successful.</returns>
@@ -6566,11 +6566,11 @@ namespace ShipEngineAPI
         {
             if (tag_name == null)
                 throw new System.ArgumentNullException("tag_name");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/tags/{tag_name}");
             urlBuilder_.Replace("{tag_name}", System.Uri.EscapeDataString(ConvertToString(tag_name, System.Globalization.CultureInfo.InvariantCulture)));
-
+    
             var client_ = _httpClient;
             try
             {
@@ -6578,12 +6578,12 @@ namespace ShipEngineAPI
                 {
                     request_.Method = new System.Net.Http.HttpMethod("DELETE");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -6593,9 +6593,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 204)
                         {
@@ -6653,7 +6653,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Update Tag Name</summary>
         /// <returns>The request was successful.</returns>
@@ -6662,15 +6662,15 @@ namespace ShipEngineAPI
         {
             if (tag_name == null)
                 throw new System.ArgumentNullException("tag_name");
-
+    
             if (new_tag_name == null)
                 throw new System.ArgumentNullException("new_tag_name");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/tags/{tag_name}/{new_tag_name}");
             urlBuilder_.Replace("{tag_name}", System.Uri.EscapeDataString(ConvertToString(tag_name, System.Globalization.CultureInfo.InvariantCulture)));
             urlBuilder_.Replace("{new_tag_name}", System.Uri.EscapeDataString(ConvertToString(new_tag_name, System.Globalization.CultureInfo.InvariantCulture)));
-
+    
             var client_ = _httpClient;
             try
             {
@@ -6679,12 +6679,12 @@ namespace ShipEngineAPI
                     request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "text/plain");
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -6694,9 +6694,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 204)
                         {
@@ -6754,7 +6754,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Get Tracking Information</summary>
         /// <param name="carrier_code">Carrier code used to retrieve tracking information</param>
@@ -6774,7 +6774,7 @@ namespace ShipEngineAPI
                 urlBuilder_.Append(System.Uri.EscapeDataString("tracking_number") + "=").Append(System.Uri.EscapeDataString(ConvertToString(tracking_number, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
             urlBuilder_.Length--;
-
+    
             var client_ = _httpClient;
             try
             {
@@ -6782,12 +6782,12 @@ namespace ShipEngineAPI
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -6797,9 +6797,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -6857,7 +6857,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Start Tracking a Package</summary>
         /// <param name="carrier_code">Carrier code used to retrieve tracking information</param>
@@ -6877,7 +6877,7 @@ namespace ShipEngineAPI
                 urlBuilder_.Append(System.Uri.EscapeDataString("tracking_number") + "=").Append(System.Uri.EscapeDataString(ConvertToString(tracking_number, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
             urlBuilder_.Length--;
-
+    
             var client_ = _httpClient;
             try
             {
@@ -6886,12 +6886,12 @@ namespace ShipEngineAPI
                     request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "text/plain");
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -6901,9 +6901,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 204)
                         {
@@ -6961,7 +6961,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Stop Tracking a Package</summary>
         /// <param name="carrier_code">Carrier code used to retrieve tracking information</param>
@@ -6981,7 +6981,7 @@ namespace ShipEngineAPI
                 urlBuilder_.Append(System.Uri.EscapeDataString("tracking_number") + "=").Append(System.Uri.EscapeDataString(ConvertToString(tracking_number, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
             urlBuilder_.Length--;
-
+    
             var client_ = _httpClient;
             try
             {
@@ -6990,12 +6990,12 @@ namespace ShipEngineAPI
                     request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "text/plain");
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -7005,9 +7005,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 204)
                         {
@@ -7065,7 +7065,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>List Warehouses</summary>
         /// <returns>The request was a success.</returns>
@@ -7074,7 +7074,7 @@ namespace ShipEngineAPI
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/warehouses");
-
+    
             var client_ = _httpClient;
             try
             {
@@ -7082,12 +7082,12 @@ namespace ShipEngineAPI
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -7097,9 +7097,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -7157,7 +7157,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Create Warehouse</summary>
         /// <returns>The request was a success.</returns>
@@ -7166,10 +7166,10 @@ namespace ShipEngineAPI
         {
             if (body == null)
                 throw new System.ArgumentNullException("body");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/warehouses");
-
+    
             var client_ = _httpClient;
             try
             {
@@ -7180,12 +7180,12 @@ namespace ShipEngineAPI
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -7195,9 +7195,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -7255,7 +7255,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Get Warehouse By Id</summary>
         /// <param name="warehouse_id">Warehouse ID</param>
@@ -7265,11 +7265,11 @@ namespace ShipEngineAPI
         {
             if (warehouse_id == null)
                 throw new System.ArgumentNullException("warehouse_id");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/warehouses/{warehouse_id}");
             urlBuilder_.Replace("{warehouse_id}", System.Uri.EscapeDataString(ConvertToString(warehouse_id, System.Globalization.CultureInfo.InvariantCulture)));
-
+    
             var client_ = _httpClient;
             try
             {
@@ -7277,12 +7277,12 @@ namespace ShipEngineAPI
                 {
                     request_.Method = new System.Net.Http.HttpMethod("GET");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -7292,9 +7292,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 200)
                         {
@@ -7352,7 +7352,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Update WareHouse By Id</summary>
         /// <param name="warehouse_id">Warehouse ID</param>
@@ -7362,14 +7362,14 @@ namespace ShipEngineAPI
         {
             if (warehouse_id == null)
                 throw new System.ArgumentNullException("warehouse_id");
-
+    
             if (body == null)
                 throw new System.ArgumentNullException("body");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/warehouses/{warehouse_id}");
             urlBuilder_.Replace("{warehouse_id}", System.Uri.EscapeDataString(ConvertToString(warehouse_id, System.Globalization.CultureInfo.InvariantCulture)));
-
+    
             var client_ = _httpClient;
             try
             {
@@ -7380,12 +7380,12 @@ namespace ShipEngineAPI
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -7395,9 +7395,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 204)
                         {
@@ -7455,7 +7455,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Delete Warehouse By ID</summary>
         /// <param name="warehouse_id">Warehouse ID</param>
@@ -7465,11 +7465,11 @@ namespace ShipEngineAPI
         {
             if (warehouse_id == null)
                 throw new System.ArgumentNullException("warehouse_id");
-
+    
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/warehouses/{warehouse_id}");
             urlBuilder_.Replace("{warehouse_id}", System.Uri.EscapeDataString(ConvertToString(warehouse_id, System.Globalization.CultureInfo.InvariantCulture)));
-
+    
             var client_ = _httpClient;
             try
             {
@@ -7477,12 +7477,12 @@ namespace ShipEngineAPI
                 {
                     request_.Method = new System.Net.Http.HttpMethod("DELETE");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
-
+    
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
                     request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
                     PrepareRequest(client_, request_, url_);
-
+    
                     var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
                     try
                     {
@@ -7492,9 +7492,9 @@ namespace ShipEngineAPI
                             foreach (var item_ in response_.Content.Headers)
                                 headers_[item_.Key] = item_.Value;
                         }
-
+    
                         ProcessResponse(client_, response_);
-
+    
                         var status_ = (int)response_.StatusCode;
                         if (status_ == 204)
                         {
@@ -7552,7 +7552,7 @@ namespace ShipEngineAPI
             {
             }
         }
-
+    
         protected struct ObjectResponseResult<T>
         {
             public ObjectResponseResult(T responseObject, string responseText)
@@ -7560,21 +7560,21 @@ namespace ShipEngineAPI
                 this.Object = responseObject;
                 this.Text = responseText;
             }
-
+    
             public T Object { get; }
-
+    
             public string Text { get; }
         }
-
+    
         public bool ReadResponseAsString { get; set; }
-
+        
         protected virtual async System.Threading.Tasks.Task<ObjectResponseResult<T>> ReadObjectResponseAsync<T>(System.Net.Http.HttpResponseMessage response, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> headers)
         {
             if (response == null || response.Content == null)
             {
                 return new ObjectResponseResult<T>(default(T), string.Empty);
             }
-
+        
             if (ReadResponseAsString)
             {
                 var responseText = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -7609,14 +7609,14 @@ namespace ShipEngineAPI
                 }
             }
         }
-
+    
         private string ConvertToString(object value, System.Globalization.CultureInfo cultureInfo)
         {
             if (value == null)
             {
                 return null;
             }
-
+        
             if (value is System.Enum)
             {
                 var name = System.Enum.GetName(value.GetType(), value);
@@ -7625,18 +7625,18 @@ namespace ShipEngineAPI
                     var field = System.Reflection.IntrospectionExtensions.GetTypeInfo(value.GetType()).GetDeclaredField(name);
                     if (field != null)
                     {
-                        var attribute = System.Reflection.CustomAttributeExtensions.GetCustomAttribute(field, typeof(System.Runtime.Serialization.EnumMemberAttribute))
+                        var attribute = System.Reflection.CustomAttributeExtensions.GetCustomAttribute(field, typeof(System.Runtime.Serialization.EnumMemberAttribute)) 
                             as System.Runtime.Serialization.EnumMemberAttribute;
                         if (attribute != null)
                         {
                             return attribute.Value != null ? attribute.Value : name;
                         }
                     }
-
+        
                     return System.Convert.ToString(System.Convert.ChangeType(value, System.Enum.GetUnderlyingType(value.GetType()), cultureInfo));
                 }
             }
-            else if (value is bool)
+            else if (value is bool) 
             {
                 return System.Convert.ToString((bool)value, cultureInfo).ToLowerInvariant();
             }
@@ -7649,7 +7649,7 @@ namespace ShipEngineAPI
                 var array = System.Linq.Enumerable.OfType<object>((System.Array) value);
                 return string.Join(",", System.Linq.Enumerable.Select(array, o => ConvertToString(o, cultureInfo)));
             }
-
+        
             var result = System.Convert.ToString(value, cultureInfo);
             return (result is null) ? string.Empty : result;
         }

@@ -26,13 +26,41 @@ namespace ShipEngineTest
                 {
                     Text = toParse,
                 });
-
                 Console.WriteLine(JsonConvert.SerializeObject(response, Formatting.Indented));
+
+                // Now try to validate the address
+                var validated = await client.ValidateAddress(new [] {
+                    new AddressToValidate
+                    {
+                        AddressLine1 = "424 Otterson Drive, Suite 100",
+                        CityLocality = "Chico",
+                        StateProvince = "CA",
+                        PostalCode = "95928",
+                        CountryCode = "US",
+                    },
+                });
+                Console.WriteLine(JsonConvert.SerializeObject(validated, Formatting.Indented));
+
+                validated = await client.ValidateAddress(new [] {
+                    new AddressToValidate
+                    {
+                        AddressLine1 = "424 Otterson Drive",
+                        CityLocality = "Chico",
+                        StateProvince = "CA",
+                        PostalCode = "95928",
+                        CountryCode = "US",
+                    },
+                });
+                Console.WriteLine(JsonConvert.SerializeObject(validated, Formatting.Indented));
             }
             catch (Exception e)
             {
                 Console.WriteLine("FAILED!");
                 Console.WriteLine(e.Message);
+                if (e.InnerException != null)
+                {
+                    Console.WriteLine(e.InnerException.Message);
+                }
             }
         }
     }
