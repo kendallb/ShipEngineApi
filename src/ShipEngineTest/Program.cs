@@ -52,6 +52,9 @@ namespace ShipEngineTest
                     },
                 });
                 Console.WriteLine(JsonConvert.SerializeObject(validated, Formatting.Indented));
+
+                var carriers = await client.ListCarriers();
+                Console.WriteLine(JsonConvert.SerializeObject(carriers, Formatting.Indented));
             }
             catch (Exception e)
             {

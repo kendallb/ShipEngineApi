@@ -647,7 +647,7 @@ namespace ShipEngineAPI
         /// <summary>Indicates whether this is a residential address.</summary>
         [Newtonsoft.Json.JsonProperty("address_residential_indicator", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public AddressResidentialIndicator AddressResidentialIndicator { get; set; } = ShipEngineAPI.AddressResidentialIndicator.Unknown;
+        public AddressResidentialIndicator? AddressResidentialIndicator { get; set; }
     
     
     }
@@ -1030,7 +1030,7 @@ namespace ShipEngineAPI
     {
         [Newtonsoft.Json.JsonProperty("code", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public AddressValidationCode Code { get; set; }
+        public AddressValidationCode? Code { get; set; }
     
         /// <summary>Message explaining the address validation error</summary>
         [Newtonsoft.Json.JsonProperty("message", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -1039,7 +1039,7 @@ namespace ShipEngineAPI
     
         [Newtonsoft.Json.JsonProperty("type", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public AddressValidationMessageType Type { get; set; }
+        public AddressValidationMessageType? Type { get; set; }
     
         [Newtonsoft.Json.JsonProperty("detail_code", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
@@ -1389,12 +1389,12 @@ namespace ShipEngineAPI
         [Newtonsoft.Json.JsonProperty("label_layout", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public LabelLayout LabelLayout { get; set; } = ShipEngineAPI.LabelLayout._4x6;
+        public LabelLayout LabelLayout { get; set; }
     
         [Newtonsoft.Json.JsonProperty("label_format", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public LabelFormat LabelFormat { get; set; } = ShipEngineAPI.LabelFormat.Pdf;
+        public LabelFormat LabelFormat { get; set; }
     
         /// <summary>A string that uniquely identifies the batch</summary>
         [Newtonsoft.Json.JsonProperty("batch_id", Required = Newtonsoft.Json.Required.Always)]
@@ -1410,7 +1410,7 @@ namespace ShipEngineAPI
     
         /// <summary>Custom notes you can add for each created batch</summary>
         [Newtonsoft.Json.JsonProperty("batch_notes", Required = Newtonsoft.Json.Required.AllowNull)]
-        public string BatchNotes { get; set; } = "";
+        public string BatchNotes { get; set; }
     
         /// <summary>The date and time the batch was created in ShipEngine</summary>
         [Newtonsoft.Json.JsonProperty("created_at", Required = Newtonsoft.Json.Required.Always)]
@@ -1712,11 +1712,11 @@ namespace ShipEngineAPI
         public System.DateTimeOffset ShipDate { get; set; }
     
         [Newtonsoft.Json.JsonProperty("label_layout", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string LabelLayout { get; set; } = "4x6";
+        public string LabelLayout { get; set; }
     
         [Newtonsoft.Json.JsonProperty("label_format", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public LabelFormat LabelFormat { get; set; } = ShipEngineAPI.LabelFormat.Pdf;
+        public LabelFormat? LabelFormat { get; set; }
     
     
     }
@@ -1794,12 +1794,12 @@ namespace ShipEngineAPI
     
         /// <summary>Indicates whether the carrier requires funding to use its services</summary>
         [Newtonsoft.Json.JsonProperty("requires_funded_amount", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool RequiresFundedAmount { get; set; }
+        public bool? RequiresFundedAmount { get; set; }
     
         /// <summary>Current available balance</summary>
         [Newtonsoft.Json.JsonProperty("balance", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Range(0D, double.MaxValue)]
-        public double Balance { get; set; }
+        public double? Balance { get; set; }
     
         /// <summary>Nickname given to the account when initially setting up the carrier.</summary>
         [Newtonsoft.Json.JsonProperty("nickname", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -1813,15 +1813,15 @@ namespace ShipEngineAPI
     
         /// <summary>Is this the primary carrier that is used by default when no carrier is specified in label/shipment creation</summary>
         [Newtonsoft.Json.JsonProperty("primary", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool Primary { get; set; }
+        public bool? Primary { get; set; }
     
         /// <summary>Carrier supports multiple packages per shipment</summary>
         [Newtonsoft.Json.JsonProperty("has_multi_package_supporting_services", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool HasMultiPackageSupportingServices { get; set; }
+        public bool? HasMultiPackageSupportingServices { get; set; }
     
         /// <summary>The carrier supports adding custom label messages to an order.</summary>
         [Newtonsoft.Json.JsonProperty("supports_label_messages", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool SupportsLabelMessages { get; set; }
+        public bool? SupportsLabelMessages { get; set; }
     
         /// <summary>A list of services that are offered by the carrier</summary>
         [Newtonsoft.Json.JsonProperty("services", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -1865,15 +1865,15 @@ namespace ShipEngineAPI
     
         /// <summary>Supports domestic shipping</summary>
         [Newtonsoft.Json.JsonProperty("domestic", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool Domestic { get; set; }
+        public bool? Domestic { get; set; }
     
         /// <summary>Supports international shipping.</summary>
         [Newtonsoft.Json.JsonProperty("international", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool International { get; set; }
+        public bool? International { get; set; }
     
         /// <summary>Carrier supports multiple packages per shipment</summary>
         [Newtonsoft.Json.JsonProperty("is_multi_package_supported", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool IsMultiPackageSupported { get; set; }
+        public bool? IsMultiPackageSupported { get; set; }
     
     
     }
@@ -1915,22 +1915,22 @@ namespace ShipEngineAPI
         [Newtonsoft.Json.JsonProperty("unit", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public DimensionUnit Unit { get; set; } = ShipEngineAPI.DimensionUnit.Inch;
+        public DimensionUnit Unit { get; set; }
     
         /// <summary>The length of the package, in the specified unit</summary>
         [Newtonsoft.Json.JsonProperty("length", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Range(0D, double.MaxValue)]
-        public double Length { get; set; } = 0D;
+        public double Length { get; set; }
     
         /// <summary>The width of the package, in the specified unit</summary>
         [Newtonsoft.Json.JsonProperty("width", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Range(0D, double.MaxValue)]
-        public double Width { get; set; } = 0D;
+        public double Width { get; set; }
     
         /// <summary>The length of the package, in the specified unit</summary>
         [Newtonsoft.Json.JsonProperty("height", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Range(0D, double.MaxValue)]
-        public double Height { get; set; } = 0D;
+        public double Height { get; set; }
     
     
     }
@@ -2186,6 +2186,256 @@ namespace ShipEngineAPI
         [System.ComponentModel.DataAnnotations.Required]
         public string Password { get; set; }
     
+        [Newtonsoft.Json.JsonProperty("merchant_seller_id", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string MerchantSellerId { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("mws_auth_token", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string MwsAuthToken { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("email", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
+        public string Email { get; set; }
+    
+        /// <summary>Asendia account number</summary>
+        [Newtonsoft.Json.JsonProperty("account_number", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string AccountNumber { get; set; }
+    
+        /// <summary>FTP username</summary>
+        [Newtonsoft.Json.JsonProperty("ftp_username", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string FtpUsername { get; set; }
+    
+        /// <summary>FTP password</summary>
+        [Newtonsoft.Json.JsonProperty("ftp_password", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string FtpPassword { get; set; }
+    
+        /// <summary>API key</summary>
+        [Newtonsoft.Json.JsonProperty("api_key", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string ApiKey { get; set; }
+    
+        /// <summary>API secret</summary>
+        [Newtonsoft.Json.JsonProperty("api_secret", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string ApiSecret { get; set; }
+    
+        /// <summary>Canada Post Account Contract ID</summary>
+        [Newtonsoft.Json.JsonProperty("contract_id", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string ContractId { get; set; }
+    
+        /// <summary>The client id</summary>
+        [Newtonsoft.Json.JsonProperty("client_id", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string ClientId { get; set; }
+    
+        /// <summary>The pickup number</summary>
+        [Newtonsoft.Json.JsonProperty("pickup_number", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string PickupNumber { get; set; }
+    
+        /// <summary>The distribution center</summary>
+        [Newtonsoft.Json.JsonProperty("distribution_center", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string DistributionCenter { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("ancillary_endorsement", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public AncillaryServiceEndorsement? AncillaryEndorsement { get; set; }
+    
+        /// <summary>A string that uniquely identifies the site</summary>
+        [Newtonsoft.Json.JsonProperty("site_id", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [System.ComponentModel.DataAnnotations.StringLength(25, MinimumLength = 1)]
+        [System.ComponentModel.DataAnnotations.RegularExpression(@"^se(-[a-z0-9]+)+$")]
+        public string SiteId { get; set; }
+    
+        /// <summary>Account</summary>
+        [Newtonsoft.Json.JsonProperty("account", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string Account { get; set; }
+    
+        /// <summary>Passphrase</summary>
+        [Newtonsoft.Json.JsonProperty("passphrase", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string Passphrase { get; set; }
+    
+        /// <summary>Address</summary>
+        [Newtonsoft.Json.JsonProperty("address1", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string Address1 { get; set; }
+    
+        /// <summary>Address</summary>
+        [Newtonsoft.Json.JsonProperty("address2", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
+        public string Address2 { get; set; }
+    
+        /// <summary>The city</summary>
+        [Newtonsoft.Json.JsonProperty("city", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string City { get; set; }
+    
+        /// <summary>The company</summary>
+        [Newtonsoft.Json.JsonProperty("company", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
+        public string Company { get; set; }
+    
+        /// <summary>Country code</summary>
+        [Newtonsoft.Json.JsonProperty("country_code", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string CountryCode { get; set; }
+    
+        /// <summary>First name</summary>
+        [Newtonsoft.Json.JsonProperty("first_name", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string FirstName { get; set; }
+    
+        /// <summary>Last name</summary>
+        [Newtonsoft.Json.JsonProperty("last_name", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string LastName { get; set; }
+    
+        /// <summary>Phone number</summary>
+        [Newtonsoft.Json.JsonProperty("phone", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string Phone { get; set; }
+    
+        /// <summary>Postal Code</summary>
+        [Newtonsoft.Json.JsonProperty("postal_code", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string PostalCode { get; set; }
+    
+        /// <summary>State</summary>
+        [Newtonsoft.Json.JsonProperty("state", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string State { get; set; }
+    
+        /// <summary>Boolean signaling agreement to the Fedex End User License Agreement</summary>
+        [Newtonsoft.Json.JsonProperty("agree_to_eula", Required = Newtonsoft.Json.Required.Always)]
+        public bool AgreeToEula { get; set; }
+    
+        /// <summary>Meter number</summary>
+        [Newtonsoft.Json.JsonProperty("meter_number", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
+        public string MeterNumber { get; set; }
+    
+        /// <summary>A string that uniquely identifies the mailer</summary>
+        [Newtonsoft.Json.JsonProperty("mailer_id", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string MailerId { get; set; }
+    
+        /// <summary>Profile name</summary>
+        [Newtonsoft.Json.JsonProperty("profile_name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
+        public string ProfileName { get; set; }
+    
+        /// <summary>Merchant id</summary>
+        [Newtonsoft.Json.JsonProperty("merchant_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(0, int.MaxValue)]
+        public int? MerchantId { get; set; }
+    
+        /// <summary>Induction site</summary>
+        [Newtonsoft.Json.JsonProperty("induction_site", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string InductionSite { get; set; }
+    
+        /// <summary>Activation key</summary>
+        [Newtonsoft.Json.JsonProperty("activation_key", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string ActivationKey { get; set; }
+    
+        /// <summary>The oba email address</summary>
+        [Newtonsoft.Json.JsonProperty("oba_email", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
+        public string ObaEmail { get; set; }
+    
+        /// <summary>Contact name</summary>
+        [Newtonsoft.Json.JsonProperty("contact_name", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string ContactName { get; set; }
+    
+        /// <summary>Company name</summary>
+        [Newtonsoft.Json.JsonProperty("company_name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
+        public string CompanyName { get; set; }
+    
+        /// <summary>Street line1</summary>
+        [Newtonsoft.Json.JsonProperty("street_line1", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
+        public string StreetLine1 { get; set; }
+    
+        /// <summary>Street line2</summary>
+        [Newtonsoft.Json.JsonProperty("street_line2", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
+        public string StreetLine2 { get; set; }
+    
+        /// <summary>Street line3</summary>
+        [Newtonsoft.Json.JsonProperty("street_line3", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
+        public string StreetLine3 { get; set; }
+    
+        /// <summary>Seko Account Access Key</summary>
+        [Newtonsoft.Json.JsonProperty("access_key", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string AccessKey { get; set; }
+    
+        /// <summary>A string that uniquely identifies the sendle</summary>
+        [Newtonsoft.Json.JsonProperty("sendle_id", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [System.ComponentModel.DataAnnotations.StringLength(25, MinimumLength = 1)]
+        [System.ComponentModel.DataAnnotations.RegularExpression(@"^se(-[a-z0-9]+)+$")]
+        public string SendleId { get; set; }
+    
+        /// <summary>Account country code</summary>
+        [Newtonsoft.Json.JsonProperty("account_country_code", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string AccountCountryCode { get; set; }
+    
+        /// <summary>Account postal code</summary>
+        [Newtonsoft.Json.JsonProperty("account_postal_code", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string AccountPostalCode { get; set; }
+    
+        /// <summary>Title</summary>
+        [Newtonsoft.Json.JsonProperty("title", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
+        public string Title { get; set; }
+    
+        /// <summary>The UPS invoice</summary>
+        [Newtonsoft.Json.JsonProperty("invoice", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public UpsInvoice Invoice { get; set; }
+    
+        /// <summary>The Agreement to the [UPS Technology Agreement](https://www.ups.com/assets/resources/media/UTA_with_EUR.pdf)</summary>
+        [Newtonsoft.Json.JsonProperty("agree_to_technology_agreement", Required = Newtonsoft.Json.Required.Always)]
+        public bool AgreeToTechnologyAgreement { get; set; }
+    
+    
+    }
+    
+    /// <summary>An Access Worldwide account information request body</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v11.0.0.0)")]
+    public partial class ConnectAccessWorldwideRequestBody 
+    {
+        /// <summary>The nickname associated with the carrier connection</summary>
+        [Newtonsoft.Json.JsonProperty("nickname", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string Nickname { get; set; }
+    
+        /// <summary>Access Worldwide Username</summary>
+        [Newtonsoft.Json.JsonProperty("username", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string Username { get; set; }
+    
+        /// <summary>Access Worldwide Password</summary>
+        [Newtonsoft.Json.JsonProperty("password", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string Password { get; set; }
+    
     
     }
     
@@ -2370,7 +2620,7 @@ namespace ShipEngineAPI
     
         [Newtonsoft.Json.JsonProperty("ancillary_endorsement", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public AncillaryServiceEndorsement AncillaryEndorsement { get; set; }
+        public AncillaryServiceEndorsement? AncillaryEndorsement { get; set; }
     
         /// <summary>Account number</summary>
         [Newtonsoft.Json.JsonProperty("account_number", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -2726,9 +2976,7 @@ namespace ShipEngineAPI
     
         /// <summary>A string that uniquely identifies the mailer</summary>
         [Newtonsoft.Json.JsonProperty("mailer_id", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        [System.ComponentModel.DataAnnotations.StringLength(25, MinimumLength = 1)]
-        [System.ComponentModel.DataAnnotations.RegularExpression(@"^se(-[a-z0-9]+)+$")]
+        [System.ComponentModel.DataAnnotations.Required]
         public string MailerId { get; set; }
     
         /// <summary>Profile name</summary>
@@ -2795,12 +3043,12 @@ namespace ShipEngineAPI
         /// <summary>Merchant id</summary>
         [Newtonsoft.Json.JsonProperty("merchant_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Range(0, int.MaxValue)]
-        public int MerchantId { get; set; }
+        public int? MerchantId { get; set; }
     
         /// <summary>Mailer id</summary>
         [Newtonsoft.Json.JsonProperty("mailer_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [System.ComponentModel.DataAnnotations.Range(0, int.MaxValue)]
-        public int MailerId { get; set; }
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
+        public string MailerId { get; set; }
     
         /// <summary>Induction site</summary>
         [Newtonsoft.Json.JsonProperty("induction_site", Required = Newtonsoft.Json.Required.Always)]
@@ -3114,7 +3362,7 @@ namespace ShipEngineAPI
         /// <summary>invoice date</summary>
         [Newtonsoft.Json.JsonProperty("invoice_date", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
-        public System.DateTimeOffset InvoiceDate { get; set; }
+        public System.DateTimeOffset? InvoiceDate { get; set; }
     
         /// <summary>invoice number</summary>
         [Newtonsoft.Json.JsonProperty("invoice_number", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -3129,7 +3377,7 @@ namespace ShipEngineAPI
     
         [Newtonsoft.Json.JsonProperty("invoice_amount", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Range(0D, double.MaxValue)]
-        public double InvoiceAmount { get; set; }
+        public double? InvoiceAmount { get; set; }
     
     
     }
@@ -3168,7 +3416,69 @@ namespace ShipEngineAPI
     
     /// <summary>A DHL Express response body</summary>
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v11.0.0.0)")]
-    public partial class GetCarrierSettingsResponseBody : DhlExpressAccountSettings
+    public partial class GetCarrierSettingsResponseBody 
+    {
+        /// <summary>Account nickname</summary>
+        [Newtonsoft.Json.JsonProperty("nickname", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
+        public string Nickname { get; set; }
+    
+        /// <summary>Indicates if the account number should be hidden on the archive documentation</summary>
+        [Newtonsoft.Json.JsonProperty("should_hide_account_number_on_archive_doc", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? ShouldHideAccountNumberOnArchiveDoc { get; set; }
+    
+        /// <summary>Indicates if this is primary account</summary>
+        [Newtonsoft.Json.JsonProperty("is_primary_account", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? IsPrimaryAccount { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("pickup_type", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public UpsPickupType? PickupType { get; set; }
+    
+        /// <summary>The use carbon neutral shipping program</summary>
+        [Newtonsoft.Json.JsonProperty("use_carbon_neutral_shipping_program", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? UseCarbonNeutralShippingProgram { get; set; }
+    
+        /// <summary>The use ground freight pricing</summary>
+        [Newtonsoft.Json.JsonProperty("use_ground_freight_pricing", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? UseGroundFreightPricing { get; set; }
+    
+        /// <summary>The use consolidation services</summary>
+        [Newtonsoft.Json.JsonProperty("use_consolidation_services", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? UseConsolidationServices { get; set; }
+    
+        /// <summary>The use order number on mail innovations labels</summary>
+        [Newtonsoft.Json.JsonProperty("use_order_number_on_mail_innovations_labels", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? UseOrderNumberOnMailInnovationsLabels { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("mail_innovations_endorsement", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public AncillaryServiceEndorsement? MailInnovationsEndorsement { get; set; }
+    
+        /// <summary>mail innovations cost center</summary>
+        [Newtonsoft.Json.JsonProperty("mail_innovations_cost_center", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue)]
+        public string MailInnovationsCostCenter { get; set; }
+    
+        /// <summary>The use negotiated rates</summary>
+        [Newtonsoft.Json.JsonProperty("use_negotiated_rates", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? UseNegotiatedRates { get; set; }
+    
+        /// <summary>account postal code</summary>
+        [Newtonsoft.Json.JsonProperty("account_postal_code", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 5)]
+        public string AccountPostalCode { get; set; }
+    
+        /// <summary>The invoice</summary>
+        [Newtonsoft.Json.JsonProperty("invoice", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public UpsInvoice Invoice { get; set; }
+    
+    
+    }
+    
+    /// <summary>A DHL Express response body</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v11.0.0.0)")]
+    public partial class DhlExpressSettingsResponseBody : DhlExpressAccountSettings
     {
     
     }
@@ -3184,11 +3494,11 @@ namespace ShipEngineAPI
     
         /// <summary>Indicates if the account number should be hidden on the archive documentation</summary>
         [Newtonsoft.Json.JsonProperty("should_hide_account_number_on_archive_doc", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool ShouldHideAccountNumberOnArchiveDoc { get; set; }
+        public bool? ShouldHideAccountNumberOnArchiveDoc { get; set; }
     
         /// <summary>Indicates if this is primary account</summary>
         [Newtonsoft.Json.JsonProperty("is_primary_account", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool IsPrimaryAccount { get; set; }
+        public bool? IsPrimaryAccount { get; set; }
     
     
     }
@@ -3218,18 +3528,18 @@ namespace ShipEngineAPI
     
         [Newtonsoft.Json.JsonProperty("pickup_type", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public FedexPickupType PickupType { get; set; }
+        public FedexPickupType? PickupType { get; set; }
     
         [Newtonsoft.Json.JsonProperty("smart_post_hub", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public SmartPostHub SmartPostHub { get; set; }
+        public SmartPostHub? SmartPostHub { get; set; }
     
         [Newtonsoft.Json.JsonProperty("smart_post_endorsement", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public AncillaryServiceEndorsement SmartPostEndorsement { get; set; }
+        public AncillaryServiceEndorsement? SmartPostEndorsement { get; set; }
     
         [Newtonsoft.Json.JsonProperty("is_primary_account", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool IsPrimaryAccount { get; set; }
+        public bool? IsPrimaryAccount { get; set; }
     
     
     }
@@ -3394,31 +3704,31 @@ namespace ShipEngineAPI
     
         /// <summary>Indicates if this is the primary UPS account</summary>
         [Newtonsoft.Json.JsonProperty("is_primary_account", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool IsPrimaryAccount { get; set; }
+        public bool? IsPrimaryAccount { get; set; }
     
         [Newtonsoft.Json.JsonProperty("pickup_type", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public UpsPickupType PickupType { get; set; }
+        public UpsPickupType? PickupType { get; set; }
     
         /// <summary>The use carbon neutral shipping program</summary>
         [Newtonsoft.Json.JsonProperty("use_carbon_neutral_shipping_program", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool UseCarbonNeutralShippingProgram { get; set; }
+        public bool? UseCarbonNeutralShippingProgram { get; set; }
     
         /// <summary>The use ground freight pricing</summary>
         [Newtonsoft.Json.JsonProperty("use_ground_freight_pricing", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool UseGroundFreightPricing { get; set; }
+        public bool? UseGroundFreightPricing { get; set; }
     
         /// <summary>The use consolidation services</summary>
         [Newtonsoft.Json.JsonProperty("use_consolidation_services", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool UseConsolidationServices { get; set; }
+        public bool? UseConsolidationServices { get; set; }
     
         /// <summary>The use order number on mail innovations labels</summary>
         [Newtonsoft.Json.JsonProperty("use_order_number_on_mail_innovations_labels", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool UseOrderNumberOnMailInnovationsLabels { get; set; }
+        public bool? UseOrderNumberOnMailInnovationsLabels { get; set; }
     
         [Newtonsoft.Json.JsonProperty("mail_innovations_endorsement", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public AncillaryServiceEndorsement MailInnovationsEndorsement { get; set; }
+        public AncillaryServiceEndorsement? MailInnovationsEndorsement { get; set; }
     
         /// <summary>mail innovations cost center</summary>
         [Newtonsoft.Json.JsonProperty("mail_innovations_cost_center", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -3427,7 +3737,7 @@ namespace ShipEngineAPI
     
         /// <summary>The use negotiated rates</summary>
         [Newtonsoft.Json.JsonProperty("use_negotiated_rates", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool UseNegotiatedRates { get; set; }
+        public bool? UseNegotiatedRates { get; set; }
     
         /// <summary>account postal code</summary>
         [Newtonsoft.Json.JsonProperty("account_postal_code", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -3458,7 +3768,88 @@ namespace ShipEngineAPI
     
     /// <summary>An update dhl express settings request body</summary>
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v11.0.0.0)")]
-    public partial class UpdateCarrierSettingsRequestBody : DhlExpressAccountSettings
+    public partial class UpdateCarrierSettingsRequestBody 
+    {
+        /// <summary>Account nickname</summary>
+        [Newtonsoft.Json.JsonProperty("nickname", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
+        public string Nickname { get; set; }
+    
+        /// <summary>Indicates if the account number should be hidden on the archive documentation</summary>
+        [Newtonsoft.Json.JsonProperty("should_hide_account_number_on_archive_doc", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? ShouldHideAccountNumberOnArchiveDoc { get; set; }
+    
+        /// <summary>Indicates if this is primary account</summary>
+        [Newtonsoft.Json.JsonProperty("is_primary_account", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? IsPrimaryAccount { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("pickup_type", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public FedexPickupType? PickupType { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("smart_post_hub", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public SmartPostHub? SmartPostHub { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("smart_post_endorsement", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public AncillaryServiceEndorsement? SmartPostEndorsement { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("include_barcode_with_order_number", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? IncludeBarcodeWithOrderNumber { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("receive_email_on_manifest_processing", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? ReceiveEmailOnManifestProcessing { get; set; }
+    
+        /// <summary>The use carbon neutral shipping program</summary>
+        [Newtonsoft.Json.JsonProperty("use_carbon_neutral_shipping_program", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? UseCarbonNeutralShippingProgram { get; set; }
+    
+        /// <summary>The use ground freight pricing</summary>
+        [Newtonsoft.Json.JsonProperty("use_ground_freight_pricing", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? UseGroundFreightPricing { get; set; }
+    
+        /// <summary>The use consolidation services</summary>
+        [Newtonsoft.Json.JsonProperty("use_consolidation_services", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? UseConsolidationServices { get; set; }
+    
+        /// <summary>The use order number on mail innovations labels</summary>
+        [Newtonsoft.Json.JsonProperty("use_order_number_on_mail_innovations_labels", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? UseOrderNumberOnMailInnovationsLabels { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("mail_innovations_endorsement", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public AncillaryServiceEndorsement? MailInnovationsEndorsement { get; set; }
+    
+        /// <summary>mail innovations cost center</summary>
+        [Newtonsoft.Json.JsonProperty("mail_innovations_cost_center", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue)]
+        public string MailInnovationsCostCenter { get; set; }
+    
+        /// <summary>The use negotiated rates</summary>
+        [Newtonsoft.Json.JsonProperty("use_negotiated_rates", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? UseNegotiatedRates { get; set; }
+    
+        /// <summary>account postal code</summary>
+        [Newtonsoft.Json.JsonProperty("account_postal_code", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 5)]
+        public string AccountPostalCode { get; set; }
+    
+        /// <summary>The invoice</summary>
+        [Newtonsoft.Json.JsonProperty("invoice", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public UpsInvoice Invoice { get; set; }
+    
+        /// <summary>Email</summary>
+        [Newtonsoft.Json.JsonProperty("email", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
+        public string Email { get; set; }
+    
+    
+    }
+    
+    /// <summary>An update dhl express settings request body</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v11.0.0.0)")]
+    public partial class UpdateDhlExpressSettingsRequestBody : DhlExpressAccountSettings
     {
     
     }
@@ -3475,10 +3866,10 @@ namespace ShipEngineAPI
     public partial class UpdateNewgisticsSettingsRequestBody 
     {
         [Newtonsoft.Json.JsonProperty("include_barcode_with_order_number", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool IncludeBarcodeWithOrderNumber { get; set; }
+        public bool? IncludeBarcodeWithOrderNumber { get; set; }
     
         [Newtonsoft.Json.JsonProperty("receive_email_on_manifest_processing", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool ReceiveEmailOnManifestProcessing { get; set; }
+        public bool? ReceiveEmailOnManifestProcessing { get; set; }
     
     
     }
@@ -3565,7 +3956,7 @@ namespace ShipEngineAPI
     
         [Newtonsoft.Json.JsonProperty("event", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public WebhookEvent Event { get; set; }
+        public WebhookEvent? Event { get; set; }
     
     
     }
@@ -3758,7 +4149,7 @@ namespace ShipEngineAPI
     
         [Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public LabelStatus Status { get; set; }
+        public LabelStatus? Status { get; set; }
     
         /// <summary>The shipment that this label is for.  ShipEngine can create a shipment for you automatically when you [create a label](https://www.shipengine.com/docs/labels/create-a-label/), or you can [create your own shipment](https://www.shipengine.com/docs/shipping/create-a-shipment/) and then [use it to print a label](https://www.shipengine.com/docs/labels/create-from-shipment/)
         /// </summary>
@@ -3800,7 +4191,7 @@ namespace ShipEngineAPI
         /// <summary>Indicates whether this is a return label.  You may also want to set the `rma_number` so you know what is being returned.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("is_return_label", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool IsReturnLabel { get; set; }
+        public bool? IsReturnLabel { get; set; }
     
         /// <summary>An optional Return Merchandise Authorization number.  This field is useful for return labels.  You can set it to any string value.
         /// </summary>
@@ -3810,7 +4201,7 @@ namespace ShipEngineAPI
         /// <summary>Indicates whether this is an international shipment.  That is, the originating country and destination country are different.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("is_international", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool IsInternational { get; set; }
+        public bool? IsInternational { get; set; }
     
         /// <summary>If this label was created as part of a [batch](https://www.shipengine.com/docs/labels/bulk/), then this is the unique ID of that batch.
         /// </summary>
@@ -3830,7 +4221,7 @@ namespace ShipEngineAPI
         /// </summary>
         [Newtonsoft.Json.JsonProperty("charge_event", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public LabelChargeEvent ChargeEvent { get; set; }
+        public LabelChargeEvent? ChargeEvent { get; set; }
     
         /// <summary>The `label_id` of the original (outgoing) label that the return label is for. This associates the two labels together, which is
         /// required by some carriers.
@@ -3849,7 +4240,7 @@ namespace ShipEngineAPI
         /// <summary>Indicate if this label is being used only for testing purposes. If true, then no charge will be added to your account.</summary>
         [Newtonsoft.Json.JsonProperty("test_label", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.Obsolete]
-        public bool TestLabel { get; set; } = false;
+        public bool? TestLabel { get; set; }
     
         /// <summary>The [package type](https://www.shipengine.com/docs/reference/list-carrier-packages/), such as `thick_envelope`, `small_flat_rate_box`, `large_package`, etc.  The code `package` indicates a custom or unknown package type.
         /// </summary>
@@ -3859,12 +4250,12 @@ namespace ShipEngineAPI
     
         [Newtonsoft.Json.JsonProperty("validate_address", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public ValidateAddress ValidateAddress { get; set; } = ShipEngineAPI.ValidateAddress.ValidateAndClean;
+        public ValidateAddress? ValidateAddress { get; set; }
     
         /// <summary>Indicates whether the label has been [voided](https://www.shipengine.com/docs/labels/voiding/)
         /// </summary>
         [Newtonsoft.Json.JsonProperty("voided", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool Voided { get; set; }
+        public bool? Voided { get; set; }
     
         /// <summary>The date and time that the label was [voided](https://www.shipengine.com/docs/labels/voiding/), or `null` if the label has not been voided
         /// </summary>
@@ -3874,24 +4265,24 @@ namespace ShipEngineAPI
     
         [Newtonsoft.Json.JsonProperty("label_download_type", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public LabelDownloadType LabelDownloadType { get; set; } = ShipEngineAPI.LabelDownloadType.Url;
+        public LabelDownloadType? LabelDownloadType { get; set; }
     
         /// <summary>The file format that you want the label to be in.  We recommend `pdf` format because it is supported by all carriers, whereas some carriers do not support the `png` or `zpl` formats.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("label_format", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public LabelFormat LabelFormat { get; set; } = ShipEngineAPI.LabelFormat.Pdf;
+        public LabelFormat? LabelFormat { get; set; }
     
         /// <summary>The layout (size) that you want the label to be in.  The `label_format` determines which sizes are allowed.  `4x6` is supported for all label formats, whereas `letter` (8.5" x 11") is only supported for `pdf` format.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("label_layout", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public LabelLayout LabelLayout { get; set; } = ShipEngineAPI.LabelLayout._4x6;
+        public LabelLayout? LabelLayout { get; set; }
     
         /// <summary>Indicates whether the shipment is trackable, in which case the `tracking_status` field will reflect the current status and each package will have a `tracking_number`.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("trackable", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool Trackable { get; set; }
+        public bool? Trackable { get; set; }
     
         /// <summary>The label image resource that was used to create a custom label image.</summary>
         [Newtonsoft.Json.JsonProperty("label_image_id", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -3907,7 +4298,7 @@ namespace ShipEngineAPI
         /// <summary>The current status of the package, such as `in_transit` or `delivered`</summary>
         [Newtonsoft.Json.JsonProperty("tracking_status", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public TrackingStatus TrackingStatus { get; set; }
+        public TrackingStatus? TrackingStatus { get; set; }
     
         [Newtonsoft.Json.JsonProperty("label_download", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public LabelDownload LabelDownload { get; set; }
@@ -4002,7 +4393,7 @@ namespace ShipEngineAPI
         /// <summary>The current status of the shipment</summary>
         [Newtonsoft.Json.JsonProperty("shipment_status", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public ShipmentStatus ShipmentStatus { get; set; } = ShipEngineAPI.ShipmentStatus.Pending;
+        public ShipmentStatus? ShipmentStatus { get; set; }
     
         /// <summary>The recipient's mailing address</summary>
         [Newtonsoft.Json.JsonProperty("ship_to", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -4028,7 +4419,7 @@ namespace ShipEngineAPI
         /// <summary>The type of delivery confirmation that is required for this shipment.</summary>
         [Newtonsoft.Json.JsonProperty("confirmation", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public DeliveryConfirmation Confirmation { get; set; } = ShipEngineAPI.DeliveryConfirmation.None;
+        public DeliveryConfirmation? Confirmation { get; set; }
     
         /// <summary>Customs information.  This is usually only needed for international shipments.
         /// </summary>
@@ -4043,7 +4434,7 @@ namespace ShipEngineAPI
         /// </summary>
         [Newtonsoft.Json.JsonProperty("insurance_provider", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public InsuranceProvider InsuranceProvider { get; set; } = ShipEngineAPI.InsuranceProvider.None;
+        public InsuranceProvider? InsuranceProvider { get; set; }
     
         /// <summary>Arbitrary tags associated with this shipment.  Tags can be used to categorize shipments, and shipments can be queried by their tags.
         /// </summary>
@@ -4052,7 +4443,7 @@ namespace ShipEngineAPI
     
         [Newtonsoft.Json.JsonProperty("order_source_code", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public OrderSourceName OrderSourceCode { get; set; }
+        public OrderSourceName? OrderSourceCode { get; set; }
     
         /// <summary>The packages in the shipment.
         /// 
@@ -4089,7 +4480,7 @@ namespace ShipEngineAPI
         /// <summary>The quantity of this item included in the shipment</summary>
         [Newtonsoft.Json.JsonProperty("quantity", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Range(0, int.MaxValue)]
-        public int Quantity { get; set; }
+        public int? Quantity { get; set; }
     
         /// <summary>Item Stock Keeping Unit</summary>
         [Newtonsoft.Json.JsonProperty("sku", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -4110,7 +4501,7 @@ namespace ShipEngineAPI
     
         [Newtonsoft.Json.JsonProperty("order_source_code", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public OrderSourceName OrderSourceCode { get; set; }
+        public OrderSourceName? OrderSourceCode { get; set; }
     
     
     }
@@ -4231,13 +4622,13 @@ namespace ShipEngineAPI
         [Newtonsoft.Json.JsonProperty("contents", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public PackageContents Contents { get; set; } = ShipEngineAPI.PackageContents.Merchandise;
+        public PackageContents Contents { get; set; }
     
         /// <summary>Indicates what to do if a package is unable to be delivered.</summary>
         [Newtonsoft.Json.JsonProperty("non_delivery", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public NonDelivery NonDelivery { get; set; } = ShipEngineAPI.NonDelivery.ReturnToSender;
+        public NonDelivery NonDelivery { get; set; }
     
         /// <summary>Customs declarations for each item in the shipment.</summary>
         [Newtonsoft.Json.JsonProperty("customs_items", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -4298,7 +4689,7 @@ namespace ShipEngineAPI
         /// <summary>The quantity of this item in the shipment.</summary>
         [Newtonsoft.Json.JsonProperty("quantity", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Range(0, int.MaxValue)]
-        public int Quantity { get; set; } = 0;
+        public int? Quantity { get; set; }
     
         /// <summary>The total value of the customs item</summary>
         [Newtonsoft.Json.JsonProperty("value", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -4356,16 +4747,16 @@ namespace ShipEngineAPI
     
         /// <summary>Indicates that the shipment contains alcohol.</summary>
         [Newtonsoft.Json.JsonProperty("contains_alcohol", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool ContainsAlcohol { get; set; } = false;
+        public bool? ContainsAlcohol { get; set; }
     
         /// <summary>Indicates that the shipper is paying the international delivery duties for this shipment.  This option is supported by UPS, FedEx, and DHL Express.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("delivered_duty_paid", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool DeliveredDutyPaid { get; set; } = false;
+        public bool? DeliveredDutyPaid { get; set; }
     
         /// <summary>Indicates if the shipment contain dry ice</summary>
         [Newtonsoft.Json.JsonProperty("dry_ice", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool DryIce { get; set; } = false;
+        public bool? DryIce { get; set; }
     
         /// <summary>The weight of the dry ice in the shipment</summary>
         [Newtonsoft.Json.JsonProperty("dry_ice_weight", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -4374,11 +4765,11 @@ namespace ShipEngineAPI
         /// <summary>Indicates that the package cannot be processed automatically because it is too large or irregularly shaped. This is primarily for USPS shipments.  See [Section 1.2 of the USPS parcel standards](https://pe.usps.com/text/dmm300/101.htm#ep1047495) for details.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("non_machinable", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool NonMachinable { get; set; } = false;
+        public bool? NonMachinable { get; set; }
     
         /// <summary>Enables Saturday delivery, if supported by the carrier.</summary>
         [Newtonsoft.Json.JsonProperty("saturday_delivery", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool SaturdayDelivery { get; set; } = false;
+        public bool? SaturdayDelivery { get; set; }
     
         /// <summary>Whether to use [UPS Ground Freight pricing](https://www.shipengine.com/docs/shipping/ups-ground-freight/). If enabled, then a `freight_class` must also be specified.
         /// </summary>
@@ -4467,7 +4858,7 @@ namespace ShipEngineAPI
     {
         [Newtonsoft.Json.JsonProperty("payment_type", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public CollectOnDeliveryPaymentType PaymentType { get; set; }
+        public CollectOnDeliveryPaymentType? PaymentType { get; set; }
     
         [Newtonsoft.Json.JsonProperty("payment_amount", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public PaymentAmount PaymentAmount { get; set; }
@@ -4507,11 +4898,11 @@ namespace ShipEngineAPI
     {
         [Newtonsoft.Json.JsonProperty("currency", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public Currency Currency { get; set; }
+        public Currency? Currency { get; set; }
     
         [Newtonsoft.Json.JsonProperty("amount", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Range(0D, double.MaxValue)]
-        public double Amount { get; set; }
+        public double? Amount { get; set; }
     
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
     
@@ -4720,19 +5111,19 @@ namespace ShipEngineAPI
     {
         [Newtonsoft.Json.JsonProperty("validate_address", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public ValidateAddress ValidateAddress { get; set; }
+        public ValidateAddress? ValidateAddress { get; set; }
     
         [Newtonsoft.Json.JsonProperty("label_layout", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public LabelLayout LabelLayout { get; set; } = ShipEngineAPI.LabelLayout._4x6;
+        public LabelLayout? LabelLayout { get; set; }
     
         [Newtonsoft.Json.JsonProperty("label_format", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public LabelFormat LabelFormat { get; set; } = ShipEngineAPI.LabelFormat.Pdf;
+        public LabelFormat? LabelFormat { get; set; }
     
         [Newtonsoft.Json.JsonProperty("label_download_type", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public LabelDownloadType LabelDownloadType { get; set; }
+        public LabelDownloadType? LabelDownloadType { get; set; }
     
     
     }
@@ -4750,19 +5141,19 @@ namespace ShipEngineAPI
     {
         [Newtonsoft.Json.JsonProperty("validate_address", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public ValidateAddress ValidateAddress { get; set; }
+        public ValidateAddress? ValidateAddress { get; set; }
     
         [Newtonsoft.Json.JsonProperty("label_layout", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public LabelLayout LabelLayout { get; set; } = ShipEngineAPI.LabelLayout._4x6;
+        public LabelLayout? LabelLayout { get; set; }
     
         [Newtonsoft.Json.JsonProperty("label_format", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public LabelFormat LabelFormat { get; set; } = ShipEngineAPI.LabelFormat.Pdf;
+        public LabelFormat? LabelFormat { get; set; }
     
         [Newtonsoft.Json.JsonProperty("label_download_type", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public LabelDownloadType LabelDownloadType { get; set; }
+        public LabelDownloadType? LabelDownloadType { get; set; }
     
     
     }
@@ -4789,23 +5180,23 @@ namespace ShipEngineAPI
         /// </summary>
         [Newtonsoft.Json.JsonProperty("charge_event", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public LabelChargeEvent ChargeEvent { get; set; }
+        public LabelChargeEvent? ChargeEvent { get; set; }
     
         /// <summary>The layout (size) that you want the label to be in.  The `label_format` determines which sizes are allowed.  `4x6` is supported for all label formats, whereas `letter` (8.5" x 11") is only supported for `pdf` format.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("label_layout", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public LabelLayout LabelLayout { get; set; } = ShipEngineAPI.LabelLayout._4x6;
+        public LabelLayout? LabelLayout { get; set; }
     
         /// <summary>The file format that you want the label to be in.  We recommend `pdf` format because it is supported by all carriers, whereas some carriers do not support the `png` or `zpl` formats.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("label_format", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public LabelFormat LabelFormat { get; set; } = ShipEngineAPI.LabelFormat.Pdf;
+        public LabelFormat? LabelFormat { get; set; }
     
         [Newtonsoft.Json.JsonProperty("label_download_type", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public LabelDownloadType LabelDownloadType { get; set; } = ShipEngineAPI.LabelDownloadType.Url;
+        public LabelDownloadType? LabelDownloadType { get; set; }
     
         /// <summary>The label image resource that was used to create a custom label image.</summary>
         [Newtonsoft.Json.JsonProperty("label_image_id", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -4941,12 +5332,12 @@ namespace ShipEngineAPI
         /// <summary>Latitude coordinate of tracking event.</summary>
         [Newtonsoft.Json.JsonProperty("latitude", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Range(0D, 90D)]
-        public double Latitude { get; set; }
+        public double? Latitude { get; set; }
     
         /// <summary>Longitude coordinate of tracking event.</summary>
         [Newtonsoft.Json.JsonProperty("longitude", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Range(0D, 180D)]
-        public double Longitude { get; set; }
+        public double? Longitude { get; set; }
     
     
     }
@@ -5020,17 +5411,17 @@ namespace ShipEngineAPI
         /// <summary>The date-time that the manifest was created</summary>
         [Newtonsoft.Json.JsonProperty("created_at", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
-        public System.DateTimeOffset CreatedAt { get; set; }
+        public System.DateTimeOffset? CreatedAt { get; set; }
     
         /// <summary>The date-time that the manifests shipments will be picked up</summary>
         [Newtonsoft.Json.JsonProperty("ship_date", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
-        public System.DateTimeOffset ShipDate { get; set; }
+        public System.DateTimeOffset? ShipDate { get; set; }
     
         /// <summary>The number of shipments that are included in this manifest</summary>
         [Newtonsoft.Json.JsonProperty("shipments", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Range(1, int.MaxValue)]
-        public int Shipments { get; set; }
+        public int? Shipments { get; set; }
     
         /// <summary>A string that uniquely identifies the warehouse</summary>
         [Newtonsoft.Json.JsonProperty("warehouse_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -5103,6 +5494,40 @@ namespace ShipEngineAPI
     
     /// <summary>A create manifest request body</summary>
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v11.0.0.0)")]
+    public partial class CreateManifestByObjectRequestBody 
+    {
+        /// <summary>A string that uniquely identifies the carrier</summary>
+        [Newtonsoft.Json.JsonProperty("carrier_id", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [System.ComponentModel.DataAnnotations.StringLength(25, MinimumLength = 1)]
+        [System.ComponentModel.DataAnnotations.RegularExpression(@"^se(-[a-z0-9]+)+$")]
+        public string CarrierId { get; set; }
+    
+        /// <summary>The list of label ids to exclude from the manifest</summary>
+        [Newtonsoft.Json.JsonProperty("excluded_label_ids", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.List<string> ExcludedLabelIds { get; }
+    
+        /// <summary>The list of label ids to include for the manifest</summary>
+        [Newtonsoft.Json.JsonProperty("label_ids", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.List<string> LabelIds { get; }
+    
+        /// <summary>A string that uniquely identifies the warehouse</summary>
+        [Newtonsoft.Json.JsonProperty("warehouse_id", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [System.ComponentModel.DataAnnotations.StringLength(25, MinimumLength = 1)]
+        [System.ComponentModel.DataAnnotations.RegularExpression(@"^se(-[a-z0-9]+)+$")]
+        public string WarehouseId { get; set; }
+    
+        /// <summary>The ship date that the shipment will be sent out on</summary>
+        [Newtonsoft.Json.JsonProperty("ship_date", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public System.DateTimeOffset ShipDate { get; set; }
+    
+    
+    }
+    
+    /// <summary>A create manifest request body</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v11.0.0.0)")]
     public partial class CreateManifestLabelIdsRequestBody 
     {
         /// <summary>The list of label ids to include in the manifest</summary>
@@ -5135,19 +5560,19 @@ namespace ShipEngineAPI
         [Newtonsoft.Json.JsonProperty("created_at", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
         [System.Obsolete]
-        public System.DateTimeOffset CreatedAt { get; set; }
+        public System.DateTimeOffset? CreatedAt { get; set; }
     
         /// <summary>The date-time that the manifests shipments will be picked up</summary>
         [Newtonsoft.Json.JsonProperty("ship_date", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
         [System.Obsolete]
-        public System.DateTimeOffset ShipDate { get; set; }
+        public System.DateTimeOffset? ShipDate { get; set; }
     
         /// <summary>The number of shipments that are included in this manifest</summary>
         [Newtonsoft.Json.JsonProperty("shipments", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Range(1, int.MaxValue)]
         [System.Obsolete]
-        public int Shipments { get; set; }
+        public int? Shipments { get; set; }
     
         /// <summary>A string that uniquely identifies the warehouse</summary>
         [Newtonsoft.Json.JsonProperty("warehouse_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -5208,19 +5633,19 @@ namespace ShipEngineAPI
         [Newtonsoft.Json.JsonProperty("created_at", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
         [System.Obsolete]
-        public System.DateTimeOffset CreatedAt { get; set; }
+        public System.DateTimeOffset? CreatedAt { get; set; }
     
         /// <summary>The date-time that the manifests shipments will be picked up</summary>
         [Newtonsoft.Json.JsonProperty("ship_date", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
         [System.Obsolete]
-        public System.DateTimeOffset ShipDate { get; set; }
+        public System.DateTimeOffset? ShipDate { get; set; }
     
         /// <summary>The number of shipments that are included in this manifest</summary>
         [Newtonsoft.Json.JsonProperty("shipments", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Range(1, int.MaxValue)]
         [System.Obsolete]
-        public int Shipments { get; set; }
+        public int? Shipments { get; set; }
     
         /// <summary>A string that uniquely identifies the warehouse</summary>
         [Newtonsoft.Json.JsonProperty("warehouse_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -5295,8 +5720,34 @@ namespace ShipEngineAPI
     
     }
     
+    /// <summary>A rate shipment request body</summary>
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v11.0.0.0)")]
-    public partial class CalculateRatesRequestBody 
+    public partial class CalculateRatesRequestBody : RateRequestOptions
+    {
+        /// <summary>A string that uniquely identifies the shipment</summary>
+        [Newtonsoft.Json.JsonProperty("shipment_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(25, MinimumLength = 1)]
+        [System.ComponentModel.DataAnnotations.RegularExpression(@"^se(-[a-z0-9]+)+$")]
+        public string ShipmentId { get; set; }
+    
+        /// <summary>The shipment object</summary>
+        [Newtonsoft.Json.JsonProperty("shipment", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public AddressValidatingShipment Shipment { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v11.0.0.0)")]
+    public partial class ShipmentIdRequest 
     {
         /// <summary>A string that uniquely identifies the shipment</summary>
         [Newtonsoft.Json.JsonProperty("shipment_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -5394,7 +5845,7 @@ namespace ShipEngineAPI
         /// <summary>The current status of the shipment</summary>
         [Newtonsoft.Json.JsonProperty("shipment_status", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public ShipmentStatus ShipmentStatus { get; set; } = ShipEngineAPI.ShipmentStatus.Pending;
+        public ShipmentStatus? ShipmentStatus { get; set; }
     
         /// <summary>The recipient's mailing address</summary>
         [Newtonsoft.Json.JsonProperty("ship_to", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -5420,7 +5871,7 @@ namespace ShipEngineAPI
         /// <summary>The type of delivery confirmation that is required for this shipment.</summary>
         [Newtonsoft.Json.JsonProperty("confirmation", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public DeliveryConfirmation Confirmation { get; set; } = ShipEngineAPI.DeliveryConfirmation.None;
+        public DeliveryConfirmation? Confirmation { get; set; }
     
         /// <summary>Customs information.  This is usually only needed for international shipments.
         /// </summary>
@@ -5435,7 +5886,7 @@ namespace ShipEngineAPI
         /// </summary>
         [Newtonsoft.Json.JsonProperty("insurance_provider", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public InsuranceProvider InsuranceProvider { get; set; } = ShipEngineAPI.InsuranceProvider.None;
+        public InsuranceProvider? InsuranceProvider { get; set; }
     
         /// <summary>Arbitrary tags associated with this shipment.  Tags can be used to categorize shipments, and shipments can be queried by their tags.
         /// </summary>
@@ -5444,7 +5895,7 @@ namespace ShipEngineAPI
     
         [Newtonsoft.Json.JsonProperty("order_source_code", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public OrderSourceName OrderSourceCode { get; set; }
+        public OrderSourceName? OrderSourceCode { get; set; }
     
         /// <summary>The packages in the shipment.
         /// 
@@ -5466,7 +5917,7 @@ namespace ShipEngineAPI
     {
         [Newtonsoft.Json.JsonProperty("validate_address", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public ValidateAddress ValidateAddress { get; set; } = ShipEngineAPI.ValidateAddress.NoValidation;
+        public ValidateAddress? ValidateAddress { get; set; }
     
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
     
@@ -5517,11 +5968,11 @@ namespace ShipEngineAPI
     
         /// <summary>Calculate the duties and tariffs for cross border shipments.</summary>
         [Newtonsoft.Json.JsonProperty("calculate_tax_amount", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool CalculateTaxAmount { get; set; }
+        public bool? CalculateTaxAmount { get; set; }
     
         [Newtonsoft.Json.JsonProperty("preferred_currency", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public Currency PreferredCurrency { get; set; }
+        public Currency? PreferredCurrency { get; set; }
     
     
     }
@@ -5573,11 +6024,11 @@ namespace ShipEngineAPI
     
         /// <summary>When the rate was created</summary>
         [Newtonsoft.Json.JsonProperty("created_at", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.DateTimeOffset CreatedAt { get; set; }
+        public System.DateTimeOffset? CreatedAt { get; set; }
     
         [Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public RateResponseStatus Status { get; set; }
+        public RateResponseStatus? Status { get; set; }
     
         [Newtonsoft.Json.JsonProperty("errors", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Collections.Generic.List<Error> Errors { get; }
@@ -5648,7 +6099,7 @@ namespace ShipEngineAPI
         /// </summary>
         [Newtonsoft.Json.JsonProperty("delivery_days", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Range(1, int.MaxValue)]
-        public int DeliveryDays { get; set; }
+        public int? DeliveryDays { get; set; }
     
         /// <summary>Indicates if the rate is guaranteed.</summary>
         [Newtonsoft.Json.JsonProperty("guaranteed_service", Required = Newtonsoft.Json.Required.Always)]
@@ -5666,7 +6117,7 @@ namespace ShipEngineAPI
         /// <summary>ship date</summary>
         [Newtonsoft.Json.JsonProperty("ship_date", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
-        public System.DateTimeOffset ShipDate { get; set; }
+        public System.DateTimeOffset? ShipDate { get; set; }
     
         /// <summary>Indicates if the rates been negotiated</summary>
         [Newtonsoft.Json.JsonProperty("negotiated_rate", Required = Newtonsoft.Json.Required.Always)]
@@ -5767,13 +6218,20 @@ namespace ShipEngineAPI
     
     }
     
+    /// <summary>A rate shipments request body</summary>
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v11.0.0.0)")]
-    public partial class CompareBulkRatesRequestBody 
+    public partial class CompareBulkRatesRequestBody : RateRequestRateOptions
     {
         /// <summary>The array of shipment IDs</summary>
         [Newtonsoft.Json.JsonProperty("shipment_ids", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
         public System.Collections.Generic.List<string> ShipmentIds { get; } = new System.Collections.Generic.List<string>();
+    
+        /// <summary>The array of shipments to get bulk rate estimates for</summary>
+        [Newtonsoft.Json.JsonProperty("shipments", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        [System.ComponentModel.DataAnnotations.MinLength(1)]
+        public System.Collections.Generic.List<AddressValidatingShipment> Shipments { get; } = new System.Collections.Generic.List<AddressValidatingShipment>();
     
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
     
@@ -5793,6 +6251,26 @@ namespace ShipEngineAPI
         /// <summary>The rate options</summary>
         [Newtonsoft.Json.JsonProperty("rate_options", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public RateRequestBody RateOptions { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v11.0.0.0)")]
+    public partial class RateRequestByShipmentIds 
+    {
+        /// <summary>The array of shipment IDs</summary>
+        [Newtonsoft.Json.JsonProperty("shipment_ids", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public System.Collections.Generic.List<string> ShipmentIds { get; } = new System.Collections.Generic.List<string>();
     
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
     
@@ -5862,8 +6340,36 @@ namespace ShipEngineAPI
     
     }
     
+    /// <summary>A rate estimate request body</summary>
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v11.0.0.0)")]
-    public partial class EstimateRatesRequestBody 
+    public partial class EstimateRatesRequestBody : RateEstimateOptions
+    {
+        /// <summary>A string that uniquely identifies the carrier</summary>
+        [Newtonsoft.Json.JsonProperty("carrier_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(25, MinimumLength = 1)]
+        [System.ComponentModel.DataAnnotations.RegularExpression(@"^se(-[a-z0-9]+)+$")]
+        [System.Obsolete]
+        public string CarrierId { get; set; }
+    
+        /// <summary>Array of Carrier Ids</summary>
+        [Newtonsoft.Json.JsonProperty("carrier_ids", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.MinLength(1)]
+        public System.Collections.Generic.List<string> CarrierIds { get; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v11.0.0.0)")]
+    public partial class RateEstimateByCarrierId 
     {
         /// <summary>A string that uniquely identifies the carrier</summary>
         [Newtonsoft.Json.JsonProperty("carrier_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -5953,11 +6459,11 @@ namespace ShipEngineAPI
     
         [Newtonsoft.Json.JsonProperty("confirmation", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public DeliveryConfirmation Confirmation { get; set; }
+        public DeliveryConfirmation? Confirmation { get; set; }
     
         [Newtonsoft.Json.JsonProperty("address_residential_indicator", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public AddressResidentialIndicator AddressResidentialIndicator { get; set; }
+        public AddressResidentialIndicator? AddressResidentialIndicator { get; set; }
     
         /// <summary>ship date</summary>
         [Newtonsoft.Json.JsonProperty("ship_date", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -6042,7 +6548,7 @@ namespace ShipEngineAPI
     {
         /// <summary>Indicates if errors occured while creating the shipments</summary>
         [Newtonsoft.Json.JsonProperty("has_errors", Required = Newtonsoft.Json.Required.Always)]
-        public bool HasErrors { get; set; } = false;
+        public bool HasErrors { get; set; }
     
         /// <summary>An array of shipments that were created.</summary>
         [Newtonsoft.Json.JsonProperty("shipments", Required = Newtonsoft.Json.Required.Always)]
@@ -6158,7 +6664,7 @@ namespace ShipEngineAPI
     {
         [Newtonsoft.Json.JsonProperty("validate_address", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public ValidateAddress ValidateAddress { get; set; } = ShipEngineAPI.ValidateAddress.NoValidation;
+        public ValidateAddress? ValidateAddress { get; set; }
     
     
     }
@@ -6168,7 +6674,7 @@ namespace ShipEngineAPI
     {
         [Newtonsoft.Json.JsonProperty("validate_address", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public ValidateAddress ValidateAddress { get; set; } = ShipEngineAPI.ValidateAddress.NoValidation;
+        public ValidateAddress? ValidateAddress { get; set; }
     
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
     
@@ -6311,7 +6817,7 @@ namespace ShipEngineAPI
         /// <summary>Timestamp that indicates when the warehouse was created</summary>
         [Newtonsoft.Json.JsonProperty("created_at", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
-        public System.DateTimeOffset CreatedAt { get; set; }
+        public System.DateTimeOffset? CreatedAt { get; set; }
     
         /// <summary>The origin address of the warehouse</summary>
         [Newtonsoft.Json.JsonProperty("origin_address", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -6377,7 +6883,7 @@ namespace ShipEngineAPI
     
         [Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public LabelStatus Status { get; set; }
+        public LabelStatus? Status { get; set; }
     
         /// <summary>The shipment that this label is for.  ShipEngine can create a shipment for you automatically when you [create a label](https://www.shipengine.com/docs/labels/create-a-label/), or you can [create your own shipment](https://www.shipengine.com/docs/shipping/create-a-shipment/) and then [use it to print a label](https://www.shipengine.com/docs/labels/create-from-shipment/)
         /// </summary>
@@ -6419,7 +6925,7 @@ namespace ShipEngineAPI
         /// <summary>Indicates whether this is a return label.  You may also want to set the `rma_number` so you know what is being returned.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("is_return_label", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool IsReturnLabel { get; set; }
+        public bool? IsReturnLabel { get; set; }
     
         /// <summary>An optional Return Merchandise Authorization number.  This field is useful for return labels.  You can set it to any string value.
         /// </summary>
@@ -6429,7 +6935,7 @@ namespace ShipEngineAPI
         /// <summary>Indicates whether this is an international shipment.  That is, the originating country and destination country are different.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("is_international", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool IsInternational { get; set; }
+        public bool? IsInternational { get; set; }
     
         /// <summary>If this label was created as part of a [batch](https://www.shipengine.com/docs/labels/bulk/), then this is the unique ID of that batch.
         /// </summary>
@@ -6449,7 +6955,7 @@ namespace ShipEngineAPI
         /// </summary>
         [Newtonsoft.Json.JsonProperty("charge_event", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public LabelChargeEvent ChargeEvent { get; set; }
+        public LabelChargeEvent? ChargeEvent { get; set; }
     
         /// <summary>The `label_id` of the original (outgoing) label that the return label is for. This associates the two labels together, which is
         /// required by some carriers.
@@ -6468,7 +6974,7 @@ namespace ShipEngineAPI
         /// <summary>Indicate if this label is being used only for testing purposes. If true, then no charge will be added to your account.</summary>
         [Newtonsoft.Json.JsonProperty("test_label", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.Obsolete]
-        public bool TestLabel { get; set; } = false;
+        public bool? TestLabel { get; set; }
     
         /// <summary>The [package type](https://www.shipengine.com/docs/reference/list-carrier-packages/), such as `thick_envelope`, `small_flat_rate_box`, `large_package`, etc.  The code `package` indicates a custom or unknown package type.
         /// </summary>
@@ -6478,12 +6984,12 @@ namespace ShipEngineAPI
     
         [Newtonsoft.Json.JsonProperty("validate_address", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public ValidateAddress ValidateAddress { get; set; } = ShipEngineAPI.ValidateAddress.ValidateAndClean;
+        public ValidateAddress? ValidateAddress { get; set; }
     
         /// <summary>Indicates whether the label has been [voided](https://www.shipengine.com/docs/labels/voiding/)
         /// </summary>
         [Newtonsoft.Json.JsonProperty("voided", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool Voided { get; set; }
+        public bool? Voided { get; set; }
     
         /// <summary>The date and time that the label was [voided](https://www.shipengine.com/docs/labels/voiding/), or `null` if the label has not been voided
         /// </summary>
@@ -6493,24 +6999,24 @@ namespace ShipEngineAPI
     
         [Newtonsoft.Json.JsonProperty("label_download_type", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public LabelDownloadType LabelDownloadType { get; set; } = ShipEngineAPI.LabelDownloadType.Url;
+        public LabelDownloadType? LabelDownloadType { get; set; }
     
         /// <summary>The file format that you want the label to be in.  We recommend `pdf` format because it is supported by all carriers, whereas some carriers do not support the `png` or `zpl` formats.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("label_format", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public LabelFormat LabelFormat { get; set; } = ShipEngineAPI.LabelFormat.Pdf;
+        public LabelFormat? LabelFormat { get; set; }
     
         /// <summary>The layout (size) that you want the label to be in.  The `label_format` determines which sizes are allowed.  `4x6` is supported for all label formats, whereas `letter` (8.5" x 11") is only supported for `pdf` format.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("label_layout", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public LabelLayout LabelLayout { get; set; } = ShipEngineAPI.LabelLayout._4x6;
+        public LabelLayout? LabelLayout { get; set; }
     
         /// <summary>Indicates whether the shipment is trackable, in which case the `tracking_status` field will reflect the current status and each package will have a `tracking_number`.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("trackable", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public bool Trackable { get; set; }
+        public bool? Trackable { get; set; }
     
         /// <summary>The label image resource that was used to create a custom label image.</summary>
         [Newtonsoft.Json.JsonProperty("label_image_id", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -6526,7 +7032,7 @@ namespace ShipEngineAPI
         /// <summary>The current status of the package, such as `in_transit` or `delivered`</summary>
         [Newtonsoft.Json.JsonProperty("tracking_status", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public TrackingStatus TrackingStatus { get; set; }
+        public TrackingStatus? TrackingStatus { get; set; }
     
         [Newtonsoft.Json.JsonProperty("label_download", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public LabelDownload LabelDownload { get; set; }
