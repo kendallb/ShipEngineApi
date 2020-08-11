@@ -4,7 +4,7 @@
   "documentGenerator": {
     "fromDocument": {
       "json": "",
-      "url": "https://raw.githubusercontent.com/kendallb/shipengine-openapi/master/openapi.yaml",
+      "url": "../../../shipengine-openapi/openapi.yaml",
       "output": null,
       "newLineBehavior": "Auto"
     }
@@ -79,8 +79,8 @@
       "excludedTypeNames": [],
       "excludedParameterNames": [],
       "handleReferences": false,
-      "generateImmutableArrayProperties": true,
-      "generateImmutableDictionaryProperties": true,
+      "generateImmutableArrayProperties": false,
+      "generateImmutableDictionaryProperties": false,
       "jsonSerializerSettingsTransformationMethod": null,
       "inlineNamedArrays": true,
       "inlineNamedDictionaries": true,
