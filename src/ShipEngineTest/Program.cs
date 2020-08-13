@@ -18,8 +18,9 @@ namespace ShipEngineTest
         public static async Task Main()
         {
             try {
+                const string apiKey = "TEST_UviO3xlrk2l3tdqyTLUZ9flQuDtVwRBTUlVZgZmCQA4";
                 using var httpClient = new SingleInstanceHttpClient();
-                var client = new ShipEngineClient(httpClient, "TEST_UviO3xlrk2l3tdqyTLUZ9flQuDtVwRBTUlVZgZmCQA4");
+                var client = new ShipEngineClient(httpClient, apiKey);
                 client.ReadResponseAsString = true;
                 const string toParse = "424 Otterson Drive, Chico CA 95928";
                 Console.WriteLine($"Parsing: {toParse}");
