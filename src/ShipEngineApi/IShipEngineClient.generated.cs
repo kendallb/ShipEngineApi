@@ -29,7 +29,7 @@ namespace ShipEngineAPI
         /// <summary>Validate An Address</summary>
         /// <returns>The request was a success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.List<AddressValidationResult>> ValidateAddress(System.Collections.Generic.IEnumerable<AddressToValidate> body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<System.Collections.Generic.IList<AddressValidationResult>> ValidateAddress(System.Collections.Generic.IEnumerable<AddressToValidate> body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>List Batches</summary>
@@ -196,7 +196,7 @@ namespace ShipEngineAPI
         /// <summary>List Webhooks</summary>
         /// <returns>The request was a success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.List<Webhook>> ListWebhooks(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<System.Collections.Generic.IList<Webhook>> ListWebhooks(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Create a Webhook</summary>
@@ -381,13 +381,13 @@ namespace ShipEngineAPI
         /// <summary>Get Bulk Rates</summary>
         /// <returns>The request was a success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.List<BulkRate>> CompareBulkRates(CompareBulkRatesRequestBody body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<System.Collections.Generic.IList<BulkRate>> CompareBulkRates(CompareBulkRatesRequestBody body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Estimate Rates</summary>
         /// <returns>The request was a success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<System.Collections.Generic.List<Rate>> EstimateRates(EstimateRatesRequestBody body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<System.Collections.Generic.IList<Rate>> EstimateRates(EstimateRatesRequestBody body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Get Rate By ID</summary>
@@ -690,7 +690,7 @@ namespace ShipEngineAPI
         /// </summary>
         [Newtonsoft.Json.JsonProperty("entities", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
-        public System.Collections.Generic.List<RecognizedEntity> Entities { get; set; } = new System.Collections.Generic.List<RecognizedEntity>();
+        public System.Collections.Generic.IList<RecognizedEntity> Entities { get; set; } = new System.Collections.Generic.List<RecognizedEntity>();
     
     
     }
@@ -769,7 +769,7 @@ namespace ShipEngineAPI
         /// <summary>The errors associated with the failed API call</summary>
         [Newtonsoft.Json.JsonProperty("errors", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
-        public System.Collections.Generic.List<Error> Errors { get; set; } = new System.Collections.Generic.List<Error>();
+        public System.Collections.Generic.IList<Error> Errors { get; set; } = new System.Collections.Generic.List<Error>();
     
     
     }
@@ -991,7 +991,7 @@ namespace ShipEngineAPI
         /// <summary>The list of messages that were generated during the address validation request.</summary>
         [Newtonsoft.Json.JsonProperty("messages", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
-        public System.Collections.Generic.List<ResponseMessage> Messages { get; set; } = new System.Collections.Generic.List<ResponseMessage>();
+        public System.Collections.Generic.IList<ResponseMessage> Messages { get; set; } = new System.Collections.Generic.List<ResponseMessage>();
     
     
     }
@@ -1355,7 +1355,7 @@ namespace ShipEngineAPI
         /// <summary>Batch List</summary>
         [Newtonsoft.Json.JsonProperty("batches", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
-        public System.Collections.Generic.List<Batch> Batches { get; set; } = new System.Collections.Generic.List<Batch>();
+        public System.Collections.Generic.IList<Batch> Batches { get; set; } = new System.Collections.Generic.List<Batch>();
     
         /// <summary>The total number of batches the API call returned</summary>
         [Newtonsoft.Json.JsonProperty("total", Required = Newtonsoft.Json.Required.Always)]
@@ -1616,11 +1616,11 @@ namespace ShipEngineAPI
     
         /// <summary>Array of shipment IDs used in the batch</summary>
         [Newtonsoft.Json.JsonProperty("shipment_ids", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<string> ShipmentIds { get; set; }
+        public System.Collections.Generic.IList<string> ShipmentIds { get; set; }
     
         /// <summary>Array of rate IDs used in the batch</summary>
         [Newtonsoft.Json.JsonProperty("rate_ids", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<string> RateIds { get; set; }
+        public System.Collections.Generic.IList<string> RateIds { get; set; }
     
     
     }
@@ -1659,11 +1659,11 @@ namespace ShipEngineAPI
     {
         /// <summary>The Shipment Ids to be modified on the batch</summary>
         [Newtonsoft.Json.JsonProperty("shipment_ids", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<string> ShipmentIds { get; set; }
+        public System.Collections.Generic.IList<string> ShipmentIds { get; set; }
     
         /// <summary>Array of Rate IDs to be modifed on the batch</summary>
         [Newtonsoft.Json.JsonProperty("rate_ids", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<string> RateIds { get; set; }
+        public System.Collections.Generic.IList<string> RateIds { get; set; }
     
     
     }
@@ -1675,7 +1675,7 @@ namespace ShipEngineAPI
         /// <summary>The errors currently associated with the batch</summary>
         [Newtonsoft.Json.JsonProperty("errors", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
-        public System.Collections.Generic.List<BatchResponseError> Errors { get; set; } = new System.Collections.Generic.List<BatchResponseError>();
+        public System.Collections.Generic.IList<BatchResponseError> Errors { get; set; } = new System.Collections.Generic.List<BatchResponseError>();
     
         [Newtonsoft.Json.JsonProperty("links", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
@@ -1743,7 +1743,7 @@ namespace ShipEngineAPI
         /// <summary>The errors associated with the failed API call</summary>
         [Newtonsoft.Json.JsonProperty("errors", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
-        public System.Collections.Generic.List<Error> Errors { get; set; } = new System.Collections.Generic.List<Error>();
+        public System.Collections.Generic.IList<Error> Errors { get; set; } = new System.Collections.Generic.List<Error>();
     
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
     
@@ -1764,7 +1764,7 @@ namespace ShipEngineAPI
         /// <summary>The carrier response body</summary>
         [Newtonsoft.Json.JsonProperty("carriers", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
-        public System.Collections.Generic.List<Carrier> Carriers { get; set; } = new System.Collections.Generic.List<Carrier>();
+        public System.Collections.Generic.IList<Carrier> Carriers { get; set; } = new System.Collections.Generic.List<Carrier>();
     
     
     }
@@ -1825,15 +1825,15 @@ namespace ShipEngineAPI
     
         /// <summary>A list of services that are offered by the carrier</summary>
         [Newtonsoft.Json.JsonProperty("services", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<Service> Services { get; set; }
+        public System.Collections.Generic.IList<Service> Services { get; set; }
     
         /// <summary>A list of package types that are supported by the carrier</summary>
         [Newtonsoft.Json.JsonProperty("packages", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<PackageType> Packages { get; set; }
+        public System.Collections.Generic.IList<PackageType> Packages { get; set; }
     
         /// <summary>A list of options that are available to that carrier</summary>
         [Newtonsoft.Json.JsonProperty("options", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<CarrierAdvancedOption> Options { get; set; }
+        public System.Collections.Generic.IList<CarrierAdvancedOption> Options { get; set; }
     
     
     }
@@ -2053,7 +2053,7 @@ namespace ShipEngineAPI
     {
         /// <summary>AN array of carrier options</summary>
         [Newtonsoft.Json.JsonProperty("options", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<CarrierAdvancedOption> Options { get; set; }
+        public System.Collections.Generic.IList<CarrierAdvancedOption> Options { get; set; }
     
     
     }
@@ -2064,7 +2064,7 @@ namespace ShipEngineAPI
     {
         /// <summary>An array of custom package types</summary>
         [Newtonsoft.Json.JsonProperty("packages", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<PackageType> Packages { get; set; }
+        public System.Collections.Generic.IList<PackageType> Packages { get; set; }
     
     
     }
@@ -2075,7 +2075,7 @@ namespace ShipEngineAPI
     {
         /// <summary>An array of services associated with the carrier</summary>
         [Newtonsoft.Json.JsonProperty("services", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<Service> Services { get; set; }
+        public System.Collections.Generic.IList<Service> Services { get; set; }
     
     
     }
@@ -4087,7 +4087,7 @@ namespace ShipEngineAPI
         /// </summary>
         [Newtonsoft.Json.JsonProperty("labels", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
-        public System.Collections.Generic.List<Labels> Labels { get; set; } = new System.Collections.Generic.List<Labels>();
+        public System.Collections.Generic.IList<Labels> Labels { get; set; } = new System.Collections.Generic.List<Labels>();
     
     
     }
@@ -4318,7 +4318,7 @@ namespace ShipEngineAPI
         /// &gt; **Note:** Some carriers only allow one package per label.  If you attempt to create a multi-package label for a carrier that doesn't allow it, an error will be returned.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("packages", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<Package> Packages { get; set; }
+        public System.Collections.Generic.IList<Package> Packages { get; set; }
     
     
     }
@@ -4364,7 +4364,7 @@ namespace ShipEngineAPI
         /// external order sources
         /// </summary>
         [Newtonsoft.Json.JsonProperty("items", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<ShipmentItem> Items { get; set; }
+        public System.Collections.Generic.IList<ShipmentItem> Items { get; set; }
     
         /// <summary>You can optionally use this field to store your own identifier for this shipment.
         /// 
@@ -4439,7 +4439,7 @@ namespace ShipEngineAPI
         /// <summary>Arbitrary tags associated with this shipment.  Tags can be used to categorize shipments, and shipments can be queried by their tags.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("tags", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<Tag> Tags { get; set; }
+        public System.Collections.Generic.IList<Tag> Tags { get; set; }
     
         [Newtonsoft.Json.JsonProperty("order_source_code", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
@@ -4451,7 +4451,7 @@ namespace ShipEngineAPI
         /// </summary>
         [Newtonsoft.Json.JsonProperty("packages", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.MinLength(1)]
-        public System.Collections.Generic.List<Package> Packages { get; set; }
+        public System.Collections.Generic.IList<Package> Packages { get; set; }
     
         /// <summary>The combined weight of all packages in the shipment</summary>
         [Newtonsoft.Json.JsonProperty("total_weight", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -4632,7 +4632,7 @@ namespace ShipEngineAPI
     
         /// <summary>Customs declarations for each item in the shipment.</summary>
         [Newtonsoft.Json.JsonProperty("customs_items", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<CustomsItem> CustomsItems { get; set; }
+        public System.Collections.Generic.IList<CustomsItem> CustomsItems { get; set; }
     
     
     }
@@ -5267,7 +5267,7 @@ namespace ShipEngineAPI
     
         /// <summary>The events that have occured during the lifetime of this tracking number.</summary>
         [Newtonsoft.Json.JsonProperty("events", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<TrackEvent> Events { get; set; }
+        public System.Collections.Generic.IList<TrackEvent> Events { get; set; }
     
     
     }
@@ -5365,7 +5365,7 @@ namespace ShipEngineAPI
         /// <summary>The list of available manifests</summary>
         [Newtonsoft.Json.JsonProperty("manifests", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
-        public System.Collections.Generic.List<Manifest> Manifests { get; set; } = new System.Collections.Generic.List<Manifest>();
+        public System.Collections.Generic.IList<Manifest> Manifests { get; set; } = new System.Collections.Generic.List<Manifest>();
     
         /// <summary>The total number of manifests returned</summary>
         [Newtonsoft.Json.JsonProperty("total", Required = Newtonsoft.Json.Required.Always)]
@@ -5471,11 +5471,11 @@ namespace ShipEngineAPI
     
         /// <summary>The list of label ids to exclude from the manifest</summary>
         [Newtonsoft.Json.JsonProperty("excluded_label_ids", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<string> ExcludedLabelIds { get; set; }
+        public System.Collections.Generic.IList<string> ExcludedLabelIds { get; set; }
     
         /// <summary>The list of label ids to include for the manifest</summary>
         [Newtonsoft.Json.JsonProperty("label_ids", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<string> LabelIds { get; set; }
+        public System.Collections.Generic.IList<string> LabelIds { get; set; }
     
         /// <summary>A string that uniquely identifies the warehouse</summary>
         [Newtonsoft.Json.JsonProperty("warehouse_id", Required = Newtonsoft.Json.Required.Always)]
@@ -5505,11 +5505,11 @@ namespace ShipEngineAPI
     
         /// <summary>The list of label ids to exclude from the manifest</summary>
         [Newtonsoft.Json.JsonProperty("excluded_label_ids", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<string> ExcludedLabelIds { get; set; }
+        public System.Collections.Generic.IList<string> ExcludedLabelIds { get; set; }
     
         /// <summary>The list of label ids to include for the manifest</summary>
         [Newtonsoft.Json.JsonProperty("label_ids", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<string> LabelIds { get; set; }
+        public System.Collections.Generic.IList<string> LabelIds { get; set; }
     
         /// <summary>A string that uniquely identifies the warehouse</summary>
         [Newtonsoft.Json.JsonProperty("warehouse_id", Required = Newtonsoft.Json.Required.Always)]
@@ -5533,7 +5533,7 @@ namespace ShipEngineAPI
         /// <summary>The list of label ids to include in the manifest</summary>
         [Newtonsoft.Json.JsonProperty("label_ids", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
-        public System.Collections.Generic.List<string> LabelIds { get; set; } = new System.Collections.Generic.List<string>();
+        public System.Collections.Generic.IList<string> LabelIds { get; set; } = new System.Collections.Generic.List<string>();
     
     
     }
@@ -5606,7 +5606,7 @@ namespace ShipEngineAPI
     public partial class Manifests 
     {
         [Newtonsoft.Json.JsonProperty("manifests", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<Manifest> Manifests1 { get; set; }
+        public System.Collections.Generic.IList<Manifest> Manifests1 { get; set; }
     
     
     }
@@ -5687,7 +5687,7 @@ namespace ShipEngineAPI
     {
         /// <summary>An array of custom package types</summary>
         [Newtonsoft.Json.JsonProperty("packages", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<PackageType> Packages { get; set; }
+        public System.Collections.Generic.IList<PackageType> Packages { get; set; }
     
     
     }
@@ -5816,7 +5816,7 @@ namespace ShipEngineAPI
         /// external order sources
         /// </summary>
         [Newtonsoft.Json.JsonProperty("items", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<ShipmentItem> Items { get; set; }
+        public System.Collections.Generic.IList<ShipmentItem> Items { get; set; }
     
         /// <summary>You can optionally use this field to store your own identifier for this shipment.
         /// 
@@ -5891,7 +5891,7 @@ namespace ShipEngineAPI
         /// <summary>Arbitrary tags associated with this shipment.  Tags can be used to categorize shipments, and shipments can be queried by their tags.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("tags", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<Tag> Tags { get; set; }
+        public System.Collections.Generic.IList<Tag> Tags { get; set; }
     
         [Newtonsoft.Json.JsonProperty("order_source_code", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
@@ -5903,7 +5903,7 @@ namespace ShipEngineAPI
         /// </summary>
         [Newtonsoft.Json.JsonProperty("packages", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.MinLength(1)]
-        public System.Collections.Generic.List<Package> Packages { get; set; }
+        public System.Collections.Generic.IList<Package> Packages { get; set; }
     
         /// <summary>The combined weight of all packages in the shipment</summary>
         [Newtonsoft.Json.JsonProperty("total_weight", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -5958,13 +5958,13 @@ namespace ShipEngineAPI
         [Newtonsoft.Json.JsonProperty("carrier_ids", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
         [System.ComponentModel.DataAnnotations.MinLength(1)]
-        public System.Collections.Generic.List<string> CarrierIds { get; set; } = new System.Collections.Generic.List<string>();
+        public System.Collections.Generic.IList<string> CarrierIds { get; set; } = new System.Collections.Generic.List<string>();
     
         [Newtonsoft.Json.JsonProperty("package_types", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<string> PackageTypes { get; set; }
+        public System.Collections.Generic.IList<string> PackageTypes { get; set; }
     
         [Newtonsoft.Json.JsonProperty("service_codes", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<string> ServiceCodes { get; set; }
+        public System.Collections.Generic.IList<string> ServiceCodes { get; set; }
     
         /// <summary>Calculate the duties and tariffs for cross border shipments.</summary>
         [Newtonsoft.Json.JsonProperty("calculate_tax_amount", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -6004,11 +6004,11 @@ namespace ShipEngineAPI
     {
         /// <summary>An array of shipment rates</summary>
         [Newtonsoft.Json.JsonProperty("rates", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<Rate> Rates { get; set; }
+        public System.Collections.Generic.IList<Rate> Rates { get; set; }
     
         /// <summary>An array of invalid shipment rates</summary>
         [Newtonsoft.Json.JsonProperty("invalid_rates", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<Rate> InvalidRates { get; set; }
+        public System.Collections.Generic.IList<Rate> InvalidRates { get; set; }
     
         /// <summary>A string that uniquely identifies the rate request</summary>
         [Newtonsoft.Json.JsonProperty("rate_request_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -6031,7 +6031,7 @@ namespace ShipEngineAPI
         public RateResponseStatus? Status { get; set; }
     
         [Newtonsoft.Json.JsonProperty("errors", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<Error> Errors { get; set; }
+        public System.Collections.Generic.IList<Error> Errors { get; set; }
     
     
     }
@@ -6160,12 +6160,12 @@ namespace ShipEngineAPI
         /// <summary>The warning messages</summary>
         [Newtonsoft.Json.JsonProperty("warning_messages", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
-        public System.Collections.Generic.List<string> WarningMessages { get; set; } = new System.Collections.Generic.List<string>();
+        public System.Collections.Generic.IList<string> WarningMessages { get; set; } = new System.Collections.Generic.List<string>();
     
         /// <summary>The error messages</summary>
         [Newtonsoft.Json.JsonProperty("error_messages", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
-        public System.Collections.Generic.List<string> ErrorMessages { get; set; } = new System.Collections.Generic.List<string>();
+        public System.Collections.Generic.IList<string> ErrorMessages { get; set; } = new System.Collections.Generic.List<string>();
     
     
     }
@@ -6225,13 +6225,13 @@ namespace ShipEngineAPI
         /// <summary>The array of shipment IDs</summary>
         [Newtonsoft.Json.JsonProperty("shipment_ids", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
-        public System.Collections.Generic.List<string> ShipmentIds { get; set; } = new System.Collections.Generic.List<string>();
+        public System.Collections.Generic.IList<string> ShipmentIds { get; set; } = new System.Collections.Generic.List<string>();
     
         /// <summary>The array of shipments to get bulk rate estimates for</summary>
         [Newtonsoft.Json.JsonProperty("shipments", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
         [System.ComponentModel.DataAnnotations.MinLength(1)]
-        public System.Collections.Generic.List<AddressValidatingShipment> Shipments { get; set; } = new System.Collections.Generic.List<AddressValidatingShipment>();
+        public System.Collections.Generic.IList<AddressValidatingShipment> Shipments { get; set; } = new System.Collections.Generic.List<AddressValidatingShipment>();
     
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
     
@@ -6270,7 +6270,7 @@ namespace ShipEngineAPI
         /// <summary>The array of shipment IDs</summary>
         [Newtonsoft.Json.JsonProperty("shipment_ids", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
-        public System.Collections.Generic.List<string> ShipmentIds { get; set; } = new System.Collections.Generic.List<string>();
+        public System.Collections.Generic.IList<string> ShipmentIds { get; set; } = new System.Collections.Generic.List<string>();
     
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
     
@@ -6291,7 +6291,7 @@ namespace ShipEngineAPI
         [Newtonsoft.Json.JsonProperty("shipments", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
         [System.ComponentModel.DataAnnotations.MinLength(1)]
-        public System.Collections.Generic.List<AddressValidatingShipment> Shipments { get; set; } = new System.Collections.Generic.List<AddressValidatingShipment>();
+        public System.Collections.Generic.IList<AddressValidatingShipment> Shipments { get; set; } = new System.Collections.Generic.List<AddressValidatingShipment>();
     
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
     
@@ -6335,7 +6335,7 @@ namespace ShipEngineAPI
         /// <summary>An array of errors that were returned while retrieving the bulk rate</summary>
         [Newtonsoft.Json.JsonProperty("errors", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
-        public System.Collections.Generic.List<Error> Errors { get; set; } = new System.Collections.Generic.List<Error>();
+        public System.Collections.Generic.IList<Error> Errors { get; set; } = new System.Collections.Generic.List<Error>();
     
     
     }
@@ -6354,7 +6354,7 @@ namespace ShipEngineAPI
         /// <summary>Array of Carrier Ids</summary>
         [Newtonsoft.Json.JsonProperty("carrier_ids", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.MinLength(1)]
-        public System.Collections.Generic.List<string> CarrierIds { get; set; }
+        public System.Collections.Generic.IList<string> CarrierIds { get; set; }
     
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
     
@@ -6396,7 +6396,7 @@ namespace ShipEngineAPI
         /// <summary>Array of Carrier Ids</summary>
         [Newtonsoft.Json.JsonProperty("carrier_ids", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.MinLength(1)]
-        public System.Collections.Generic.List<string> CarrierIds { get; set; }
+        public System.Collections.Generic.IList<string> CarrierIds { get; set; }
     
         private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
     
@@ -6507,7 +6507,7 @@ namespace ShipEngineAPI
         /// <summary>The list of shipments returned by the api call</summary>
         [Newtonsoft.Json.JsonProperty("shipments", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
-        public System.Collections.Generic.List<Shipment> Shipments { get; set; } = new System.Collections.Generic.List<Shipment>();
+        public System.Collections.Generic.IList<Shipment> Shipments { get; set; } = new System.Collections.Generic.List<Shipment>();
     
         /// <summary>Total number of shipments returned by the api call</summary>
         [Newtonsoft.Json.JsonProperty("total", Required = Newtonsoft.Json.Required.Always)]
@@ -6537,7 +6537,7 @@ namespace ShipEngineAPI
         [Newtonsoft.Json.JsonProperty("shipments", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
         [System.ComponentModel.DataAnnotations.MinLength(1)]
-        public System.Collections.Generic.List<AddressValidatingShipment> Shipments { get; set; } = new System.Collections.Generic.List<AddressValidatingShipment>();
+        public System.Collections.Generic.IList<AddressValidatingShipment> Shipments { get; set; } = new System.Collections.Generic.List<AddressValidatingShipment>();
     
     
     }
@@ -6553,7 +6553,7 @@ namespace ShipEngineAPI
         /// <summary>An array of shipments that were created.</summary>
         [Newtonsoft.Json.JsonProperty("shipments", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
-        public System.Collections.Generic.List<CreateAndValidateShipment> Shipments { get; set; } = new System.Collections.Generic.List<CreateAndValidateShipment>();
+        public System.Collections.Generic.IList<CreateAndValidateShipment> Shipments { get; set; } = new System.Collections.Generic.List<CreateAndValidateShipment>();
     
     
     }
@@ -6565,7 +6565,7 @@ namespace ShipEngineAPI
         /// <summary>An array of errors that occurred while creating shipment.</summary>
         [Newtonsoft.Json.JsonProperty("errors", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.Obsolete]
-        public System.Collections.Generic.List<string> Errors { get; set; }
+        public System.Collections.Generic.IList<string> Errors { get; set; }
     
         /// <summary>The address validation</summary>
         [Newtonsoft.Json.JsonProperty("address_validation", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -6580,7 +6580,7 @@ namespace ShipEngineAPI
         /// <summary>An array of errors that occurred while creating shipment.</summary>
         [Newtonsoft.Json.JsonProperty("errors", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.Obsolete]
-        public System.Collections.Generic.List<string> Errors { get; set; }
+        public System.Collections.Generic.IList<string> Errors { get; set; }
     
         /// <summary>The address validation</summary>
         [Newtonsoft.Json.JsonProperty("address_validation", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -6646,7 +6646,7 @@ namespace ShipEngineAPI
         /// </summary>
         [Newtonsoft.Json.JsonProperty("entities", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
-        public System.Collections.Generic.List<RecognizedEntity> Entities { get; set; } = new System.Collections.Generic.List<RecognizedEntity>();
+        public System.Collections.Generic.IList<RecognizedEntity> Entities { get; set; } = new System.Collections.Generic.List<RecognizedEntity>();
     
     
     }
@@ -6702,7 +6702,7 @@ namespace ShipEngineAPI
         /// <summary>The errors associated with the shipment.</summary>
         [Newtonsoft.Json.JsonProperty("errors", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
-        public System.Collections.Generic.List<ShipmentResponseError> Errors { get; set; } = new System.Collections.Generic.List<ShipmentResponseError>();
+        public System.Collections.Generic.IList<ShipmentResponseError> Errors { get; set; } = new System.Collections.Generic.List<ShipmentResponseError>();
     
         [Newtonsoft.Json.JsonProperty("links", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
@@ -6768,7 +6768,7 @@ namespace ShipEngineAPI
     {
         /// <summary>The array of tags returned by the API call</summary>
         [Newtonsoft.Json.JsonProperty("tags", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<Tag> Tags { get; set; }
+        public System.Collections.Generic.IList<Tag> Tags { get; set; }
     
     
     }
@@ -6794,7 +6794,7 @@ namespace ShipEngineAPI
         /// <summary>The array of warehouses returned by the API call</summary>
         [Newtonsoft.Json.JsonProperty("warehouses", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
-        public System.Collections.Generic.List<Warehouse> Warehouses { get; set; } = new System.Collections.Generic.List<Warehouse>();
+        public System.Collections.Generic.IList<Warehouse> Warehouses { get; set; } = new System.Collections.Generic.List<Warehouse>();
     
     
     }
@@ -7052,7 +7052,7 @@ namespace ShipEngineAPI
         /// &gt; **Note:** Some carriers only allow one package per label. If you attempt to create a multi-package label for a carrier that doesn't allow it, an error will be returned.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("packages", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.List<Package> Packages { get; set; }
+        public System.Collections.Generic.IList<Package> Packages { get; set; }
     
     
     }

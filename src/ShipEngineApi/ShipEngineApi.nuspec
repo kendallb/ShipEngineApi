@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>ShipEngineApi</id>
-    <version>1.0.9</version>
+    <version>1.0.10</version>
     <title>ShipEngine API</title>
     <authors>Kendall Bennett</authors>
     <owners>kendallbennett</owners>
@@ -11,7 +11,7 @@
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>A library for communicating with ShipEngine from .NET applications.</description>
     <summary>A library for communicating with ShipEngine from .NET applications. To use this you need an account with ShipEngine. The API is generated automatically from the OpenAPI specifications publiced by ShipEngine</summary>
-    <releaseNotes>Fixed incorrect request classes missing setters and fixed some values that need to be nullable</releaseNotes>
+    <releaseNotes>Fixed generate client to use IList and IDictionary for more flexibility</releaseNotes>
     <copyright>Copyright (C) 2020 and later AMain.com, Inc.</copyright>
     <tags>ShipEngine OpenAPI Swagger</tags>
   </metadata>
