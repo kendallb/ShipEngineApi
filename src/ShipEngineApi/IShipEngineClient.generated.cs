@@ -6097,7 +6097,7 @@ namespace ShipEngineAPI
         /// <summary>The number of days estimated for delivery, this will show the _actual_ deliverty
         /// time if for example, the package gets shipped on a Friday
         /// </summary>
-        [Newtonsoft.Json.JsonProperty("delivery_days", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("delivery_days", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Range(1, int.MaxValue)]
         public int? DeliveryDays { get; set; }
     
@@ -6105,12 +6105,12 @@ namespace ShipEngineAPI
         [Newtonsoft.Json.JsonProperty("guaranteed_service", Required = Newtonsoft.Json.Required.Always)]
         public bool GuaranteedService { get; set; }
     
-        [Newtonsoft.Json.JsonProperty("estimated_delivery_date", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("estimated_delivery_date", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.RegularExpression(@"^\d{4}-\d{2}-\d{2}(T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[-+]\d{2}:\d{2}))?$")]
-        public System.DateTimeOffset EstimatedDeliveryDate { get; set; }
+        public System.DateTimeOffset? EstimatedDeliveryDate { get; set; }
     
         /// <summary>The carrier delivery days</summary>
-        [Newtonsoft.Json.JsonProperty("carrier_delivery_days", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("carrier_delivery_days", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
         public string CarrierDeliveryDays { get; set; }
     
