@@ -97,6 +97,63 @@ namespace ShipEngineTest
                     },
                 });
                 Console.WriteLine(JsonConvert.SerializeObject(rates, Formatting.Indented));
+
+                // Try to rate an international package
+                rates = await client.CalculateRates(new CalculateRatesRequestBody {
+                    Shipment = new AddressValidatingShipment {
+                        ValidateAddress = ValidateAddress.NoValidation,
+                        ShipDate = DateTimeOffset.Now.Date,
+                        ShipTo = new Address {
+                            Name = "Joe Blogs",
+                            Phone = "N/A",
+                            AddressLine1 = "81 Packingston St",
+                            CityLocality = "Kew",
+                            StateProvince = "VIC",
+                            PostalCode = "3101",
+                            CountryCode = "AU",
+                        },
+                        ShipFrom = new Address {
+                            Name = "Online Seller",
+                            Phone = "N/A",
+                            AddressLine1 = "424 Otterson Drive",
+                            CityLocality = "Chico",
+                            StateProvince = "CA",
+                            PostalCode = "95928-8217",
+                            CountryCode = "US",
+                        },
+                        Packages = new List<Package> {
+                            new Package {
+                                Weight = new Weight {
+                                    Value = 1.0,
+                                    Unit = WeightUnit.Pound,
+                                },
+                                Dimensions = new Dimensions {
+                                    Length = 1,
+                                    Width = 2,
+                                    Height = 3,
+                                },
+                            },
+                        },
+                        Customs = new InternationalShipmentOptions {
+                            Contents = PackageContents.Merchandise,
+                            NonDelivery = NonDelivery.ReturnToSender,
+                            CustomsItems = new List<CustomsItem> {
+                                new CustomsItem {
+                                    Description = "Product name",
+                                    Quantity = 2,
+                                    Value = 42.99,
+                                    HarmonizedTariffCode = "",
+                                    CountryOfOrigin = "US",
+                                    Sku = "PRODUCT_SKU",
+                                },
+                            },
+                        },
+                    },
+                    RateOptions = new RateRequestBody {
+                        CarrierIds = carriers.Carriers.Select(p => p.CarrierId).ToList(),
+                    },
+                });
+                Console.WriteLine(JsonConvert.SerializeObject(rates, Formatting.Indented));
             } catch (Exception e) {
                 Console.WriteLine("FAILED!");
                 Console.WriteLine(e.Message);

@@ -4675,8 +4675,7 @@ namespace ShipEngineAPI
     public partial class CustomsItem 
     {
         /// <summary>A string that uniquely identifies the customs item</summary>
-        [Newtonsoft.Json.JsonProperty("customs_item_id", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [Newtonsoft.Json.JsonProperty("customs_item_id", Required = Newtonsoft.Json.Required.AllowNull)]
         [System.ComponentModel.DataAnnotations.StringLength(25, MinimumLength = 1)]
         [System.ComponentModel.DataAnnotations.RegularExpression(@"^se(-[a-z0-9]+)+$")]
         public string CustomsItemId { get; set; }
@@ -4691,9 +4690,9 @@ namespace ShipEngineAPI
         [System.ComponentModel.DataAnnotations.Range(0, int.MaxValue)]
         public int? Quantity { get; set; }
     
-        /// <summary>The total value of the customs item</summary>
+        /// <summary>The total value of the customs item in USD</summary>
         [Newtonsoft.Json.JsonProperty("value", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public MonetaryValue Value { get; set; }
+        public double? Value { get; set; }
     
         /// <summary>The [Harmonized Tariff Code](https://en.wikipedia.org/wiki/Harmonized_System) of this item.</summary>
         [Newtonsoft.Json.JsonProperty("harmonized_tariff_code", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
