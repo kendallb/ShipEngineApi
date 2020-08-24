@@ -1783,8 +1783,7 @@ namespace ShipEngineAPI
     
         /// <summary>A string that uniquely identifies the carrier.</summary>
         [Newtonsoft.Json.JsonProperty("carrier_code", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [System.ComponentModel.DataAnnotations.StringLength(25, MinimumLength = 1)]
-        [System.ComponentModel.DataAnnotations.RegularExpression(@"^se(-[a-z0-9]+)+$")]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
         public string CarrierCode { get; set; }
     
         /// <summary>The account number that the carrier is connected to.</summary>
