@@ -1781,9 +1781,10 @@ namespace ShipEngineAPI
         [System.ComponentModel.DataAnnotations.RegularExpression(@"^se(-[a-z0-9]+)+$")]
         public string CarrierId { get; set; }
     
-        /// <summary>A string that uniquely identifies the carrier.</summary>
+        /// <summary>The [shipping carrier](https://www.shipengine.com/docs/carriers/setup/) who will ship the package, such as `fedex`, `dhl_express`, `stamps_com`, etc.
+        /// </summary>
         [Newtonsoft.Json.JsonProperty("carrier_code", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
+        [System.ComponentModel.DataAnnotations.RegularExpression(@"^[a-z0-9]+(_[a-z0-9]+)*$")]
         public string CarrierCode { get; set; }
     
         /// <summary>The account number that the carrier is connected to.</summary>
@@ -1847,9 +1848,10 @@ namespace ShipEngineAPI
         [System.ComponentModel.DataAnnotations.RegularExpression(@"^se(-[a-z0-9]+)+$")]
         public string CarrierId { get; set; }
     
+        /// <summary>The [shipping carrier](https://www.shipengine.com/docs/carriers/setup/) who will ship the package, such as `fedex`, `dhl_express`, `stamps_com`, etc.
+        /// </summary>
         [Newtonsoft.Json.JsonProperty("carrier_code", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [System.ComponentModel.DataAnnotations.StringLength(25, MinimumLength = 1)]
-        [System.ComponentModel.DataAnnotations.RegularExpression(@"^se(-[a-z0-9]+)+$")]
+        [System.ComponentModel.DataAnnotations.RegularExpression(@"^[a-z0-9]+(_[a-z0-9]+)*$")]
         public string CarrierCode { get; set; }
     
         /// <summary>service code</summary>
@@ -6135,9 +6137,11 @@ namespace ShipEngineAPI
         [Newtonsoft.Json.JsonProperty("trackable", Required = Newtonsoft.Json.Required.Always)]
         public bool Trackable { get; set; }
     
-        /// <summary>carrier code</summary>
+        /// <summary>The [shipping carrier](https://www.shipengine.com/docs/carriers/setup/) who will ship the package, such as `fedex`, `dhl_express`, `stamps_com`, etc.
+        /// </summary>
         [Newtonsoft.Json.JsonProperty("carrier_code", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [System.ComponentModel.DataAnnotations.RegularExpression(@"^[a-z0-9]+(_[a-z0-9]+)*$")]
         public string CarrierCode { get; set; }
     
         /// <summary>carrier nickname</summary>
