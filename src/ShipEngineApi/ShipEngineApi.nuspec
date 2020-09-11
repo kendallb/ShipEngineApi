@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>ShipEngineApi</id>
-    <version>1.0.13</version>
+    <version>1.0.14</version>
     <title>ShipEngine API</title>
     <authors>Kendall Bennett</authors>
     <owners>kendallbennett</owners>
@@ -11,11 +11,13 @@
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>A library for communicating with ShipEngine from .NET applications.</description>
     <summary>A library for communicating with ShipEngine from .NET applications. To use this you need an account with ShipEngine. The API is generated automatically from the OpenAPI specifications publiced by ShipEngine</summary>
-    <releaseNotes>Added dependency on Newtonsoft.Json</releaseNotes>
+    <releaseNotes>Added support for test labels for USPS and production accounts</releaseNotes>
     <copyright>Copyright (C) 2020 and later AMain.com, Inc.</copyright>
     <tags>ShipEngine OpenAPI Swagger</tags>
     <dependencies>
-      <dependency id="Newtonsoft.Json" version="12.0.3" />
+      <group targetFramework="net452">
+        <dependency id="Newtonsoft.Json" version="12.0.3" />
+      </group>
     </dependencies>
   </metadata>
 </package>

@@ -5125,6 +5125,10 @@ namespace ShipEngineAPI
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         public LabelDownloadType? LabelDownloadType { get; set; }
     
+        /// <summary>Indicate if this label is being used only for testing purposes. If true, then no charge will be added to your account. This only works with Stamps.com and Endicia for USPS</summary>
+        [Newtonsoft.Json.JsonProperty("test_label", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? TestLabel { get; set; }
+    
     
     }
     
@@ -5154,6 +5158,10 @@ namespace ShipEngineAPI
         [Newtonsoft.Json.JsonProperty("label_download_type", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         public LabelDownloadType? LabelDownloadType { get; set; }
+    
+        /// <summary>Indicate if this label is being used only for testing purposes. If true, then no charge will be added to your account. This only works with Stamps.com and Endicia for USPS</summary>
+        [Newtonsoft.Json.JsonProperty("test_label", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? TestLabel { get; set; }
     
     
     }
