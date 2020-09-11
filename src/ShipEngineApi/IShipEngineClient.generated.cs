@@ -4185,7 +4185,7 @@ namespace ShipEngineAPI
         public MonetaryValue InsuranceCost { get; set; }
     
         /// <summary>The tracking number for the package. Tracking number formats vary across carriers.</summary>
-        [Newtonsoft.Json.JsonProperty("tracking_number", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("tracking_number", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
         public string TrackingNumber { get; set; }
     
@@ -4973,7 +4973,7 @@ namespace ShipEngineAPI
     
         /// <summary>The tracking number for the package.  The format depends on the carrier.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty("tracking_number", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("tracking_number", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
         public string TrackingNumber { get; set; }
     
@@ -5232,7 +5232,7 @@ namespace ShipEngineAPI
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
     public partial class TrackingInformation 
     {
-        [Newtonsoft.Json.JsonProperty("tracking_number", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("tracking_number", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
         public string TrackingNumber { get; set; }
     
@@ -6924,7 +6924,7 @@ namespace ShipEngineAPI
         public MonetaryValue InsuranceCost { get; set; }
     
         /// <summary>The tracking number for the package. Tracking number formats vary across carriers.</summary>
-        [Newtonsoft.Json.JsonProperty("tracking_number", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("tracking_number", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
         public string TrackingNumber { get; set; }
     
