@@ -5432,7 +5432,7 @@ namespace ShipEngineAPI
         public int? Shipments { get; set; }
     
         /// <summary>A string that uniquely identifies the warehouse</summary>
-        [Newtonsoft.Json.JsonProperty("warehouse_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("warehouse_id", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.StringLength(25, MinimumLength = 1)]
         [System.ComponentModel.DataAnnotations.RegularExpression(@"^se(-[a-z0-9]+)+$")]
         public string WarehouseId { get; set; }
@@ -5471,8 +5471,7 @@ namespace ShipEngineAPI
     public partial class CreateManifestRequestBody 
     {
         /// <summary>A string that uniquely identifies the carrier</summary>
-        [Newtonsoft.Json.JsonProperty("carrier_id", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [Newtonsoft.Json.JsonProperty("carrier_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.StringLength(25, MinimumLength = 1)]
         [System.ComponentModel.DataAnnotations.RegularExpression(@"^se(-[a-z0-9]+)+$")]
         public string CarrierId { get; set; }
@@ -5486,16 +5485,15 @@ namespace ShipEngineAPI
         public System.Collections.Generic.IList<string> LabelIds { get; set; }
     
         /// <summary>A string that uniquely identifies the warehouse</summary>
-        [Newtonsoft.Json.JsonProperty("warehouse_id", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [Newtonsoft.Json.JsonProperty("warehouse_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.StringLength(25, MinimumLength = 1)]
         [System.ComponentModel.DataAnnotations.RegularExpression(@"^se(-[a-z0-9]+)+$")]
         public string WarehouseId { get; set; }
     
         /// <summary>The ship date that the shipment will be sent out on</summary>
-        [Newtonsoft.Json.JsonProperty("ship_date", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        public System.DateTimeOffset ShipDate { get; set; }
+        [Newtonsoft.Json.JsonProperty("ship_date", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
+        public System.DateTimeOffset? ShipDate { get; set; }
     
     
     }
@@ -5505,8 +5503,7 @@ namespace ShipEngineAPI
     public partial class CreateManifestByObjectRequestBody 
     {
         /// <summary>A string that uniquely identifies the carrier</summary>
-        [Newtonsoft.Json.JsonProperty("carrier_id", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [Newtonsoft.Json.JsonProperty("carrier_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.StringLength(25, MinimumLength = 1)]
         [System.ComponentModel.DataAnnotations.RegularExpression(@"^se(-[a-z0-9]+)+$")]
         public string CarrierId { get; set; }
@@ -5520,16 +5517,15 @@ namespace ShipEngineAPI
         public System.Collections.Generic.IList<string> LabelIds { get; set; }
     
         /// <summary>A string that uniquely identifies the warehouse</summary>
-        [Newtonsoft.Json.JsonProperty("warehouse_id", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [Newtonsoft.Json.JsonProperty("warehouse_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.StringLength(25, MinimumLength = 1)]
         [System.ComponentModel.DataAnnotations.RegularExpression(@"^se(-[a-z0-9]+)+$")]
         public string WarehouseId { get; set; }
     
         /// <summary>The ship date that the shipment will be sent out on</summary>
-        [Newtonsoft.Json.JsonProperty("ship_date", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        public System.DateTimeOffset ShipDate { get; set; }
+        [Newtonsoft.Json.JsonProperty("ship_date", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
+        public System.DateTimeOffset? ShipDate { get; set; }
     
     
     }
@@ -5583,7 +5579,7 @@ namespace ShipEngineAPI
         public int? Shipments { get; set; }
     
         /// <summary>A string that uniquely identifies the warehouse</summary>
-        [Newtonsoft.Json.JsonProperty("warehouse_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("warehouse_id", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.StringLength(25, MinimumLength = 1)]
         [System.ComponentModel.DataAnnotations.RegularExpression(@"^se(-[a-z0-9]+)+$")]
         [System.Obsolete]
@@ -5656,7 +5652,7 @@ namespace ShipEngineAPI
         public int? Shipments { get; set; }
     
         /// <summary>A string that uniquely identifies the warehouse</summary>
-        [Newtonsoft.Json.JsonProperty("warehouse_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("warehouse_id", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.StringLength(25, MinimumLength = 1)]
         [System.ComponentModel.DataAnnotations.RegularExpression(@"^se(-[a-z0-9]+)+$")]
         [System.Obsolete]

@@ -55,105 +55,104 @@ namespace ShipEngineTest
                 var carriers = await client.ListCarriers();
                 Console.WriteLine(JsonConvert.SerializeObject(carriers, Formatting.Indented));
 
-                // Try to rate a package
-                var rates = await client.CalculateRates(new CalculateRatesRequestBody {
-                    Shipment = new AddressValidatingShipment {
-                        ValidateAddress = ValidateAddress.NoValidation,
-                        ShipDate = DateTimeOffset.Now.Date,
-                        ShipTo = new Address {
-                            Name = "Joe Blogs",
-                            Phone = "N/A",
-                            AddressLine1 = "411 Otterson Drive",
-                            CityLocality = "Chico",
-                            StateProvince = "CA",
-                            PostalCode = "95928-8217",
-                            CountryCode = "US",
-                        },
-                        ShipFrom = new Address {
-                            Name = "Online Seller",
-                            Phone = "N/A",
-                            AddressLine1 = "424 Otterson Drive",
-                            CityLocality = "Chico",
-                            StateProvince = "CA",
-                            PostalCode = "95928-8217",
-                            CountryCode = "US",
-                        },
-                        Packages = new List<Package> {
-                            new Package {
-                                Weight = new Weight {
-                                    Value = 1.0,
-                                    Unit = WeightUnit.Pound,
-                                },
-                                Dimensions = new Dimensions {
-                                    Length = 1,
-                                    Width = 2,
-                                    Height = 3,
-                                },
-                            },
-                        },
-                    },
-                    RateOptions = new RateRequestBody {
-                        CarrierIds = carriers.Carriers.Select(p => p.CarrierId).ToList(),
-                    },
-                });
-                Console.WriteLine(JsonConvert.SerializeObject(rates, Formatting.Indented));
+                // Find some domestic entries to print labels for
+                var rateResponse = await GenerateDomesticRate(client, carriers);
+                Console.WriteLine(JsonConvert.SerializeObject(rateResponse, Formatting.Indented));
+                var domesticUSPSRate = rateResponse.RateResponse.Rates.FirstOrDefault(p => p.ServiceCode == "usps_priority_mail");
+                Console.WriteLine(JsonConvert.SerializeObject(domesticUSPSRate, Formatting.Indented));
 
-                // Try to rate an international package
-                rates = await client.CalculateRates(new CalculateRatesRequestBody {
-                    Shipment = new AddressValidatingShipment {
-                        ValidateAddress = ValidateAddress.NoValidation,
-                        ShipDate = DateTimeOffset.Now.Date,
-                        ShipTo = new Address {
-                            Name = "Joe Blogs",
-                            Phone = "N/A",
-                            AddressLine1 = "81 Packingston St",
-                            CityLocality = "Kew",
-                            StateProvince = "VIC",
-                            PostalCode = "3101",
-                            CountryCode = "AU",
-                        },
-                        ShipFrom = new Address {
-                            Name = "Online Seller",
-                            Phone = "N/A",
-                            AddressLine1 = "424 Otterson Drive",
-                            CityLocality = "Chico",
-                            StateProvince = "CA",
-                            PostalCode = "95928-8217",
-                            CountryCode = "US",
-                        },
-                        Packages = new List<Package> {
-                            new Package {
-                                Weight = new Weight {
-                                    Value = 1.0,
-                                    Unit = WeightUnit.Pound,
-                                },
-                                Dimensions = new Dimensions {
-                                    Length = 1,
-                                    Width = 2,
-                                    Height = 3,
-                                },
-                            },
-                        },
-                        Customs = new InternationalShipmentOptions {
-                            Contents = PackageContents.Merchandise,
-                            NonDelivery = NonDelivery.ReturnToSender,
-                            CustomsItems = new List<CustomsItem> {
-                                new CustomsItem {
-                                    Description = "Product name",
-                                    Quantity = 2,
-                                    Value = 42.99,
-                                    HarmonizedTariffCode = "",
-                                    CountryOfOrigin = "US",
-                                    Sku = "PRODUCT_SKU",
-                                },
-                            },
-                        },
+                // Now get UPS ground
+                rateResponse = await GenerateDomesticRate(client, carriers);
+                var domesticUPSRate = rateResponse.RateResponse.Rates.FirstOrDefault(p => p.ServiceCode == "ups_ground");
+                Console.WriteLine(JsonConvert.SerializeObject(domesticUPSRate, Formatting.Indented));
+
+                // Now get FedEx ground
+                rateResponse = await GenerateDomesticRate(client, carriers);
+                var domesticFedExRate = rateResponse.RateResponse.Rates.FirstOrDefault(p => p.ServiceCode == "fedex_ground");
+                Console.WriteLine(JsonConvert.SerializeObject(domesticFedExRate, Formatting.Indented));
+
+                // Get rates for priority mail international entry for later
+                rateResponse = await GenerateInternationalRate(client, carriers);
+                Console.WriteLine(JsonConvert.SerializeObject(rateResponse, Formatting.Indented));
+                var internationalUSPSRate = rateResponse.RateResponse.Rates.FirstOrDefault(p => p.ServiceCode == "usps_priority_mail_international");
+                Console.WriteLine(JsonConvert.SerializeObject(internationalUSPSRate, Formatting.Indented));
+
+                // Now get UPS
+                rateResponse = await GenerateInternationalRate(client, carriers);
+                var internationalUPSRate = rateResponse.RateResponse.Rates.FirstOrDefault(p => p.ServiceCode == "ups_worldwide_expedited");
+                Console.WriteLine(JsonConvert.SerializeObject(internationalUPSRate, Formatting.Indented));
+
+                // Now get FedEx
+                rateResponse = await GenerateInternationalRate(client, carriers);
+                var internationalFedExRate = rateResponse.RateResponse.Rates.FirstOrDefault(p => p.ServiceCode == "fedex_international_economy");
+                Console.WriteLine(JsonConvert.SerializeObject(internationalFedExRate, Formatting.Indented));
+
+                // Now create labels for the two USPS shipments
+                var labelRequest = new CreateLabelFromRateRequestBody {
+                    LabelLayout = LabelLayout._4x6,
+                    LabelFormat = LabelFormat.Pdf,
+                    LabelDownloadType = LabelDownloadType.Url,
+                    //TestLabel = true,
+                };
+                var labelResponse = await client.CreateLabelFromRate(labelRequest, domesticUSPSRate.RateId);
+                Console.WriteLine(JsonConvert.SerializeObject(labelResponse, Formatting.Indented));
+                var domesticUSPSLabelId = labelResponse.LabelId;
+                labelResponse = await client.CreateLabelFromRate(labelRequest, internationalUSPSRate.RateId);
+                Console.WriteLine(JsonConvert.SerializeObject(labelResponse, Formatting.Indented));
+                var internationalUSPSLabelId = labelResponse.LabelId;
+
+                // Now create labels for the two UPS shipments
+                labelResponse = await client.CreateLabelFromRate(labelRequest, domesticUPSRate.RateId);
+                Console.WriteLine(JsonConvert.SerializeObject(labelResponse, Formatting.Indented));
+                var domesticUPSLabelId = labelResponse.LabelId;
+                labelResponse = await client.CreateLabelFromRate(labelRequest, internationalUPSRate.RateId);
+                Console.WriteLine(JsonConvert.SerializeObject(labelResponse, Formatting.Indented));
+                var internationalUPSLabelId = labelResponse.LabelId;
+
+                // Now create labels for the two FedEx shipments
+                labelResponse = await client.CreateLabelFromRate(labelRequest, domesticFedExRate.RateId);
+                Console.WriteLine(JsonConvert.SerializeObject(labelResponse, Formatting.Indented));
+                var domesticFedExLabelId = labelResponse.LabelId;
+                labelResponse = await client.CreateLabelFromRate(labelRequest, internationalFedExRate.RateId);
+                Console.WriteLine(JsonConvert.SerializeObject(labelResponse, Formatting.Indented));
+                var internationalFedExLabelId = labelResponse.LabelId;
+
+                // Try to create a manifest for the USPS labels
+                var manifestRequest = new CreateManifestRequestBody {
+                    LabelIds = new List<string> {
+                        domesticUSPSLabelId,
+                        internationalUSPSLabelId,
                     },
-                    RateOptions = new RateRequestBody {
-                        CarrierIds = carriers.Carriers.Select(p => p.CarrierId).ToList(),
+                };
+                var result = await client.CreateManifest(manifestRequest);
+                Console.WriteLine(JsonConvert.SerializeObject(result, Formatting.Indented));
+
+                // Try to create a manifest for the UPS labels. This should fail with a not implemented exception
+                try {
+                    manifestRequest = new CreateManifestRequestBody {
+                        LabelIds = new List<string> {
+                            domesticUPSLabelId,
+                            internationalUPSLabelId,
+                        },
+                    };
+                    result = await client.CreateManifest(manifestRequest);
+                    Console.WriteLine(JsonConvert.SerializeObject(result, Formatting.Indented));
+                } catch (ApiException<ErrorResponseBody> e) {
+                    var error = e.Result.Errors[0];
+                    if (error.ErrorType != ErrorType.BusinessRules || error.Message != "The method or operation is not implemented.") {
+                        Console.WriteLine(e.Message);
+                    }
+                }
+
+                // Try to create a manifest for the FedEx labels
+                manifestRequest = new CreateManifestRequestBody {
+                    LabelIds = new List<string> {
+                        domesticFedExLabelId,
+                        internationalFedExLabelId,
                     },
-                });
-                Console.WriteLine(JsonConvert.SerializeObject(rates, Formatting.Indented));
+                };
+                result = await client.CreateManifest(manifestRequest);
+                Console.WriteLine(JsonConvert.SerializeObject(result, Formatting.Indented));
             } catch (Exception e) {
                 Console.WriteLine("FAILED!");
                 Console.WriteLine(e.Message);
@@ -162,5 +161,117 @@ namespace ShipEngineTest
                 }
             }
         }
-    }
+
+        /// <summary>
+        /// Generate a domestic rate
+        /// </summary>
+        private static async Task<CalculateRatesResponseBody> GenerateDomesticRate(
+            ShipEngineClient client,
+            GetCarriersResponseBody carriers)
+        {
+            return await client.CalculateRates(new CalculateRatesRequestBody {
+                Shipment = new AddressValidatingShipment {
+                    ValidateAddress = ValidateAddress.NoValidation,
+                    ShipDate = DateTimeOffset.Now.Date,
+                    ShipTo = new Address {
+                        Name = "Joe Blogs",
+                        Phone = "1-530-894-0797",
+                        AddressLine1 = "411 Otterson Drive",
+                        CityLocality = "Chico",
+                        StateProvince = "CA",
+                        PostalCode = "95928-8217",
+                        CountryCode = "US",
+                    },
+                    ShipFrom = new Address {
+                        Name = "Online Seller",
+                        Phone = "1-530-894-0797",
+                        AddressLine1 = "424 Otterson Drive",
+                        CityLocality = "Chico",
+                        StateProvince = "CA",
+                        PostalCode = "95928-8217",
+                        CountryCode = "US",
+                    },
+                    Packages = new List<Package> {
+                        new Package {
+                            Weight = new Weight {
+                                Value = 1.0,
+                                Unit = WeightUnit.Pound,
+                            },
+                            Dimensions = new Dimensions {
+                                Length = 1,
+                                Width = 2,
+                                Height = 3,
+                            },
+                        },
+                    },
+                },
+                RateOptions = new RateRequestBody {
+                    CarrierIds = carriers.Carriers.Select(p => p.CarrierId).ToList(),
+                },
+            });
+        }
+
+        /// <summary>
+        /// Generate an international rate
+        /// </summary>
+        private static async Task<CalculateRatesResponseBody> GenerateInternationalRate(
+            ShipEngineClient client,
+            GetCarriersResponseBody carriers)
+        {
+            return await client.CalculateRates(new CalculateRatesRequestBody {
+                Shipment = new AddressValidatingShipment {
+                    ValidateAddress = ValidateAddress.NoValidation,
+                    ShipDate = DateTimeOffset.Now.Date,
+                    ShipTo = new Address {
+                        Name = "Joe Blogs",
+                        Phone = "1-530-894-0797",
+                        AddressLine1 = "81 Packingston St",
+                        CityLocality = "Kew",
+                        StateProvince = "VIC",
+                        PostalCode = "3101",
+                        CountryCode = "AU",
+                    },
+                    ShipFrom = new Address {
+                        Name = "Online Seller",
+                        Phone = "1-530-894-0797",
+                        AddressLine1 = "424 Otterson Drive",
+                        CityLocality = "Chico",
+                        StateProvince = "CA",
+                        PostalCode = "95928-8217",
+                        CountryCode = "US",
+                    },
+                    Packages = new List<Package> {
+                        new Package {
+                            Weight = new Weight {
+                                Value = 1.0,
+                                Unit = WeightUnit.Pound,
+                            },
+                            Dimensions = new Dimensions {
+                                Length = 1,
+                                Width = 2,
+                                Height = 3,
+                            },
+                        },
+                    },
+                    Customs = new InternationalShipmentOptions {
+                        Contents = PackageContents.Merchandise,
+                        NonDelivery = NonDelivery.ReturnToSender,
+                        CustomsItems = new List<CustomsItem> {
+                            new CustomsItem {
+                                Description = "Product name",
+                                Quantity = 2,
+                                Value = 42.99,
+                                HarmonizedTariffCode = "",
+                                CountryOfOrigin = "US",
+                                Sku = "PRODUCT_SKU",
+                            },
+                        },
+                    },
+                },
+                RateOptions = new RateRequestBody {
+                    CarrierIds = carriers.Carriers.Select(p => p.CarrierId).ToList(),
+                },
+            });
+        }
+   }
 }
