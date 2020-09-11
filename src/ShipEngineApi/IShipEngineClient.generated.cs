@@ -4240,7 +4240,6 @@ namespace ShipEngineAPI
     
         /// <summary>Indicate if this label is being used only for testing purposes. If true, then no charge will be added to your account.</summary>
         [Newtonsoft.Json.JsonProperty("test_label", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [System.Obsolete]
         public bool? TestLabel { get; set; }
     
         /// <summary>The [package type](https://www.shipengine.com/docs/reference/list-carrier-packages/), such as `thick_envelope`, `small_flat_rate_box`, `large_package`, etc.  The code `package` indicates a custom or unknown package type.
@@ -6979,7 +6978,6 @@ namespace ShipEngineAPI
     
         /// <summary>Indicate if this label is being used only for testing purposes. If true, then no charge will be added to your account.</summary>
         [Newtonsoft.Json.JsonProperty("test_label", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [System.Obsolete]
         public bool? TestLabel { get; set; }
     
         /// <summary>The [package type](https://www.shipengine.com/docs/reference/list-carrier-packages/), such as `thick_envelope`, `small_flat_rate_box`, `large_package`, etc.  The code `package` indicates a custom or unknown package type.
