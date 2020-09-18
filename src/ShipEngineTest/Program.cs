@@ -20,7 +20,7 @@ namespace ShipEngineTest
             try {
                 const string apiKey = "TEST_UviO3xlrk2l3tdqyTLUZ9flQuDtVwRBTUlVZgZmCQA4";
                 using var httpClient = new SingleInstanceHttpClient();
-                var client = new ShipEngineClient(httpClient, apiKey);
+                var client = new ShipEngineClient(httpClient, apiKey) as IShipEngineClient;
                 client.ReadResponseAsString = true;
                 const string toParse = "424 Otterson Drive, Chico CA 95928";
                 Console.WriteLine($"Parsing: {toParse}");
@@ -166,7 +166,7 @@ namespace ShipEngineTest
         /// Generate a domestic rate
         /// </summary>
         private static async Task<CalculateRatesResponseBody> GenerateDomesticRate(
-            ShipEngineClient client,
+            IShipEngineClient client,
             GetCarriersResponseBody carriers)
         {
             return await client.CalculateRates(new CalculateRatesRequestBody {
@@ -215,7 +215,7 @@ namespace ShipEngineTest
         /// Generate an international rate
         /// </summary>
         private static async Task<CalculateRatesResponseBody> GenerateInternationalRate(
-            ShipEngineClient client,
+            IShipEngineClient client,
             GetCarriersResponseBody carriers)
         {
             return await client.CalculateRates(new CalculateRatesRequestBody {
