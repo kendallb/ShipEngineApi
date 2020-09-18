@@ -51,6 +51,26 @@ namespace ShipEngineTest
                 });
                 Console.WriteLine(JsonConvert.SerializeObject(validated, Formatting.Indented));
 
+                // Check an international address (currently fails!)
+                try {
+                    validated = await client.ValidateAddress(new[] {
+                        new AddressToValidate {
+                            AddressLine1 = "Villa Granada 122",
+                            CityLocality = "Saltillo",
+                            StateProvince = "Coahuila",
+                            PostalCode = "25210",
+                            CountryCode = "MX",
+                        },
+                    });
+                    Console.WriteLine(JsonConvert.SerializeObject(validated, Formatting.Indented));
+                } catch (Exception e) {
+                    Console.WriteLine("FAILED!");
+                    Console.WriteLine(e.Message);
+                    if (e.InnerException != null) {
+                        Console.WriteLine(e.InnerException.Message);
+                    }
+                }
+
                 // Get a list of available carriers
                 var carriers = await client.ListCarriers();
                 Console.WriteLine(JsonConvert.SerializeObject(carriers, Formatting.Indented));
