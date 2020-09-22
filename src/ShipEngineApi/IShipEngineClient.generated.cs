@@ -984,9 +984,8 @@ namespace ShipEngineAPI
         public Address OriginalAddress { get; set; } = new Address();
     
         /// <summary>The matched address found by the Shipengine API</summary>
-        [Newtonsoft.Json.JsonProperty("matched_address", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        public Address MatchedAddress { get; set; } = new Address();
+        [Newtonsoft.Json.JsonProperty("matched_address", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Address MatchedAddress { get; set; }
     
         /// <summary>The list of messages that were generated during the address validation request.</summary>
         [Newtonsoft.Json.JsonProperty("messages", Required = Newtonsoft.Json.Required.Always)]
@@ -7107,7 +7106,7 @@ namespace ShipEngineAPI
         public System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> Headers { get; private set; }
 
         public ApiException(string message, int statusCode, string response, System.Collections.Generic.IReadOnlyDictionary<string, System.Collections.Generic.IEnumerable<string>> headers, System.Exception innerException)
-            : base(message + "\n\nStatus: " + statusCode + "\nResponse: \n" + ((response == null) ? "(null)" : response.Substring(0, response.Length >= 512 ? 512 : response.Length)), innerException)
+            : base(message + "\n\nStatus: " + statusCode + "\nResponse: \n" + ((response == null) ? "(null)" : response.Substring(0, response.Length >= 2048 ? 2048 : response.Length)), innerException)
         {
             StatusCode = statusCode;
             Response = response;
