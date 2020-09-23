@@ -57,7 +57,7 @@ namespace ShipEngineAPI
         /// <param name="batch_id">Batch ID</param>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<string> DeleteBatch(string batch_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task DeleteBatch(string batch_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Get Batch By ID</summary>
@@ -71,14 +71,14 @@ namespace ShipEngineAPI
         /// <param name="batch_id">Batch ID</param>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<string> UpdateBatch(string batch_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task UpdateBatch(string batch_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Add to a Batch</summary>
         /// <param name="batch_id">Batch ID</param>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<string> AddToBatch(AddToBatchRequestBody body, string batch_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task AddToBatch(AddToBatchRequestBody body, string batch_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Get Batch Errors</summary>
@@ -93,14 +93,14 @@ namespace ShipEngineAPI
         /// <param name="batch_id">Batch ID</param>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<string> ProcessBatch(ProcessBatchRequestBody body, string batch_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task ProcessBatch(ProcessBatchRequestBody body, string batch_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Remove From Batch</summary>
         /// <param name="batch_id">Batch ID</param>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<string> RemoveFromBatch(RemoveFromBatchRequestBody body, string batch_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task RemoveFromBatch(RemoveFromBatchRequestBody body, string batch_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>List Carriers</summary>
@@ -156,7 +156,7 @@ namespace ShipEngineAPI
         /// <param name="carrier_id">Carrier ID</param>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<string> DisconnectCarrier(CarrierName carrier_name, string carrier_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task DisconnectCarrier(CarrierName carrier_name, string carrier_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Get carrier settings</summary>
@@ -172,7 +172,7 @@ namespace ShipEngineAPI
         /// <param name="carrier_id">Carrier ID</param>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<string> UpdateCarrierSettings(UpdateCarrierSettingsRequestBody body, CarrierNameWithSettings carrier_name, string carrier_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task UpdateCarrierSettings(UpdateCarrierSettingsRequestBody body, CarrierNameWithSettings carrier_name, string carrier_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Disconnect a Shipsurance Account</summary>
@@ -216,14 +216,14 @@ namespace ShipEngineAPI
         /// <param name="webhook_id">Webhook ID</param>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<string> UpdateWebhook(UpdateWebhookRequestBody body, string webhook_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task UpdateWebhook(UpdateWebhookRequestBody body, string webhook_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Delete Webhook By ID</summary>
         /// <param name="webhook_id">Webhook ID</param>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<string> DeleteWebhook(string webhook_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task DeleteWebhook(string webhook_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Add Funds To Insurance</summary>
@@ -362,14 +362,14 @@ namespace ShipEngineAPI
         /// <param name="package_id">Package ID</param>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<string> UpdatePackageType(UpdatePackageTypeRequestBody body, string package_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task UpdatePackageType(UpdatePackageTypeRequestBody body, string package_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Delete A Custom Package By ID</summary>
         /// <param name="package_id">Package ID</param>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<string> DeletePackageType(string package_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task DeletePackageType(string package_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Get Shipping Rates</summary>
@@ -450,7 +450,7 @@ namespace ShipEngineAPI
         /// <param name="shipment_id">Shipment ID</param>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<string> CancelShipments(string shipment_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task CancelShipments(string shipment_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Get Shipment Errors</summary>
@@ -480,7 +480,7 @@ namespace ShipEngineAPI
         /// <param name="shipment_id">Shipment ID</param>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<string> UntagShipment(string shipment_id, string tag_name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task UntagShipment(string shipment_id, string tag_name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Get Tags</summary>
@@ -498,13 +498,13 @@ namespace ShipEngineAPI
         /// <summary>Delete Tag</summary>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<string> DeleteTag(string tag_name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task DeleteTag(string tag_name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Update Tag Name</summary>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<string> RenameTag(string tag_name, string new_tag_name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task RenameTag(string tag_name, string new_tag_name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Get Tracking Information</summary>
@@ -520,7 +520,7 @@ namespace ShipEngineAPI
         /// <param name="tracking_number">The tracking number associated with a shipment</param>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<string> StartTracking(string carrier_code = null, string tracking_number = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task StartTracking(string carrier_code = null, string tracking_number = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Stop Tracking a Package</summary>
@@ -528,7 +528,7 @@ namespace ShipEngineAPI
         /// <param name="tracking_number">The tracking number associated with a shipment</param>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<string> StopTracking(string carrier_code = null, string tracking_number = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task StopTracking(string carrier_code = null, string tracking_number = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>List Warehouses</summary>
@@ -554,14 +554,14 @@ namespace ShipEngineAPI
         /// <param name="warehouse_id">Warehouse ID</param>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<string> UpdateWarehouse(UpdateWarehouseRequestBody body, string warehouse_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task UpdateWarehouse(UpdateWarehouseRequestBody body, string warehouse_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Delete Warehouse By ID</summary>
         /// <param name="warehouse_id">Warehouse ID</param>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<string> DeleteWarehouse(string warehouse_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task DeleteWarehouse(string warehouse_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
     }
 

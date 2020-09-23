@@ -67,36 +67,88 @@ namespace ShipEngineTest
                 var carriers = await client.ListCarriers();
                 Console.WriteLine(JsonConvert.SerializeObject(carriers, Formatting.Indented));
 
+                // Create a warehouse to use if not already present. We cannot delete the default one
+                // so if we have another one, create it there
+                var warehouseResponse = await client.ListWarehouses();
+                Console.WriteLine(JsonConvert.SerializeObject(warehouseResponse, Formatting.Indented));
+                if (warehouseResponse.Warehouses.Count > 1) {
+                    // Delete it, so we can create it again
+                    await client.DeleteWarehouse(warehouseResponse.Warehouses[1].WarehouseId);
+                }
+
+                // Now create our warehouse
+                var createWarehouseResponse = await client.CreateWarehouse(new CreateWarehouseRequestBody {
+                    Name = "My Warehouse",
+                    OriginAddress = new Address {
+                        Name = "My Warehouse",
+                        Phone = "1-530-894-0797",
+                        AddressLine1 = "424 Otterson Drive",
+                        CityLocality = "Chico",
+                        StateProvince = "CA",
+                        PostalCode = "95928-8217",
+                        CountryCode = "US",
+                    },
+                    ReturnAddress = new Address {
+                        Name = "Return To Seller",
+                        Phone = "1-530-894-0797",
+                        AddressLine1 = "424 Otterson Drive",
+                        CityLocality = "Chico",
+                        StateProvince = "CA",
+                        PostalCode = "95928-8217",
+                        CountryCode = "US",
+                    },
+                });
+                Console.WriteLine(JsonConvert.SerializeObject(createWarehouseResponse, Formatting.Indented));
+                var warehouseId = createWarehouseResponse.WarehouseId;
+
                 // Find some domestic entries to print labels for
-                var rateResponse = await GenerateDomesticRate(client, carriers);
+                var rateResponse = await GenerateDomesticRate(client, warehouseId, carriers);
                 Console.WriteLine(JsonConvert.SerializeObject(rateResponse, Formatting.Indented));
                 var domesticUSPSRate = rateResponse.RateResponse.Rates.FirstOrDefault(p => p.ServiceCode == "usps_priority_mail");
+                if (domesticUSPSRate == null) {
+                    throw new Exception("Could not get USPS domestic rate!");
+                }
                 Console.WriteLine(JsonConvert.SerializeObject(domesticUSPSRate, Formatting.Indented));
 
                 // Now get UPS ground
-                rateResponse = await GenerateDomesticRate(client, carriers);
+                rateResponse = await GenerateDomesticRate(client, warehouseId, carriers);
                 var domesticUPSRate = rateResponse.RateResponse.Rates.FirstOrDefault(p => p.ServiceCode == "ups_ground");
+                if (domesticUPSRate == null) {
+                    throw new Exception("Could not get UPS domestic rate!");
+                }
                 Console.WriteLine(JsonConvert.SerializeObject(domesticUPSRate, Formatting.Indented));
 
                 // Now get FedEx ground
-                rateResponse = await GenerateDomesticRate(client, carriers);
+                rateResponse = await GenerateDomesticRate(client, warehouseId, carriers);
                 var domesticFedExRate = rateResponse.RateResponse.Rates.FirstOrDefault(p => p.ServiceCode == "fedex_ground");
+                if (domesticFedExRate == null) {
+                    throw new Exception("Could not get FedEx domestic rate!");
+                }
                 Console.WriteLine(JsonConvert.SerializeObject(domesticFedExRate, Formatting.Indented));
 
                 // Get rates for priority mail international entry for later
-                rateResponse = await GenerateInternationalRate(client, carriers);
+                rateResponse = await GenerateInternationalRate(client, warehouseId, carriers);
                 Console.WriteLine(JsonConvert.SerializeObject(rateResponse, Formatting.Indented));
                 var internationalUSPSRate = rateResponse.RateResponse.Rates.FirstOrDefault(p => p.ServiceCode == "usps_priority_mail_international");
+                if (internationalUSPSRate == null) {
+                    throw new Exception("Could not get USPS International rate!");
+                }
                 Console.WriteLine(JsonConvert.SerializeObject(internationalUSPSRate, Formatting.Indented));
 
                 // Now get UPS
-                rateResponse = await GenerateInternationalRate(client, carriers);
+                rateResponse = await GenerateInternationalRate(client, warehouseId, carriers);
                 var internationalUPSRate = rateResponse.RateResponse.Rates.FirstOrDefault(p => p.ServiceCode == "ups_worldwide_expedited");
+                if (internationalUPSRate == null) {
+                    throw new Exception("Could not get UPS International rate!");
+                }
                 Console.WriteLine(JsonConvert.SerializeObject(internationalUPSRate, Formatting.Indented));
 
                 // Now get FedEx
-                rateResponse = await GenerateInternationalRate(client, carriers);
+                rateResponse = await GenerateInternationalRate(client, warehouseId, carriers);
                 var internationalFedExRate = rateResponse.RateResponse.Rates.FirstOrDefault(p => p.ServiceCode == "fedex_international_economy");
+                if (internationalFedExRate == null) {
+                    throw new Exception("Could not get FedEx International rate!");
+                }
                 Console.WriteLine(JsonConvert.SerializeObject(internationalFedExRate, Formatting.Indented));
 
                 // Now create labels for the two USPS shipments
@@ -179,6 +231,7 @@ namespace ShipEngineTest
         /// </summary>
         private static async Task<CalculateRatesResponseBody> GenerateDomesticRate(
             IShipEngineClient client,
+            string warehouseId,
             GetCarriersResponseBody carriers)
         {
             return await client.CalculateRates(new CalculateRatesRequestBody {
@@ -194,7 +247,8 @@ namespace ShipEngineTest
                         PostalCode = "95928-8217",
                         CountryCode = "US",
                     },
-                    ShipFrom = new Address {
+                    WarehouseId = warehouseId,
+                    ReturnTo = new Address {
                         Name = "Online Seller",
                         Phone = "1-530-894-0797",
                         AddressLine1 = "424 Otterson Drive",
@@ -228,6 +282,7 @@ namespace ShipEngineTest
         /// </summary>
         private static async Task<CalculateRatesResponseBody> GenerateInternationalRate(
             IShipEngineClient client,
+            string warehouseId,
             GetCarriersResponseBody carriers)
         {
             return await client.CalculateRates(new CalculateRatesRequestBody {
@@ -243,7 +298,8 @@ namespace ShipEngineTest
                         PostalCode = "3101",
                         CountryCode = "AU",
                     },
-                    ShipFrom = new Address {
+                    WarehouseId = warehouseId,
+                    ReturnTo = new Address {
                         Name = "Online Seller",
                         Phone = "1-530-894-0797",
                         AddressLine1 = "424 Otterson Drive",

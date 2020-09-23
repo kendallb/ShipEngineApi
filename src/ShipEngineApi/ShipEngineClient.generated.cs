@@ -562,7 +562,7 @@ namespace ShipEngineAPI
         /// <param name="batch_id">Batch ID</param>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<string> DeleteBatch(string batch_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task DeleteBatch(string batch_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (batch_id == null)
                 throw new System.ArgumentNullException("batch_id");
@@ -577,7 +577,6 @@ namespace ShipEngineAPI
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("DELETE");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
     
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
@@ -601,12 +600,7 @@ namespace ShipEngineAPI
                             var status_ = (int)response_.StatusCode;
                             if (status_ == 204)
                             {
-                                var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
-                                if (objectResponse_.Object == null)
-                                {
-                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                                }
-                                return objectResponse_.Object;
+                                return;
                             }
                             else
                             if (status_ == 400)
@@ -772,7 +766,7 @@ namespace ShipEngineAPI
         /// <param name="batch_id">Batch ID</param>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<string> UpdateBatch(string batch_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task UpdateBatch(string batch_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (batch_id == null)
                 throw new System.ArgumentNullException("batch_id");
@@ -786,9 +780,8 @@ namespace ShipEngineAPI
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "text/plain");
+                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
     
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
@@ -812,12 +805,7 @@ namespace ShipEngineAPI
                             var status_ = (int)response_.StatusCode;
                             if (status_ == 204)
                             {
-                                var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
-                                if (objectResponse_.Object == null)
-                                {
-                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                                }
-                                return objectResponse_.Object;
+                                return;
                             }
                             else
                             if (status_ == 400)
@@ -878,7 +866,7 @@ namespace ShipEngineAPI
         /// <param name="batch_id">Batch ID</param>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<string> AddToBatch(AddToBatchRequestBody body, string batch_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task AddToBatch(AddToBatchRequestBody body, string batch_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (batch_id == null)
                 throw new System.ArgumentNullException("batch_id");
@@ -899,7 +887,6 @@ namespace ShipEngineAPI
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
     
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
@@ -923,12 +910,7 @@ namespace ShipEngineAPI
                             var status_ = (int)response_.StatusCode;
                             if (status_ == 204)
                             {
-                                var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
-                                if (objectResponse_.Object == null)
-                                {
-                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                                }
-                                return objectResponse_.Object;
+                                return;
                             }
                             else
                             if (status_ == 400)
@@ -1104,7 +1086,7 @@ namespace ShipEngineAPI
         /// <param name="batch_id">Batch ID</param>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<string> ProcessBatch(ProcessBatchRequestBody body, string batch_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task ProcessBatch(ProcessBatchRequestBody body, string batch_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (batch_id == null)
                 throw new System.ArgumentNullException("batch_id");
@@ -1125,7 +1107,6 @@ namespace ShipEngineAPI
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
     
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
@@ -1149,12 +1130,7 @@ namespace ShipEngineAPI
                             var status_ = (int)response_.StatusCode;
                             if (status_ == 204)
                             {
-                                var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
-                                if (objectResponse_.Object == null)
-                                {
-                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                                }
-                                return objectResponse_.Object;
+                                return;
                             }
                             else
                             if (status_ == 400)
@@ -1215,7 +1191,7 @@ namespace ShipEngineAPI
         /// <param name="batch_id">Batch ID</param>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<string> RemoveFromBatch(RemoveFromBatchRequestBody body, string batch_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task RemoveFromBatch(RemoveFromBatchRequestBody body, string batch_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (batch_id == null)
                 throw new System.ArgumentNullException("batch_id");
@@ -1236,7 +1212,6 @@ namespace ShipEngineAPI
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
     
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
@@ -1260,12 +1235,7 @@ namespace ShipEngineAPI
                             var status_ = (int)response_.StatusCode;
                             if (status_ == 204)
                             {
-                                var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
-                                if (objectResponse_.Object == null)
-                                {
-                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                                }
-                                return objectResponse_.Object;
+                                return;
                             }
                             else
                             if (status_ == 400)
@@ -2069,7 +2039,7 @@ namespace ShipEngineAPI
         /// <param name="carrier_id">Carrier ID</param>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<string> DisconnectCarrier(CarrierName carrier_name, string carrier_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task DisconnectCarrier(CarrierName carrier_name, string carrier_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (carrier_name == null)
                 throw new System.ArgumentNullException("carrier_name");
@@ -2088,7 +2058,6 @@ namespace ShipEngineAPI
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("DELETE");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
     
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
@@ -2112,12 +2081,7 @@ namespace ShipEngineAPI
                             var status_ = (int)response_.StatusCode;
                             if (status_ == 204)
                             {
-                                var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
-                                if (objectResponse_.Object == null)
-                                {
-                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                                }
-                                return objectResponse_.Object;
+                                return;
                             }
                             else
                             if (status_ == 404)
@@ -2269,7 +2233,7 @@ namespace ShipEngineAPI
         /// <param name="carrier_id">Carrier ID</param>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<string> UpdateCarrierSettings(UpdateCarrierSettingsRequestBody body, CarrierNameWithSettings carrier_name, string carrier_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task UpdateCarrierSettings(UpdateCarrierSettingsRequestBody body, CarrierNameWithSettings carrier_name, string carrier_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (carrier_name == null)
                 throw new System.ArgumentNullException("carrier_name");
@@ -2294,7 +2258,6 @@ namespace ShipEngineAPI
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
     
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
@@ -2318,12 +2281,7 @@ namespace ShipEngineAPI
                             var status_ = (int)response_.StatusCode;
                             if (status_ == 204)
                             {
-                                var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
-                                if (objectResponse_.Object == null)
-                                {
-                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                                }
-                                return objectResponse_.Object;
+                                return;
                             }
                             else
                             if (status_ == 404)
@@ -2976,7 +2934,7 @@ namespace ShipEngineAPI
         /// <param name="webhook_id">Webhook ID</param>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<string> UpdateWebhook(UpdateWebhookRequestBody body, string webhook_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task UpdateWebhook(UpdateWebhookRequestBody body, string webhook_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (webhook_id == null)
                 throw new System.ArgumentNullException("webhook_id");
@@ -2997,7 +2955,6 @@ namespace ShipEngineAPI
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
     
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
@@ -3021,12 +2978,7 @@ namespace ShipEngineAPI
                             var status_ = (int)response_.StatusCode;
                             if (status_ == 204)
                             {
-                                var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
-                                if (objectResponse_.Object == null)
-                                {
-                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                                }
-                                return objectResponse_.Object;
+                                return;
                             }
                             else
                             if (status_ == 400)
@@ -3087,7 +3039,7 @@ namespace ShipEngineAPI
         /// <param name="webhook_id">Webhook ID</param>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<string> DeleteWebhook(string webhook_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task DeleteWebhook(string webhook_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (webhook_id == null)
                 throw new System.ArgumentNullException("webhook_id");
@@ -3102,7 +3054,6 @@ namespace ShipEngineAPI
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("DELETE");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
     
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
@@ -3126,12 +3077,7 @@ namespace ShipEngineAPI
                             var status_ = (int)response_.StatusCode;
                             if (status_ == 204)
                             {
-                                var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
-                                if (objectResponse_.Object == null)
-                                {
-                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                                }
-                                return objectResponse_.Object;
+                                return;
                             }
                             else
                             if (status_ == 400)
@@ -5055,7 +5001,7 @@ namespace ShipEngineAPI
         /// <param name="package_id">Package ID</param>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<string> UpdatePackageType(UpdatePackageTypeRequestBody body, string package_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task UpdatePackageType(UpdatePackageTypeRequestBody body, string package_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (package_id == null)
                 throw new System.ArgumentNullException("package_id");
@@ -5076,7 +5022,6 @@ namespace ShipEngineAPI
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
     
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
@@ -5100,12 +5045,7 @@ namespace ShipEngineAPI
                             var status_ = (int)response_.StatusCode;
                             if (status_ == 204)
                             {
-                                var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
-                                if (objectResponse_.Object == null)
-                                {
-                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                                }
-                                return objectResponse_.Object;
+                                return;
                             }
                             else
                             if (status_ == 400)
@@ -5166,7 +5106,7 @@ namespace ShipEngineAPI
         /// <param name="package_id">Package ID</param>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<string> DeletePackageType(string package_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task DeletePackageType(string package_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (package_id == null)
                 throw new System.ArgumentNullException("package_id");
@@ -5181,7 +5121,6 @@ namespace ShipEngineAPI
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("DELETE");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
     
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
@@ -5205,12 +5144,7 @@ namespace ShipEngineAPI
                             var status_ = (int)response_.StatusCode;
                             if (status_ == 204)
                             {
-                                var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
-                                if (objectResponse_.Object == null)
-                                {
-                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                                }
-                                return objectResponse_.Object;
+                                return;
                             }
                             else
                             if (status_ == 400)
@@ -6336,7 +6270,7 @@ namespace ShipEngineAPI
         /// <param name="shipment_id">Shipment ID</param>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<string> CancelShipments(string shipment_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task CancelShipments(string shipment_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (shipment_id == null)
                 throw new System.ArgumentNullException("shipment_id");
@@ -6350,9 +6284,8 @@ namespace ShipEngineAPI
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "text/plain");
+                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
     
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
@@ -6376,12 +6309,7 @@ namespace ShipEngineAPI
                             var status_ = (int)response_.StatusCode;
                             if (status_ == 204)
                             {
-                                var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
-                                if (objectResponse_.Object == null)
-                                {
-                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                                }
-                                return objectResponse_.Object;
+                                return;
                             }
                             else
                             if (status_ == 400)
@@ -6778,7 +6706,7 @@ namespace ShipEngineAPI
         /// <param name="shipment_id">Shipment ID</param>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<string> UntagShipment(string shipment_id, string tag_name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task UntagShipment(string shipment_id, string tag_name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (shipment_id == null)
                 throw new System.ArgumentNullException("shipment_id");
@@ -6797,7 +6725,6 @@ namespace ShipEngineAPI
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("DELETE");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
     
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
@@ -6821,12 +6748,7 @@ namespace ShipEngineAPI
                             var status_ = (int)response_.StatusCode;
                             if (status_ == 204)
                             {
-                                var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
-                                if (objectResponse_.Object == null)
-                                {
-                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                                }
-                                return objectResponse_.Object;
+                                return;
                             }
                             else
                             if (status_ == 400)
@@ -7091,7 +7013,7 @@ namespace ShipEngineAPI
         /// <summary>Delete Tag</summary>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<string> DeleteTag(string tag_name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task DeleteTag(string tag_name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (tag_name == null)
                 throw new System.ArgumentNullException("tag_name");
@@ -7106,7 +7028,6 @@ namespace ShipEngineAPI
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("DELETE");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
     
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
@@ -7130,12 +7051,7 @@ namespace ShipEngineAPI
                             var status_ = (int)response_.StatusCode;
                             if (status_ == 204)
                             {
-                                var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
-                                if (objectResponse_.Object == null)
-                                {
-                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                                }
-                                return objectResponse_.Object;
+                                return;
                             }
                             else
                             if (status_ == 400)
@@ -7195,7 +7111,7 @@ namespace ShipEngineAPI
         /// <summary>Update Tag Name</summary>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<string> RenameTag(string tag_name, string new_tag_name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task RenameTag(string tag_name, string new_tag_name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (tag_name == null)
                 throw new System.ArgumentNullException("tag_name");
@@ -7213,9 +7129,8 @@ namespace ShipEngineAPI
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "text/plain");
+                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
     
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
@@ -7239,12 +7154,7 @@ namespace ShipEngineAPI
                             var status_ = (int)response_.StatusCode;
                             if (status_ == 204)
                             {
-                                var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
-                                if (objectResponse_.Object == null)
-                                {
-                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                                }
-                                return objectResponse_.Object;
+                                return;
                             }
                             else
                             if (status_ == 400)
@@ -7417,7 +7327,7 @@ namespace ShipEngineAPI
         /// <param name="tracking_number">The tracking number associated with a shipment</param>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<string> StartTracking(string carrier_code = null, string tracking_number = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task StartTracking(string carrier_code = null, string tracking_number = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/tracking/start?");
@@ -7436,9 +7346,8 @@ namespace ShipEngineAPI
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "text/plain");
+                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
                     request_.Method = new System.Net.Http.HttpMethod("POST");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
     
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
@@ -7462,12 +7371,7 @@ namespace ShipEngineAPI
                             var status_ = (int)response_.StatusCode;
                             if (status_ == 204)
                             {
-                                var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
-                                if (objectResponse_.Object == null)
-                                {
-                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                                }
-                                return objectResponse_.Object;
+                                return;
                             }
                             else
                             if (status_ == 400)
@@ -7529,7 +7433,7 @@ namespace ShipEngineAPI
         /// <param name="tracking_number">The tracking number associated with a shipment</param>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<string> StopTracking(string carrier_code = null, string tracking_number = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task StopTracking(string carrier_code = null, string tracking_number = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/tracking/stop?");
@@ -7548,9 +7452,8 @@ namespace ShipEngineAPI
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "text/plain");
+                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
                     request_.Method = new System.Net.Http.HttpMethod("POST");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
     
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
@@ -7574,12 +7477,7 @@ namespace ShipEngineAPI
                             var status_ = (int)response_.StatusCode;
                             if (status_ == 204)
                             {
-                                var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
-                                if (objectResponse_.Object == null)
-                                {
-                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                                }
-                                return objectResponse_.Object;
+                                return;
                             }
                             else
                             if (status_ == 400)
@@ -7951,7 +7849,7 @@ namespace ShipEngineAPI
         /// <param name="warehouse_id">Warehouse ID</param>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<string> UpdateWarehouse(UpdateWarehouseRequestBody body, string warehouse_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task UpdateWarehouse(UpdateWarehouseRequestBody body, string warehouse_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (warehouse_id == null)
                 throw new System.ArgumentNullException("warehouse_id");
@@ -7972,7 +7870,6 @@ namespace ShipEngineAPI
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
     
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
@@ -7996,12 +7893,7 @@ namespace ShipEngineAPI
                             var status_ = (int)response_.StatusCode;
                             if (status_ == 204)
                             {
-                                var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
-                                if (objectResponse_.Object == null)
-                                {
-                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                                }
-                                return objectResponse_.Object;
+                                return;
                             }
                             else
                             if (status_ == 400)
@@ -8062,7 +7954,7 @@ namespace ShipEngineAPI
         /// <param name="warehouse_id">Warehouse ID</param>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<string> DeleteWarehouse(string warehouse_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task DeleteWarehouse(string warehouse_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (warehouse_id == null)
                 throw new System.ArgumentNullException("warehouse_id");
@@ -8077,7 +7969,6 @@ namespace ShipEngineAPI
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
                     request_.Method = new System.Net.Http.HttpMethod("DELETE");
-                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
     
                     PrepareRequest(client_, request_, urlBuilder_);
                     var url_ = urlBuilder_.ToString();
@@ -8101,12 +7992,7 @@ namespace ShipEngineAPI
                             var status_ = (int)response_.StatusCode;
                             if (status_ == 204)
                             {
-                                var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
-                                if (objectResponse_.Object == null)
-                                {
-                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
-                                }
-                                return objectResponse_.Object;
+                                return;
                             }
                             else
                             if (status_ == 400)
