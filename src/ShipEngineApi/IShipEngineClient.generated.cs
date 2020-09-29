@@ -5584,7 +5584,7 @@ namespace ShipEngineAPI
         public string WarehouseId { get; set; }
     
         /// <summary>A string that uniquely identifies the submission</summary>
-        [Newtonsoft.Json.JsonProperty("submission_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("submission_id", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
         [System.Obsolete]
         public string SubmissionId { get; set; }
@@ -5657,7 +5657,7 @@ namespace ShipEngineAPI
         public string WarehouseId { get; set; }
     
         /// <summary>A string that uniquely identifies the submission</summary>
-        [Newtonsoft.Json.JsonProperty("submission_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("submission_id", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
         [System.Obsolete]
         public string SubmissionId { get; set; }
