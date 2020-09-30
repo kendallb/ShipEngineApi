@@ -630,7 +630,7 @@ namespace ShipEngineAPI
     
         /// <summary>The state or province.  For some countries (including the U.S.) only abbreviations are allowed.  Other countries allow the full name or abbreviation.
         /// </summary>
-        [Newtonsoft.Json.JsonProperty("state_province", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("state_province", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
         public string StateProvince { get; set; }
     
