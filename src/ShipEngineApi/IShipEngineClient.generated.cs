@@ -799,6 +799,20 @@ namespace ShipEngineAPI
         [System.ComponentModel.DataAnnotations.Required]
         public string Message { get; set; }
     
+        /// <summary>A string that uniquely identifies the carrier.</summary>
+        [Newtonsoft.Json.JsonProperty("carrier_id", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(25, MinimumLength = 1)]
+        [System.ComponentModel.DataAnnotations.RegularExpression(@"^se(-[a-z0-9]+)+$")]
+        public string CarrierId { get; set; }
+    
+        /// <summary>A string that uniquely identifies the carrier by code.</summary>
+        [Newtonsoft.Json.JsonProperty("carrier_code", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string CarrierCode { get; set; }
+    
+        /// <summary>A string that uniquely identifies the carrier by name.</summary>
+        [Newtonsoft.Json.JsonProperty("carrier_name", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string CarrierName { get; set; }
+    
     
     }
     
