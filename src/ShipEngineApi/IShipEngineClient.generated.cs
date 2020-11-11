@@ -5137,6 +5137,11 @@ namespace ShipEngineAPI
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         public LabelDownloadType? LabelDownloadType { get; set; }
     
+        /// <summary>The label image resource that was used to create a custom label image.</summary>
+        [Newtonsoft.Json.JsonProperty("label_image_id", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 4)]
+        public string LabelImageId { get; set; }
+    
         /// <summary>Indicate if this label is being used only for testing purposes. If true, then no charge will be added to your account. This only works with Stamps.com and Endicia for USPS</summary>
         [Newtonsoft.Json.JsonProperty("test_label", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public bool? TestLabel { get; set; }
