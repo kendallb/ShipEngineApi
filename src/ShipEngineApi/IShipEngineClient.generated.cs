@@ -1971,7 +1971,7 @@ namespace ShipEngineAPI
         public string Name { get; set; }
     
         /// <summary>Default value of option</summary>
-        [Newtonsoft.Json.JsonProperty("default_value", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("default_value", Required = Newtonsoft.Json.Required.AllowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
         public string DefaultValue { get; set; }
     
