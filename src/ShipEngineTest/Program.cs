@@ -73,7 +73,13 @@ namespace ShipEngineTest
                 Console.WriteLine(JsonConvert.SerializeObject(warehouseResponse, Formatting.Indented));
                 if (warehouseResponse.Warehouses.Count > 1) {
                     // Delete it, so we can create it again
-                    await client.DeleteWarehouse(warehouseResponse.Warehouses[1].WarehouseId);
+                    for (var i = 1; i < warehouseResponse.Warehouses.Count; i++) {
+                        try {
+                            await client.DeleteWarehouse(warehouseResponse.Warehouses[i].WarehouseId);
+                        } catch (Exception e) {
+
+                        }
+                    }
                 }
 
                 // Now create our warehouse

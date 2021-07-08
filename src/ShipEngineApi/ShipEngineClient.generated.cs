@@ -248,9 +248,10 @@ namespace ShipEngineAPI
         /// <param name="page">Return a specific page of results. Defaults to the first page. If set to a number that's greater than the number of pages of results, an empty page is returned.</param>
         /// <param name="page_size">The number of results to return per response.</param>
         /// <param name="sort_dir">Controls the sort order of the query.</param>
+        /// <param name="batch_number">Batch Number</param>
         /// <returns>The request was a success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<ListBatchesResponseBody> ListBatches(BatchStatus? status = null, int? page = null, int? page_size = null, SortDir? sort_dir = null, BatchesSortBy? sort_by = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<ListBatchesResponseBody> ListBatches(BatchStatus? status = null, int? page = null, int? page_size = null, SortDir? sort_dir = null, string batch_number = null, BatchesSortBy? sort_by = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/batches?");
@@ -269,6 +270,10 @@ namespace ShipEngineAPI
             if (sort_dir != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("sort_dir") + "=").Append(System.Uri.EscapeDataString(ConvertToString(sort_dir, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (batch_number != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("batch_number") + "=").Append(System.Uri.EscapeDataString(ConvertToString(batch_number, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
             if (sort_by != null)
             {
@@ -1329,6 +1334,16 @@ namespace ShipEngineAPI
     
                             var status_ = (int)response_.StatusCode;
                             if (status_ == 200)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<GetCarriersResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
+                            }
+                            else
+                            if (status_ == 207)
                             {
                                 var objectResponse_ = await ReadObjectResponseAsync<GetCarriersResponseBody>(response_, headers_).ConfigureAwait(false);
                                 if (objectResponse_.Object == null)
@@ -2517,7 +2532,7 @@ namespace ShipEngineAPI
         /// <summary>Download File</summary>
         /// <returns>The request was a success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<FileResponse> DownloadFile(string subdir, string filename, string dir, string download = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<FileResponse> DownloadFile(string subdir, string filename, string dir, string download = null, int? rotation = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (subdir == null)
                 throw new System.ArgumentNullException("subdir");
@@ -2536,6 +2551,10 @@ namespace ShipEngineAPI
             if (download != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("download") + "=").Append(System.Uri.EscapeDataString(ConvertToString(download, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (rotation != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("rotation") + "=").Append(System.Uri.EscapeDataString(ConvertToString(rotation, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
             urlBuilder_.Length--;
     
@@ -5396,7 +5415,7 @@ namespace ShipEngineAPI
         /// <summary>Estimate Rates</summary>
         /// <returns>The request was a success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<System.Collections.Generic.IList<Rate>> EstimateRates(EstimateRatesRequestBody body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<System.Collections.Generic.IList<RateEstimate>> EstimateRates(EstimateRatesRequestBody body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (body == null)
                 throw new System.ArgumentNullException("body");
@@ -5437,7 +5456,7 @@ namespace ShipEngineAPI
                             var status_ = (int)response_.StatusCode;
                             if (status_ == 200)
                             {
-                                var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.IList<Rate>>(response_, headers_).ConfigureAwait(false);
+                                var objectResponse_ = await ReadObjectResponseAsync<System.Collections.Generic.IList<RateEstimate>>(response_, headers_).ConfigureAwait(false);
                                 if (objectResponse_.Object == null)
                                 {
                                     throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
