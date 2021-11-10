@@ -22,6 +22,23 @@ namespace ShipEngineTest
                 using var httpClient = new SingleInstanceHttpClient();
                 var client = new ShipEngineClient(httpClient, apiKey) as IShipEngineClient;
                 client.ReadResponseAsString = true;
+
+                // Test some tracking numbers
+                var tracking = await client.GetTrackingLog("endicia", "9400111897864863224429");
+                Console.WriteLine(JsonConvert.SerializeObject(tracking, Formatting.Indented));
+                tracking = await client.GetTrackingLog("fedex", "285761258500");
+                Console.WriteLine(JsonConvert.SerializeObject(tracking, Formatting.Indented));
+                tracking = await client.GetTrackingLog("ups", "1Z1Y697WYW96354186");
+                Console.WriteLine(JsonConvert.SerializeObject(tracking, Formatting.Indented));
+
+                // NOTE: These will only work with a real API key ...
+                // tracking = await client.GetTrackingLog("dhl_express", "1118436826");
+                // Console.WriteLine(JsonConvert.SerializeObject(tracking, Formatting.Indented));
+                // tracking = await client.GetTrackingLog("ontrac", "D10012779850776");
+                // Console.WriteLine(JsonConvert.SerializeObject(tracking, Formatting.Indented));
+                // tracking = await client.GetTrackingLog("apc", "1646302220033587");
+                // Console.WriteLine(JsonConvert.SerializeObject(tracking, Formatting.Indented));
+
                 const string toParse = "424 Otterson Drive, Chico CA 95928";
                 Console.WriteLine($"Parsing: {toParse}");
                 var response = await client.ParseAddress(new ParseAddressRequestBody {
@@ -76,8 +93,7 @@ namespace ShipEngineTest
                     for (var i = 1; i < warehouseResponse.Warehouses.Count; i++) {
                         try {
                             await client.DeleteWarehouse(warehouseResponse.Warehouses[i].WarehouseId);
-                        } catch (Exception e) {
-
+                        } catch (Exception) {
                         }
                     }
                 }
