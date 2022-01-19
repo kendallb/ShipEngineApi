@@ -5486,7 +5486,7 @@ namespace ShipEngineAPI
         public string StatusDescription { get; set; }
     
         /// <summary>Carrier status code</summary>
-        [Newtonsoft.Json.JsonProperty("carrier_status_code", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("carrier_status_code", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
         public string CarrierStatusCode { get; set; }
     
@@ -5495,9 +5495,9 @@ namespace ShipEngineAPI
         [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue)]
         public string CarrierStatusDescription { get; set; }
     
-        [Newtonsoft.Json.JsonProperty("ship_date", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("ship_date", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.RegularExpression(@"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[-+]\d{2}:\d{2})$")]
-        public System.DateTimeOffset ShipDate { get; set; }
+        public System.DateTimeOffset? ShipDate { get; set; }
     
         [Newtonsoft.Json.JsonProperty("estimated_delivery_date", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.RegularExpression(@"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[-+]\d{2}:\d{2})$")]
