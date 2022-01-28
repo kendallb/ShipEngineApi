@@ -5535,7 +5535,7 @@ namespace ShipEngineAPI
         public System.DateTimeOffset CarrierOccurredAt { get; set; }
     
         /// <summary>Event description</summary>
-        [Newtonsoft.Json.JsonProperty("description", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("description", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue)]
         public string Description { get; set; }
     
