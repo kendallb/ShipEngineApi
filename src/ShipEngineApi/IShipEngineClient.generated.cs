@@ -5476,7 +5476,7 @@ namespace ShipEngineAPI
         public string TrackingNumber { get; set; }
     
         /// <summary>Status code</summary>
-        [Newtonsoft.Json.JsonProperty("status_code", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("status_code", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
         public string StatusCode { get; set; }
     
@@ -5569,7 +5569,7 @@ namespace ShipEngineAPI
         public string Signer { get; set; }
     
         /// <summary>Event Code</summary>
-        [Newtonsoft.Json.JsonProperty("event_code", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonProperty("event_code", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue)]
         public string EventCode { get; set; }
     
