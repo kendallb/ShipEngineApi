@@ -26,7 +26,7 @@
       "exceptionClass": "ApiException",
       "wrapDtoExceptions": true,
       "useHttpClientCreationMethod": false,
-      "httpClientType": "IHttpClient",
+      "httpClientType": "HttpClient",
       "useHttpRequestMessageCreationMethod": false,
       "useBaseUrl": true,
       "generateBaseUrlProperty": true,
@@ -46,7 +46,9 @@
       "queryNullValue": "",
       "className": "ShipEngineClient",
       "operationGenerationMode": "SingleClientFromOperationId",
-      "additionalNamespaceUsages": [],
+      "additionalNamespaceUsages": [
+        "System.Net.Http"
+      ],
       "additionalContractNamespaceUsages": [],
       "generateOptionalParameters": true,
       "generateJsonMethods": false,

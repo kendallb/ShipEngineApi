@@ -18,7 +18,7 @@ namespace ShipEngineAPI
         /// </summary>
         /// <param name="httpClient">Reference to the shared HttpClient class to use</param>
         /// <param name="apiKey">Reference to the API keys to use for the API calls</param>
-        public ShipEngineClient(IHttpClient httpClient, string apiKey)
+        public ShipEngineClient(HttpClient httpClient, string apiKey)
             : this(httpClient)
         {
             _apiKey = apiKey;
@@ -30,7 +30,7 @@ namespace ShipEngineAPI
         /// <param name="client">HttpClient being used</param>
         /// <param name="request">HttpRequestMessage for this request</param>
         /// <param name="url">Url for the request</param>
-        partial void PrepareRequest(IHttpClient client, HttpRequestMessage request, string url)
+        partial void PrepareRequest(HttpClient client, HttpRequestMessage request, string url)
         {
             if (string.IsNullOrWhiteSpace(_apiKey))
             {

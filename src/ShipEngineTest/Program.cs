@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using ShipEngineAPI;
@@ -19,7 +20,7 @@ namespace ShipEngineTest
         {
             try {
                 const string apiKey = "TEST_UviO3xlrk2l3tdqyTLUZ9flQuDtVwRBTUlVZgZmCQA4";
-                using var httpClient = new SingleInstanceHttpClient();
+                using var httpClient = new HttpClient();
                 var client = new ShipEngineClient(httpClient, apiKey) as IShipEngineClient;
                 client.ReadResponseAsString = true;
 

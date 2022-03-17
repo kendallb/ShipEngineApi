@@ -4,6 +4,7 @@
 // </auto-generated>
 //----------------------
 
+using System.Net.Http;
 using ShipEngineAPI;
 
 #pragma warning disable 108 // Disable "CS0108 '{derivedDto}.ToJson()' hides inherited member '{dtoBase}.ToJson()'. Use the new keyword if hiding was intended."
@@ -21,10 +22,10 @@ namespace ShipEngineAPI
     public partial class ShipEngineClient : IShipEngineClient
     {
         private string _baseUrl = "https://api.shipengine.com";
-        private IHttpClient _httpClient;
+        private HttpClient _httpClient;
         private System.Lazy<Newtonsoft.Json.JsonSerializerSettings> _settings;
     
-        public ShipEngineClient(IHttpClient httpClient)
+        public ShipEngineClient(HttpClient httpClient)
         {
             _httpClient = httpClient;
             _settings = new System.Lazy<Newtonsoft.Json.JsonSerializerSettings>(CreateSerializerSettings);
@@ -46,9 +47,9 @@ namespace ShipEngineAPI
         protected Newtonsoft.Json.JsonSerializerSettings JsonSerializerSettings { get { return _settings.Value; } }
     
         partial void UpdateJsonSerializerSettings(Newtonsoft.Json.JsonSerializerSettings settings);
-        partial void PrepareRequest(IHttpClient client, System.Net.Http.HttpRequestMessage request, string url);
-        partial void PrepareRequest(IHttpClient client, System.Net.Http.HttpRequestMessage request, System.Text.StringBuilder urlBuilder);
-        partial void ProcessResponse(IHttpClient client, System.Net.Http.HttpResponseMessage response);
+        partial void PrepareRequest(HttpClient client, System.Net.Http.HttpRequestMessage request, string url);
+        partial void PrepareRequest(HttpClient client, System.Net.Http.HttpRequestMessage request, System.Text.StringBuilder urlBuilder);
+        partial void ProcessResponse(HttpClient client, System.Net.Http.HttpResponseMessage response);
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Parse an address</summary>

@@ -47,13 +47,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IHttpClient.cs" />
     <Compile Include="IShipEngineClient.cs" />
     <Compile Include="IShipEngineClient.generated.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShipEngineClient.cs" />
     <Compile Include="ShipEngineClient.generated.cs" />
-    <Compile Include="SingleInstanceHttpClient.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ShipEngineApi.snk" />
