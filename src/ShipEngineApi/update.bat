@@ -1,2 +1,2 @@
 @echo off
-c:\src\git\nswag\src\nswag.console\bin\debug\net461\nswag.exe run ShipEngineClient.nswag
+C:\src\snap\Tools\nswag\console\nswag.exe run ShipEngineClient.nswag
