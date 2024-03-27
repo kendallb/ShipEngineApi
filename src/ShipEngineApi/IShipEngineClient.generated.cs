@@ -19,6 +19,45 @@ namespace ShipEngineAPI
     public partial interface IShipEngineClient
     {
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>List Account Settings</summary>
+        /// <returns>The request was a success.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<GetAccountSettingsResponseBody> ListAccountSettings(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>List Account Images</summary>
+        /// <returns>The request was a success.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<ListAccountSettingsImagesResponseBody> ListAccountImages(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>Create an Account Image</summary>
+        /// <returns>The requested object creation was a success.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<GetAccountSettingsImagesResponseBody> CreateAccountImage(CreateAccountSettingsImageRequestBody body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>Get Account Image By ID</summary>
+        /// <param name="label_image_id">Label Image Id</param>
+        /// <returns>The request was a success.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<GetAccountSettingsImagesResponseBody> GetAccountSettingsImagesById(string label_image_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>Update Account Image By ID</summary>
+        /// <param name="label_image_id">Label Image Id</param>
+        /// <returns>The request was successful.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<string> UpdateAccountSettingsImagesById(string label_image_id, UpdateAccountSettingsImageRequestBody body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>Delete Account Image By Id</summary>
+        /// <param name="label_image_id">Label Image Id</param>
+        /// <returns>The request was successful.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<string> DeleteAccountImageById(string label_image_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Parse an address</summary>
         /// <param name="body">The only required field is `text`, which is the text to be parsed. You can optionally also provide an `address` containing already-known values. For example, you may already know the recipient's name, city, and country, and only want to parse the street address into separate lines.</param>
         /// <returns>Returns the parsed address, as well as a confidence score and a list of all the entities that were recognized in the text.</returns>
@@ -45,7 +84,7 @@ namespace ShipEngineAPI
         /// <summary>Create A Batch</summary>
         /// <returns>The requested object creation was a success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<CreateBatchResponseBody> CreateBatch(CreateBatchRequestBody body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<CreateBatchResponseBody> CreateBatch(CreateBatchRequest body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Get Batch By External ID</summary>
@@ -117,6 +156,13 @@ namespace ShipEngineAPI
         System.Threading.Tasks.Task<GetCarrierByIdResponseBody> GetCarrierById(string carrier_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>Disconnect Carrier by ID</summary>
+        /// <param name="carrier_id">Carrier ID</param>
+        /// <returns>The request was successful.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<string> DisconnectCarrierById(string carrier_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Add Funds To Carrier</summary>
         /// <param name="carrier_id">Carrier ID</param>
         /// <returns>The request was a success.</returns>
@@ -161,7 +207,7 @@ namespace ShipEngineAPI
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Get carrier settings</summary>
-        /// <param name="carrier_name">The carrier name, such as `stamps_com`, `ups`, `fedex`, or `dhl_express`.</param>
+        /// <param name="carrier_name">The carrier name, such as `ups`, `fedex`, or `dhl_express`.</param>
         /// <param name="carrier_id">Carrier ID</param>
         /// <returns>The request was a success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -169,7 +215,7 @@ namespace ShipEngineAPI
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Update carrier settings</summary>
-        /// <param name="carrier_name">The carrier name, such as `stamps_com`, `ups`, `fedex`, or `dhl_express`.</param>
+        /// <param name="carrier_name">The carrier name, such as `ups`, `fedex`, or `dhl_express`.</param>
         /// <param name="carrier_id">Carrier ID</param>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -340,6 +386,13 @@ namespace ShipEngineAPI
         System.Threading.Tasks.Task<GetManifestByIdResponseBody> GetManifestById(string manifest_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>Get Manifest Request By Id</summary>
+        /// <param name="manifest_request_id">The Manifest Request Id</param>
+        /// <returns>The request was a success.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<CreateManifestResponseBody> GetManifestRequestById(string manifest_request_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>List Custom Package Types</summary>
         /// <returns>The request was a success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -373,6 +426,36 @@ namespace ShipEngineAPI
         System.Threading.Tasks.Task DeletePackageType(string package_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>List Scheduled Pickups</summary>
+        /// <param name="carrier_id">Carrier ID</param>
+        /// <param name="warehouse_id">Warehouse ID</param>
+        /// <param name="created_at_start">Only return scheduled pickups that were created on or after a specific date/time</param>
+        /// <param name="created_at_end">Only return scheduled pickups that were created on or before a specific date/time</param>
+        /// <param name="page">Return a specific page of results. Defaults to the first page. If set to a number that's greater than the number of pages of results, an empty page is returned.</param>
+        /// <param name="page_size">The number of results to return per response.</param>
+        /// <returns>The request was a success.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<GetPickupsResponseBody> ListScheduledPickups(string carrier_id = null, string warehouse_id = null, System.DateTimeOffset? created_at_start = null, System.DateTimeOffset? created_at_end = null, int? page = null, int? page_size = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>Schedule a Pickup</summary>
+        /// <returns>The request was a success.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<SchedulePickupResponseBody> SchedulePickup(SchedulePickupRequestBody body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>Get Pickup By ID</summary>
+        /// <returns>The request was a success.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<GetPickupByIdResponseBody> GetPickupById(string pickup_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>Delete a Scheduled Pickup</summary>
+        /// <returns>Return the `pickup_id` of the scheduled pickup that was successfully deleted</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<DeletePickupByIdResponseBody> DeleteScheduledPickup(string pickup_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Get Shipping Rates</summary>
         /// <returns>The request was a success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -396,6 +479,20 @@ namespace ShipEngineAPI
         /// <returns>The request was a success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<GetRateByIdResponseBody> GetRateById(string rate_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>List Service Points</summary>
+        /// <returns>The request was a success.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<ListServicePointsResponseBody> ServicePointsList(GetServicePointsRequest body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>Get Service Point By ID</summary>
+        /// <param name="carrier_code">Carrier code</param>
+        /// <param name="country_code">A two-letter [ISO 3166-1 country code](https://en.wikipedia.org/wiki/ISO_3166-1)</param>
+        /// <returns>The request was a success.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<GetServicePointByIdResponseBody> ServicePointsGetById(string carrier_code, string country_code, string service_point_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>List Shipments</summary>
@@ -454,20 +551,25 @@ namespace ShipEngineAPI
         System.Threading.Tasks.Task CancelShipments(string shipment_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>Get Shipment Errors</summary>
-        /// <param name="shipment_id">Shipment ID</param>
-        /// <param name="page">Return a specific page of results. Defaults to the first page. If set to a number that's greater than the number of pages of results, an empty page is returned.</param>
-        /// <returns>The request was a success.</returns>
-        /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ListShipmentErrorsResponseBody> ListShipmentErrors(string shipment_id, int? page = null, int? pagesize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-    
-        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Get Shipment Rates</summary>
         /// <param name="shipment_id">Shipment ID</param>
         /// <param name="created_at_start">Used to create a filter for when a resource was created (ex. A shipment that was created after a certain time)</param>
         /// <returns>The request was a success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task<ListShipmentRatesResponseBody> ListShipmentRates(string shipment_id, System.DateTimeOffset? created_at_start = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>Update Shipments Tags</summary>
+        /// <returns>NoContent</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task ShipmentsUpdateTags(UpdateShipmentsTagsRequestBody body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>Get Shipment Tags</summary>
+        /// <param name="shipment_id">Shipment ID</param>
+        /// <returns>The request was a success.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<TagShipmentResponseBody> ShipmentsListTags(string shipment_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Add Tag to Shipment</summary>
@@ -508,8 +610,15 @@ namespace ShipEngineAPI
         System.Threading.Tasks.Task RenameTag(string tag_name, string new_tag_name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>Get Ephemeral Token</summary>
+        /// <param name="redirect">Include a redirect url to the application formatted with the ephemeral token.</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<Yaml> TokensGetEphemeralToken(Redirect? redirect = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Get Tracking Information</summary>
-        /// <param name="carrier_code">Carrier code used to retrieve tracking information</param>
+        /// <param name="carrier_code">A [shipping carrier](https://www.shipengine.com/docs/carriers/setup/), such as `fedex`, `dhl_express`, `stamps_com`, etc.</param>
         /// <param name="tracking_number">The tracking number associated with a shipment</param>
         /// <returns>The request was a success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -517,7 +626,7 @@ namespace ShipEngineAPI
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Start Tracking a Package</summary>
-        /// <param name="carrier_code">Carrier code used to retrieve tracking information</param>
+        /// <param name="carrier_code">A [shipping carrier](https://www.shipengine.com/docs/carriers/setup/), such as `fedex`, `dhl_express`, `stamps_com`, etc.</param>
         /// <param name="tracking_number">The tracking number associated with a shipment</param>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -525,7 +634,7 @@ namespace ShipEngineAPI
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Stop Tracking a Package</summary>
-        /// <param name="carrier_code">Carrier code used to retrieve tracking information</param>
+        /// <param name="carrier_code">A [shipping carrier](https://www.shipengine.com/docs/carriers/setup/), such as `fedex`, `dhl_express`, `stamps_com`, etc.</param>
         /// <param name="tracking_number">The tracking number associated with a shipment</param>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -551,7 +660,7 @@ namespace ShipEngineAPI
         System.Threading.Tasks.Task<GetWarehouseByIdResponseBody> GetWarehouseById(string warehouse_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>Update WareHouse By Id</summary>
+        /// <summary>Update Warehouse By Id</summary>
         /// <param name="warehouse_id">Warehouse ID</param>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -564,8 +673,456 @@ namespace ShipEngineAPI
         /// <exception cref="ApiException">A server side error occurred.</exception>
         System.Threading.Tasks.Task DeleteWarehouse(string warehouse_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>Update Warehouse Settings</summary>
+        /// <param name="warehouse_id">Warehouse ID</param>
+        /// <returns>The request was successful.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        System.Threading.Tasks.Task<string> UpdateWarehouseSettings(UpdateWarehouseSettingsRequestBody body, string warehouse_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+    
     }
 
+    /// <summary>An account settings list response body</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class GetAccountSettingsResponseBody : AccountSettings
+    {
+    
+    }
+    
+    /// <summary>A ShipEngine account settings response body</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class AccountSettings 
+    {
+        [Newtonsoft.Json.JsonProperty("default_label_layout", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public DefaultLabelLayout? DefaultLabelLayout { get; set; }
+    
+    
+    }
+    
+    /// <summary>The possible default label layout values</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public enum DefaultLabelLayout
+    {
+        [System.Runtime.Serialization.EnumMember(Value = @"4x6")]
+        _4x6 = 0,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"Letter")]
+        Letter = 1,
+    
+    }
+    
+    /// <summary>An error response body</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class ErrorResponseBody 
+    {
+        /// <summary>A UUID that uniquely identifies the request id.
+        /// This can be given to the support team to help debug non-trivial issues that may occur
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("request_id", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [System.ComponentModel.DataAnnotations.StringLength(36, MinimumLength = 36)]
+        [System.ComponentModel.DataAnnotations.RegularExpression(@"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")]
+        public System.Guid RequestId { get; set; }
+    
+        /// <summary>The errors associated with the failed API call</summary>
+        [Newtonsoft.Json.JsonProperty("errors", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public System.Collections.Generic.IList<Error> Errors { get; set; } = new System.Collections.Generic.List<Error>();
+    
+    
+    }
+    
+    /// <summary>The error structure that gets returned with almost all failed API calls
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class Error 
+    {
+        [Newtonsoft.Json.JsonProperty("error_source", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public ErrorSource ErrorSource { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("error_type", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public ErrorType ErrorType { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("error_code", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public ErrorCode ErrorCode { get; set; }
+    
+        /// <summary>An error message associated with the failed API call</summary>
+        [Newtonsoft.Json.JsonProperty("message", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string Message { get; set; }
+    
+        /// <summary>A string that uniquely identifies the carrier.</summary>
+        [Newtonsoft.Json.JsonProperty("carrier_id", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(25, MinimumLength = 1)]
+        [System.ComponentModel.DataAnnotations.RegularExpression(@"^se(-[a-z0-9]+)+$")]
+        public string CarrierId { get; set; }
+    
+        /// <summary>A string that uniquely identifies the carrier by code.</summary>
+        [Newtonsoft.Json.JsonProperty("carrier_code", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string CarrierCode { get; set; }
+    
+        /// <summary>A string that uniquely identifies the carrier by name.</summary>
+        [Newtonsoft.Json.JsonProperty("carrier_name", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string CarrierName { get; set; }
+    
+    
+    }
+    
+    /// <summary>The source of the error, as indicated by the name this informs us if the API call failed because of the
+    /// carrier, the order source, or the ShipEngine API itself.
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public enum ErrorSource
+    {
+        [System.Runtime.Serialization.EnumMember(Value = @"carrier")]
+        Carrier = 0,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"order_source")]
+        OrderSource = 1,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"shipengine")]
+        Shipengine = 2,
+    
+    }
+    
+    /// <summary>The type of error
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public enum ErrorType
+    {
+        [System.Runtime.Serialization.EnumMember(Value = @"account_status")]
+        AccountStatus = 0,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"business_rules")]
+        BusinessRules = 1,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"validation")]
+        Validation = 2,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"security")]
+        Security = 3,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"system")]
+        System = 4,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"integrations")]
+        Integrations = 5,
+    
+    }
+    
+    /// <summary>The error code specified for the failed API Call</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public enum ErrorCode
+    {
+        [System.Runtime.Serialization.EnumMember(Value = @"auto_fund_not_supported")]
+        AutoFundNotSupported = 0,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"batch_cannot_be_modified")]
+        BatchCannotBeModified = 1,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"carrier_conflict")]
+        CarrierConflict = 2,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"carrier_disconnected")]
+        CarrierDisconnected = 3,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"carrier_not_connected")]
+        CarrierNotConnected = 4,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"carrier_not_supported")]
+        CarrierNotSupported = 5,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"confirmation_not_supported")]
+        ConfirmationNotSupported = 6,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"default_warehouse_cannot_be_deleted")]
+        DefaultWarehouseCannotBeDeleted = 7,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"field_conflict")]
+        FieldConflict = 8,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"field_value_required")]
+        FieldValueRequired = 9,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"forbidden")]
+        Forbidden = 10,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"identifier_conflict")]
+        IdentifierConflict = 11,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"identifiers_must_match")]
+        IdentifiersMustMatch = 12,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"insufficient_funds")]
+        InsufficientFunds = 13,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"invalid_address")]
+        InvalidAddress = 14,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"invalid_billing_plan")]
+        InvalidBillingPlan = 15,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"invalid_field_value")]
+        InvalidFieldValue = 16,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"invalid_identifier")]
+        InvalidIdentifier = 17,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"invalid_status")]
+        InvalidStatus = 18,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"invalid_string_length")]
+        InvalidStringLength = 19,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"label_images_not_supported")]
+        LabelImagesNotSupported = 20,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"meter_failure")]
+        MeterFailure = 21,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"order_source_not_active")]
+        OrderSourceNotActive = 22,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"rate_limit_exceeded")]
+        RateLimitExceeded = 23,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"refresh_not_supported")]
+        RefreshNotSupported = 24,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"request_body_required")]
+        RequestBodyRequired = 25,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"return_label_not_supported")]
+        ReturnLabelNotSupported = 26,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"settings_not_supported")]
+        SettingsNotSupported = 27,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"subscription_inactive")]
+        SubscriptionInactive = 28,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"terms_not_accepted")]
+        TermsNotAccepted = 29,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"tracking_not_supported")]
+        TrackingNotSupported = 30,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"trial_expired")]
+        TrialExpired = 31,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"unauthorized")]
+        Unauthorized = 32,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"unknown")]
+        Unknown = 33,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"unspecified")]
+        Unspecified = 34,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"verification_failure")]
+        VerificationFailure = 35,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"warehouse_conflict")]
+        WarehouseConflict = 36,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"webhook_event_type_conflict")]
+        WebhookEventTypeConflict = 37,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"customs_items_required")]
+        CustomsItemsRequired = 38,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"incompatible_paired_labels")]
+        IncompatiblePairedLabels = 39,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"invalid_charge_event")]
+        InvalidChargeEvent = 40,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"invalid_object")]
+        InvalidObject = 41,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"no_rates_returned")]
+        NoRatesReturned = 42,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"default_resource_cannot_be_deleted")]
+        DefaultResourceCannotBeDeleted = 43,
+    
+    }
+    
+    /// <summary>A list account images response body</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class ListAccountSettingsImagesResponseBody : PagedListResponseBody
+    {
+        /// <summary>Image List</summary>
+        [Newtonsoft.Json.JsonProperty("images", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public System.Collections.Generic.IList<Images> Images { get; set; } = new System.Collections.Generic.List<Images>();
+    
+    
+    }
+    
+    /// <summary>Many ShipEngine endpoints return a paged list of items.  In addition to the returned items, these responses also include information about the total number of items, the number of pages of results, and URLs of other pages of results.
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class PagedListResponseBody 
+    {
+        /// <summary>The total number of items across all pages of results</summary>
+        [Newtonsoft.Json.JsonProperty("total", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Range(0, int.MaxValue)]
+        public int Total { get; set; }
+    
+        /// <summary>The current page number of results.  For example, if there are 80 results, and the page size is 25, then `page` could be 1, 2, 3, or 4.  The first three pages would contain 25 items each, and the fourth page would contain the five remaining items.</summary>
+        [Newtonsoft.Json.JsonProperty("page", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Range(1, int.MaxValue)]
+        public int Page { get; set; }
+    
+        /// <summary>The total number of pages of results.  For example, if there are 80 results, and the page size is 25, then `pages` would be 4.  The first three pages would contain 25 items each, and the fourth page would contain the five remaining items.  If there are no results, then `pages` will be zero.</summary>
+        [Newtonsoft.Json.JsonProperty("pages", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Range(0, int.MaxValue)]
+        public int Pages { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("links", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public PaginationLink Links { get; set; } = new PaginationLink();
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    /// <summary>Helpful links to other pages of results</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class PaginationLink 
+    {
+        /// <summary>The link to the first page of results.  This object will _always_ have an `href` field. If there are no results, then the first page will contain an empty array of items.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("first", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public Link First { get; set; } = new Link();
+    
+        /// <summary>The link to the final page of results.  This object will _always_ have an `href` field. If there are no results, then the final page will contain an empty array of items.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("last", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public Link Last { get; set; } = new Link();
+    
+        /// <summary>The link to the previous page of results.  The `href` field will only be set when the `page` is 2 or greater.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("prev", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public OptionalLink Prev { get; set; } = new OptionalLink();
+    
+        /// <summary>The link to the next page of results.  The `href` field will only be set when the `page` is less than `pages`.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("next", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public OptionalLink Next { get; set; } = new OptionalLink();
+    
+    
+    }
+    
+    /// <summary>A link to a related resource</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class Link : OptionalLink
+    {
+    
+    }
+    
+    /// <summary>A link to a related resource, or an empty object if there is no resource to link to</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class OptionalLink 
+    {
+        /// <summary>The URL of the linked resource, if any</summary>
+        [Newtonsoft.Json.JsonProperty("href", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
+        public string Href { get; set; }
+    
+        /// <summary>The type of resource, or the type of relationship to the parent resource</summary>
+        [Newtonsoft.Json.JsonProperty("type", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
+        public string Type { get; set; }
+    
+    
+    }
+    
+    /// <summary>A ShipEngine account settings images request body</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class CreateAccountSettingsImageRequestBody : AccountSettingsImages
+    {
+    
+    }
+    
+    /// <summary>A ShipEngine account images body</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class AccountSettingsImages 
+    {
+        /// <summary>A string that uniquely identifies the image. This ID is generated by ShipEngine when the image is uploaded.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("label_image_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 4)]
+        public string LabelImageId { get; set; }
+    
+        /// <summary>A human readable name for the image.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(50, MinimumLength = 1)]
+        public string Name { get; set; }
+    
+        /// <summary>Indicates whether this image is set as default.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("is_default", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? IsDefault { get; set; }
+    
+        /// <summary>The file type of the image.</summary>
+        [Newtonsoft.Json.JsonProperty("image_content_type", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public AccountSettingsImagesImageContentType? ImageContentType { get; set; }
+    
+        /// <summary>A base64 encoded string representation of the image.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("image_data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string ImageData { get; set; }
+    
+        /// <summary>The date and time that the image was created in ShipEngine.</summary>
+        [Newtonsoft.Json.JsonProperty("created_at", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.RegularExpression(@"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[-+]\d{2}:\d{2})$")]
+        public System.DateTimeOffset CreatedAt { get; set; }
+    
+        /// <summary>The date and time that the image was modified in ShipEngine.</summary>
+        [Newtonsoft.Json.JsonProperty("modified_at", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.RegularExpression(@"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[-+]\d{2}:\d{2})$")]
+        public System.DateTimeOffset ModifiedAt { get; set; }
+    
+    
+    }
+    
+    /// <summary>A get account images by id response body</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class GetAccountSettingsImagesResponseBody : AccountSettingsImages
+    {
+    
+    }
+    
+    /// <summary>A ShipEngine account settings images request body</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class UpdateAccountSettingsImageRequestBody : AccountSettingsImages
+    {
+    
+    }
+    
     /// <summary>The only required field is `text`, which is the text to be parsed. You can optionally also provide an `address` containing already-known values. For example, you may already know the recipient's name, city, and country, and only want to parse the street address into separate lines.
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
@@ -599,6 +1156,11 @@ namespace ShipEngineAPI
         [Newtonsoft.Json.JsonProperty("phone", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
         public string Phone { get; set; }
+    
+        /// <summary>Email for the address owner.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("email", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Email { get; set; }
     
         /// <summary>If this is a business address, then the company name should be specified here.
         /// </summary>
@@ -751,234 +1313,6 @@ namespace ShipEngineAPI
             set { _additionalProperties = value; }
         }
     
-    
-    }
-    
-    /// <summary>An error response body</summary>
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
-    public partial class ErrorResponseBody 
-    {
-        /// <summary>A UUID that uniquely identifies the request id.
-        /// This can be given to the support team to help debug non-trivial issues that may occur
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("request_id", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        [System.ComponentModel.DataAnnotations.StringLength(36, MinimumLength = 36)]
-        [System.ComponentModel.DataAnnotations.RegularExpression(@"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")]
-        public System.Guid RequestId { get; set; }
-    
-        /// <summary>The errors associated with the failed API call</summary>
-        [Newtonsoft.Json.JsonProperty("errors", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        public System.Collections.Generic.IList<Error> Errors { get; set; } = new System.Collections.Generic.List<Error>();
-    
-    
-    }
-    
-    /// <summary>The error structure that gets returned with almost all failed API calls
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
-    public partial class Error 
-    {
-        [Newtonsoft.Json.JsonProperty("error_source", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public ErrorSource ErrorSource { get; set; }
-    
-        [Newtonsoft.Json.JsonProperty("error_type", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public ErrorType ErrorType { get; set; }
-    
-        [Newtonsoft.Json.JsonProperty("error_code", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public ErrorCode ErrorCode { get; set; }
-    
-        /// <summary>An error message associated with the failed API call</summary>
-        [Newtonsoft.Json.JsonProperty("message", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        public string Message { get; set; }
-    
-        /// <summary>A string that uniquely identifies the carrier.</summary>
-        [Newtonsoft.Json.JsonProperty("carrier_id", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [System.ComponentModel.DataAnnotations.StringLength(25, MinimumLength = 1)]
-        [System.ComponentModel.DataAnnotations.RegularExpression(@"^se(-[a-z0-9]+)+$")]
-        public string CarrierId { get; set; }
-    
-        /// <summary>A string that uniquely identifies the carrier by code.</summary>
-        [Newtonsoft.Json.JsonProperty("carrier_code", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string CarrierCode { get; set; }
-    
-        /// <summary>A string that uniquely identifies the carrier by name.</summary>
-        [Newtonsoft.Json.JsonProperty("carrier_name", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string CarrierName { get; set; }
-    
-    
-    }
-    
-    /// <summary>The source of the error, as indicated by the name this informs us if the API call failed because of the
-    /// carrier, the order source, or the ShipEngine API itself.
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
-    public enum ErrorSource
-    {
-        [System.Runtime.Serialization.EnumMember(Value = @"carrier")]
-        Carrier = 0,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"order_source")]
-        OrderSource = 1,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"shipengine")]
-        Shipengine = 2,
-    
-    }
-    
-    /// <summary>The type of error
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
-    public enum ErrorType
-    {
-        [System.Runtime.Serialization.EnumMember(Value = @"account_status")]
-        AccountStatus = 0,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"business_rules")]
-        BusinessRules = 1,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"validation")]
-        Validation = 2,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"security")]
-        Security = 3,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"system")]
-        System = 4,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"integrations")]
-        Integrations = 5,
-    
-    }
-    
-    /// <summary>The error code specified for the failed API Call</summary>
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
-    public enum ErrorCode
-    {
-        [System.Runtime.Serialization.EnumMember(Value = @"auto_fund_not_supported")]
-        AutoFundNotSupported = 0,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"batch_cannot_be_modified")]
-        BatchCannotBeModified = 1,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"carrier_conflict")]
-        CarrierConflict = 2,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"carrier_disconnected")]
-        CarrierDisconnected = 3,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"carrier_not_connected")]
-        CarrierNotConnected = 4,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"carrier_not_supported")]
-        CarrierNotSupported = 5,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"confirmation_not_supported")]
-        ConfirmationNotSupported = 6,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"default_warehouse_cannot_be_deleted")]
-        DefaultWarehouseCannotBeDeleted = 7,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"field_conflict")]
-        FieldConflict = 8,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"field_value_required")]
-        FieldValueRequired = 9,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"forbidden")]
-        Forbidden = 10,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"identifier_conflict")]
-        IdentifierConflict = 11,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"identifiers_must_match")]
-        IdentifiersMustMatch = 12,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"invalid_address")]
-        InvalidAddress = 13,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"invalid_billing_plan")]
-        InvalidBillingPlan = 14,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"invalid_field_value")]
-        InvalidFieldValue = 15,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"invalid_identifier")]
-        InvalidIdentifier = 16,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"invalid_status")]
-        InvalidStatus = 17,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"invalid_string_length")]
-        InvalidStringLength = 18,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"label_images_not_supported")]
-        LabelImagesNotSupported = 19,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"meter_failure")]
-        MeterFailure = 20,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"order_source_not_active")]
-        OrderSourceNotActive = 21,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"rate_limit_exceeded")]
-        RateLimitExceeded = 22,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"refresh_not_supported")]
-        RefreshNotSupported = 23,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"request_body_required")]
-        RequestBodyRequired = 24,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"return_label_not_supported")]
-        ReturnLabelNotSupported = 25,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"settings_not_supported")]
-        SettingsNotSupported = 26,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"subscription_inactive")]
-        SubscriptionInactive = 27,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"terms_not_accepted")]
-        TermsNotAccepted = 28,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"tracking_not_supported")]
-        TrackingNotSupported = 29,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"trial_expired")]
-        TrialExpired = 30,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"unauthorized")]
-        Unauthorized = 31,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"unknown")]
-        Unknown = 32,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"unspecified")]
-        Unspecified = 33,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"verification_failure")]
-        VerificationFailure = 34,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"warehouse_conflict")]
-        WarehouseConflict = 35,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"webhook_event_type_conflict")]
-        WebhookEventTypeConflict = 36,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"insufficient_funds")]
-        InsufficientFunds = 37,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"default_resource_cannot_be_deleted")]
-        DefaultResourceCannotBeDeleted = 38,
     
     }
     
@@ -1459,6 +1793,11 @@ namespace ShipEngineAPI
         [System.ComponentModel.DataAnnotations.Range(0, int.MaxValue)]
         public int Errors { get; set; }
     
+        /// <summary>The errors associated with the failed API call</summary>
+        [Newtonsoft.Json.JsonProperty("process_errors", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public System.Collections.Generic.IList<Error> ProcessErrors { get; set; } = new System.Collections.Generic.List<Error>();
+    
         /// <summary>The number of warnings that occurred while generating the batch</summary>
         [Newtonsoft.Json.JsonProperty("warnings", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Range(0, int.MaxValue)]
@@ -1531,7 +1870,7 @@ namespace ShipEngineAPI
     /// |--------------|-----------------------------------
     /// |`pdf`         | All carriers
     /// |`png`         | `fedex` &lt;br&gt; `stamps_com` &lt;br&gt; `ups` &lt;br&gt; `usps`
-    /// |`zpl`         | `access_worldwide` &lt;br&gt; `apc` &lt;br&gt; `asendia` &lt;br&gt; `dhl_global_mail` &lt;br&gt; `dhl_express` &lt;br&gt; `dhl_express_australia` &lt;br&gt; `dhl_express_canada` &lt;br&gt; `dhl_express_worldwide` &lt;br&gt; `dhl_express_uk` &lt;br&gt; `dpd` &lt;br&gt; `endicia` &lt;br&gt; `fedex` &lt;br&gt; `fedex_uk` &lt;br&gt; `firstmile` &lt;br&gt; `globegistics` &lt;br&gt; `imex` &lt;br&gt; `newgistics` &lt;br&gt; `ontrac` &lt;br&gt; `rr_donnelley` &lt;br&gt; `stamps_com` &lt;br&gt; `ups` &lt;br&gt; `usps`
+    /// |`zpl`         | `access_worldwide` &lt;br&gt; `apc` &lt;br&gt; `asendia` &lt;br&gt; `dhl_global_mail` &lt;br&gt; `dhl_express` &lt;br&gt; `dhl_express_australia` &lt;br&gt; `dhl_express_canada` &lt;br&gt; `dhl_express_worldwide` &lt;br&gt; `dhl_express_uk` &lt;br&gt; `dpd` &lt;br&gt; `endicia` &lt;br&gt; `fedex` &lt;br&gt; `fedex_uk` &lt;br&gt; `firstmile` &lt;br&gt; `imex` &lt;br&gt; `newgistics` &lt;br&gt; `ontrac` &lt;br&gt; `rr_donnelley` &lt;br&gt; `stamps_com` &lt;br&gt; `ups` &lt;br&gt; `usps`
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
     public enum LabelFormat
@@ -1544,23 +1883,6 @@ namespace ShipEngineAPI
     
         [System.Runtime.Serialization.EnumMember(Value = @"zpl")]
         Zpl = 2,
-    
-    }
-    
-    /// <summary>A link to a related resource, or an empty object if there is no resource to link to</summary>
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
-    public partial class OptionalLink 
-    {
-        /// <summary>The URL of the linked resource, if any</summary>
-        [Newtonsoft.Json.JsonProperty("href", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
-        public string Href { get; set; }
-    
-        /// <summary>The type of resource, or the type of relationship to the parent resource</summary>
-        [Newtonsoft.Json.JsonProperty("type", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
-        public string Type { get; set; }
-    
     
     }
     
@@ -1592,41 +1914,33 @@ namespace ShipEngineAPI
     
     }
     
-    /// <summary>Helpful links to other pages of results</summary>
+    /// <summary>A create batch request body</summary>
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
-    public partial class PaginationLink 
+    public partial class CreateBatchRequest 
     {
-        /// <summary>The link to the first page of results.  This object will _always_ have an `href` field. If there are no results, then the first page will contain an empty array of items.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("first", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        public Link First { get; set; } = new Link();
+        /// <summary>A string that uniquely identifies the external batch</summary>
+        [Newtonsoft.Json.JsonProperty("external_batch_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(25, MinimumLength = 1)]
+        [System.ComponentModel.DataAnnotations.RegularExpression(@"^se(-[a-z0-9]+)+$")]
+        public string ExternalBatchId { get; set; }
     
-        /// <summary>The link to the final page of results.  This object will _always_ have an `href` field. If there are no results, then the final page will contain an empty array of items.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("last", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        public Link Last { get; set; } = new Link();
+        /// <summary>Add custom messages for a particular batch</summary>
+        [Newtonsoft.Json.JsonProperty("batch_notes", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
+        public string BatchNotes { get; set; }
     
-        /// <summary>The link to the previous page of results.  The `href` field will only be set when the `page` is 2 or greater.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("prev", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        public OptionalLink Prev { get; set; } = new OptionalLink();
+        /// <summary>Array of shipment IDs used in the batch</summary>
+        [Newtonsoft.Json.JsonProperty("shipment_ids", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<string> ShipmentIds { get; set; }
     
-        /// <summary>The link to the next page of results.  The `href` field will only be set when the `page` is less than `pages`.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty("next", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        public OptionalLink Next { get; set; } = new OptionalLink();
+        /// <summary>Array of rate IDs used in the batch</summary>
+        [Newtonsoft.Json.JsonProperty("rate_ids", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<string> RateIds { get; set; }
     
+        /// <summary>The information used to process the batch</summary>
+        [Newtonsoft.Json.JsonProperty("process_labels", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public ProcessLabels ProcessLabels { get; set; }
     
-    }
-    
-    /// <summary>A link to a related resource</summary>
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
-    public partial class Link : OptionalLink
-    {
     
     }
     
@@ -1653,6 +1967,51 @@ namespace ShipEngineAPI
         [Newtonsoft.Json.JsonProperty("rate_ids", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Collections.Generic.IList<string> RateIds { get; set; }
     
+    
+    }
+    
+    /// <summary>A create and process batch request body</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class CreateAndProcessBatchRequestBody 
+    {
+        /// <summary>A string that uniquely identifies the external batch</summary>
+        [Newtonsoft.Json.JsonProperty("external_batch_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(25, MinimumLength = 1)]
+        [System.ComponentModel.DataAnnotations.RegularExpression(@"^se(-[a-z0-9]+)+$")]
+        public string ExternalBatchId { get; set; }
+    
+        /// <summary>Add custom messages for a particular batch</summary>
+        [Newtonsoft.Json.JsonProperty("batch_notes", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
+        public string BatchNotes { get; set; }
+    
+        /// <summary>Array of shipment IDs used in the batch</summary>
+        [Newtonsoft.Json.JsonProperty("shipment_ids", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<string> ShipmentIds { get; set; }
+    
+        /// <summary>Array of rate IDs used in the batch</summary>
+        [Newtonsoft.Json.JsonProperty("rate_ids", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<string> RateIds { get; set; }
+    
+        /// <summary>The information used to process the batch</summary>
+        [Newtonsoft.Json.JsonProperty("process_labels", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public ProcessLabels ProcessLabels { get; set; }
+    
+    
+    }
+    
+    /// <summary>The display format that the label should be shown in.</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public enum DisplayScheme
+    {
+        [System.Runtime.Serialization.EnumMember(Value = @"label")]
+        Label = 0,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"qr_code")]
+        QrCode = 1,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"label_and_qr_code")]
+        LabelAndQrCode = 2,
     
     }
     
@@ -1761,18 +2120,6 @@ namespace ShipEngineAPI
     
     }
     
-    /// <summary>The display format that the label should be shown in.</summary>
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
-    public enum DisplayScheme
-    {
-        [System.Runtime.Serialization.EnumMember(Value = @"label")]
-        Label = 0,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"qr_code")]
-        QrCode = 1,
-    
-    }
-    
     /// <summary>A modify batch request body</summary>
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
     public partial class RemoveFromBatchRequestBody : ModifyBatch
@@ -1875,6 +2222,10 @@ namespace ShipEngineAPI
         [Newtonsoft.Json.JsonProperty("supports_label_messages", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public bool? SupportsLabelMessages { get; set; }
     
+        /// <summary>The carrier is disabled by the current ShipEngine account's billing plan.</summary>
+        [Newtonsoft.Json.JsonProperty("disabled_by_billing_plan", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? DisabledByBillingPlan { get; set; }
+    
         /// <summary>A list of services that are offered by the carrier</summary>
         [Newtonsoft.Json.JsonProperty("services", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Collections.Generic.IList<Service> Services { get; set; }
@@ -1900,7 +2251,7 @@ namespace ShipEngineAPI
         [System.ComponentModel.DataAnnotations.RegularExpression(@"^se(-[a-z0-9]+)+$")]
         public string CarrierId { get; set; }
     
-        /// <summary>The [shipping carrier](https://www.shipengine.com/docs/carriers/setup/) who will ship the package, such as `fedex`, `dhl_express`, `stamps_com`, etc.
+        /// <summary>The [shipping carrier](https://www.shipengine.com/docs/carriers/setup/) who will ship the package, such as `fedex`, `dhl_express`, `stamps_com`, etc.		
         /// </summary>
         [Newtonsoft.Json.JsonProperty("carrier_code", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.RegularExpression(@"^[a-z0-9]+(_[a-z0-9]+)*$")]
@@ -1943,11 +2294,13 @@ namespace ShipEngineAPI
     
         [Newtonsoft.Json.JsonProperty("package_code", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [System.ComponentModel.DataAnnotations.StringLength(50, MinimumLength = 1)]
         [System.ComponentModel.DataAnnotations.RegularExpression(@"^[a-z0-9]+(_[a-z0-9]+)*$")]
         public string PackageCode { get; set; }
     
         [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
+        [System.ComponentModel.DataAnnotations.StringLength(50, MinimumLength = 1)]
         public string Name { get; set; }
     
         /// <summary>The custom dimensions for the package.</summary>
@@ -1956,6 +2309,7 @@ namespace ShipEngineAPI
     
         /// <summary>Provides a helpful description for the custom package.</summary>
         [Newtonsoft.Json.JsonProperty("description", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(500)]
         public string Description { get; set; }
     
     
@@ -2043,48 +2397,13 @@ namespace ShipEngineAPI
     {
         [Newtonsoft.Json.JsonProperty("currency", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public Currency Currency { get; set; }
+        public string Currency { get; set; }
     
         /// <summary>The monetary amount, in the specified currency.</summary>
         [Newtonsoft.Json.JsonProperty("amount", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Range(0D, double.MaxValue)]
         public double Amount { get; set; }
     
-    
-    }
-    
-    /// <summary>The currencies that are supported by ShipEngine.
-    /// 
-    /// |Currency Code  | Description
-    /// |---------------|-----------------------
-    /// |`usd`          | United States Dollar
-    /// |`cad`          | Canadian Dollar
-    /// |`aud`          | Australian Dollar
-    /// |`gbp`          | Great British Pound
-    /// |`eur`          | Euro
-    /// |`nzd`          | New Zealand Dollar
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
-    public enum Currency
-    {
-        [System.Runtime.Serialization.EnumMember(Value = @"usd")]
-        Usd = 0,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"cad")]
-        Cad = 1,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"aud")]
-        Aud = 2,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"gbp")]
-        Gbp = 3,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"eur")]
-        Eur = 4,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"nzd")]
-        Nzd = 5,
     
     }
     
@@ -2143,50 +2462,50 @@ namespace ShipEngineAPI
         [System.Runtime.Serialization.EnumMember(Value = @"amazon_buy_shipping")]
         AmazonBuyShipping = 1,
     
+        [System.Runtime.Serialization.EnumMember(Value = @"amazon_shipping_uk")]
+        AmazonShippingUk = 2,
+    
         [System.Runtime.Serialization.EnumMember(Value = @"apc")]
-        Apc = 2,
+        Apc = 3,
     
         [System.Runtime.Serialization.EnumMember(Value = @"asendia")]
-        Asendia = 3,
+        Asendia = 4,
     
         [System.Runtime.Serialization.EnumMember(Value = @"australia_post")]
-        AustraliaPost = 4,
+        AustraliaPost = 5,
     
         [System.Runtime.Serialization.EnumMember(Value = @"canada_post")]
-        CanadaPost = 5,
+        CanadaPost = 6,
     
         [System.Runtime.Serialization.EnumMember(Value = @"dhl_ecommerce")]
-        DhlEcommerce = 6,
+        DhlEcommerce = 7,
     
         [System.Runtime.Serialization.EnumMember(Value = @"dhl_express")]
-        DhlExpress = 7,
+        DhlExpress = 8,
     
         [System.Runtime.Serialization.EnumMember(Value = @"dhl_express_au")]
-        DhlExpressAu = 8,
+        DhlExpressAu = 9,
     
         [System.Runtime.Serialization.EnumMember(Value = @"dhl_express_ca")]
-        DhlExpressCa = 9,
+        DhlExpressCa = 10,
     
         [System.Runtime.Serialization.EnumMember(Value = @"dhl_express_uk")]
-        DhlExpressUk = 10,
+        DhlExpressUk = 11,
     
         [System.Runtime.Serialization.EnumMember(Value = @"dpd")]
-        Dpd = 11,
+        Dpd = 12,
     
         [System.Runtime.Serialization.EnumMember(Value = @"endicia")]
-        Endicia = 12,
+        Endicia = 13,
     
         [System.Runtime.Serialization.EnumMember(Value = @"fedex")]
-        Fedex = 13,
+        Fedex = 14,
     
         [System.Runtime.Serialization.EnumMember(Value = @"fedex_uk")]
-        FedexUk = 14,
+        FedexUk = 15,
     
         [System.Runtime.Serialization.EnumMember(Value = @"firstmile")]
-        Firstmile = 15,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"globegistics")]
-        Globegistics = 16,
+        Firstmile = 16,
     
         [System.Runtime.Serialization.EnumMember(Value = @"imex")]
         Imex = 17,
@@ -2217,9 +2536,6 @@ namespace ShipEngineAPI
     
         [System.Runtime.Serialization.EnumMember(Value = @"ups")]
         Ups = 26,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"amazon_shipping_uk")]
-        AmazonShippingUk = 27,
     
     }
     
@@ -2313,12 +2629,20 @@ namespace ShipEngineAPI
         [Newtonsoft.Json.JsonProperty("sold_to", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string SoldTo { get; set; }
     
-        /// <summary>A string that uniquely identifies the site</summary>
-        [Newtonsoft.Json.JsonProperty("site_id", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        [System.ComponentModel.DataAnnotations.StringLength(25, MinimumLength = 1)]
-        [System.ComponentModel.DataAnnotations.RegularExpression(@"^se(-[a-z0-9]+)+$")]
+        [Newtonsoft.Json.JsonProperty("registration_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string RegistrationId { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("software_name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string SoftwareName { get; set; }
+    
+        /// <summary>Required if password is provided</summary>
+        [Newtonsoft.Json.JsonProperty("site_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
         public string SiteId { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("country_code", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(2, MinimumLength = 2)]
+        public string CountryCode { get; set; }
     
         /// <summary>Account</summary>
         [Newtonsoft.Json.JsonProperty("account", Required = Newtonsoft.Json.Required.Always)]
@@ -2349,11 +2673,6 @@ namespace ShipEngineAPI
         [Newtonsoft.Json.JsonProperty("company", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
         public string Company { get; set; }
-    
-        /// <summary>Country code</summary>
-        [Newtonsoft.Json.JsonProperty("country_code", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        public string CountryCode { get; set; }
     
         /// <summary>First name</summary>
         [Newtonsoft.Json.JsonProperty("first_name", Required = Newtonsoft.Json.Required.Always)]
@@ -2734,6 +3053,12 @@ namespace ShipEngineAPI
         [Newtonsoft.Json.JsonProperty("sold_to", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string SoldTo { get; set; }
     
+        [Newtonsoft.Json.JsonProperty("registration_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string RegistrationId { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("software_name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string SoftwareName { get; set; }
+    
     
     }
     
@@ -2785,6 +3110,20 @@ namespace ShipEngineAPI
         [System.ComponentModel.DataAnnotations.Required]
         public string AccountNumber { get; set; }
     
+        /// <summary>Required if password is provided</summary>
+        [Newtonsoft.Json.JsonProperty("site_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
+        public string SiteId { get; set; }
+    
+        /// <summary>Required if site id is provided</summary>
+        [Newtonsoft.Json.JsonProperty("password", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
+        public string Password { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("country_code", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(2, MinimumLength = 2)]
+        public string CountryCode { get; set; }
+    
     
     }
     
@@ -2833,9 +3172,7 @@ namespace ShipEngineAPI
     
         /// <summary>A string that uniquely identifies the site</summary>
         [Newtonsoft.Json.JsonProperty("site_id", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        [System.ComponentModel.DataAnnotations.StringLength(25, MinimumLength = 1)]
-        [System.ComponentModel.DataAnnotations.RegularExpression(@"^se(-[a-z0-9]+)+$")]
+        [System.ComponentModel.DataAnnotations.Required]
         public string SiteId { get; set; }
     
         /// <summary>Password</summary>
@@ -2926,7 +3263,8 @@ namespace ShipEngineAPI
     
         /// <summary>Country code</summary>
         [Newtonsoft.Json.JsonProperty("country_code", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [System.ComponentModel.DataAnnotations.StringLength(2, MinimumLength = 2)]
         public string CountryCode { get; set; }
     
         /// <summary>The email address</summary>
@@ -3008,7 +3346,8 @@ namespace ShipEngineAPI
     
         /// <summary>Country code</summary>
         [Newtonsoft.Json.JsonProperty("country_code", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [System.ComponentModel.DataAnnotations.StringLength(2, MinimumLength = 2)]
         public string CountryCode { get; set; }
     
         /// <summary>The email address</summary>
@@ -3077,28 +3416,6 @@ namespace ShipEngineAPI
         [Newtonsoft.Json.JsonProperty("profile_name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
         public string ProfileName { get; set; }
-    
-        /// <summary>Password</summary>
-        [Newtonsoft.Json.JsonProperty("password", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        public string Password { get; set; }
-    
-    
-    }
-    
-    /// <summary>A Globegistics account information request body</summary>
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
-    public partial class ConnectGlobegisticsRequestBody 
-    {
-        /// <summary>Nickname</summary>
-        [Newtonsoft.Json.JsonProperty("nickname", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        public string Nickname { get; set; }
-    
-        /// <summary>Username</summary>
-        [Newtonsoft.Json.JsonProperty("username", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        public string Username { get; set; }
     
         /// <summary>Password</summary>
         [Newtonsoft.Json.JsonProperty("password", Required = Newtonsoft.Json.Required.Always)]
@@ -3424,7 +3741,8 @@ namespace ShipEngineAPI
     
         /// <summary>Country code</summary>
         [Newtonsoft.Json.JsonProperty("country_code", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [System.ComponentModel.DataAnnotations.StringLength(2, MinimumLength = 2)]
         public string CountryCode { get; set; }
     
         /// <summary>The email address</summary>
@@ -3480,6 +3798,9 @@ namespace ShipEngineAPI
         [Newtonsoft.Json.JsonProperty("invoice_amount", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Range(0D, double.MaxValue)]
         public double? InvoiceAmount { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("invoice_currency_code", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string InvoiceCurrencyCode { get; set; }
     
     
     }
@@ -3643,10 +3964,16 @@ namespace ShipEngineAPI
         [Newtonsoft.Json.JsonProperty("is_primary_account", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public bool? IsPrimaryAccount { get; set; }
     
+        [Newtonsoft.Json.JsonProperty("signature_image", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string SignatureImage { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("letterhead_image", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string LetterheadImage { get; set; }
+    
     
     }
     
-    /// <summary>Determines how FedEx will pickup your packages
+    /// <summary>Tax identifier type for customs declaration
     /// 
     /// |Pickup Type               |Description
     /// |--------------------------|-----------------------------------------
@@ -3897,6 +4224,12 @@ namespace ShipEngineAPI
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         public AncillaryServiceEndorsement? SmartPostEndorsement { get; set; }
     
+        [Newtonsoft.Json.JsonProperty("signature_image", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string SignatureImage { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("letterhead_image", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string LetterheadImage { get; set; }
+    
         [Newtonsoft.Json.JsonProperty("include_barcode_with_order_number", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public bool? IncludeBarcodeWithOrderNumber { get; set; }
     
@@ -4060,6 +4393,10 @@ namespace ShipEngineAPI
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         public WebhookEvent? Event { get; set; }
     
+        /// <summary>Array of custom webhook headers</summary>
+        [Newtonsoft.Json.JsonProperty("headers", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<WebhookHeader> Headers { get; set; }
+    
     
     }
     
@@ -4090,6 +4427,30 @@ namespace ShipEngineAPI
     
     }
     
+    /// <summary>Optional header to be specified in webhook</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class WebhookHeader 
+    {
+        [Newtonsoft.Json.JsonProperty("key", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public string Key { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("value", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        public string Value { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
     /// <summary>A create webhook request body</summary>
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
     public partial class CreateWebhookRequestBody 
@@ -4104,6 +4465,10 @@ namespace ShipEngineAPI
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
         public string Url { get; set; }
+    
+        /// <summary>Array of custom webhook headers</summary>
+        [Newtonsoft.Json.JsonProperty("headers", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<WebhookHeader> Headers { get; set; }
     
     
     }
@@ -4130,6 +4495,10 @@ namespace ShipEngineAPI
         [Newtonsoft.Json.JsonProperty("url", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
         public string Url { get; set; }
+    
+        /// <summary>Array of custom webhook headers</summary>
+        [Newtonsoft.Json.JsonProperty("headers", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<WebhookHeader> Headers { get; set; }
     
     
     }
@@ -4194,46 +4563,18 @@ namespace ShipEngineAPI
     
     }
     
-    /// <summary>Many ShipEngine endpoints return a paged list of items.  In addition to the returned items, these responses also include information about the total number of items, the number of pages of results, and URLs of other pages of results.
-    /// </summary>
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
-    public partial class PagedListResponseBody 
-    {
-        /// <summary>The total number of items across all pages of results</summary>
-        [Newtonsoft.Json.JsonProperty("total", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Range(0, int.MaxValue)]
-        public int Total { get; set; }
-    
-        /// <summary>The current page number of results.  For example, if there are 80 results, and the page size is 25, then `page` could be 1, 2, 3, or 4.  The first three pages would contain 25 items each, and the fourth page would contain the five remaining items.</summary>
-        [Newtonsoft.Json.JsonProperty("page", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Range(1, int.MaxValue)]
-        public int Page { get; set; }
-    
-        /// <summary>The total number of pages of results.  For example, if there are 80 results, and the page size is 25, then `pages` would be 4.  The first three pages would contain 25 items each, and the fourth page would contain the five remaining items.  If there are no results, then `pages` will be zero.</summary>
-        [Newtonsoft.Json.JsonProperty("pages", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Range(0, int.MaxValue)]
-        public int Pages { get; set; }
-    
-        [Newtonsoft.Json.JsonProperty("links", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        public PaginationLink Links { get; set; } = new PaginationLink();
-    
-        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
-    
-        [Newtonsoft.Json.JsonExtensionData]
-        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
-        {
-            get { return _additionalProperties; }
-            set { _additionalProperties = value; }
-        }
-    
-    
-    }
-    
     /// <summary>A purchase label request body</summary>
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
     public partial class CreateLabelRequestBody : Label
     {
+        /// <summary>A unique identifier for a carrier service point where the shipment will be delivered by the carrier. This will take precedence over a shipment's ship to address.</summary>
+        [Newtonsoft.Json.JsonProperty("ship_to_service_point_id", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string ShipToServicePointId { get; set; }
+    
+        /// <summary>A unique identifier for a carrier drop off point where a merchant plans to deliver packages. This will take precedence over a shipment's ship from address.</summary>
+        [Newtonsoft.Json.JsonProperty("ship_from_service_point_id", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string ShipFromServicePointId { get; set; }
+    
     
     }
     
@@ -4284,6 +4625,11 @@ namespace ShipEngineAPI
         /// </summary>
         [Newtonsoft.Json.JsonProperty("insurance_cost", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public MonetaryValue InsuranceCost { get; set; }
+    
+        /// <summary>The total shipping cost for the specified comparison_rate_type.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("requested_comparison_amount", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public MonetaryValue RequestedComparisonAmount { get; set; }
     
         /// <summary>The tracking number for the package. Tracking number formats vary across carriers.</summary>
         [Newtonsoft.Json.JsonProperty("tracking_number", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -4346,6 +4692,7 @@ namespace ShipEngineAPI
         /// <summary>The [package type](https://www.shipengine.com/docs/reference/list-carrier-packages/), such as `thick_envelope`, `small_flat_rate_box`, `large_package`, etc.  The code `package` indicates a custom or unknown package type.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("package_code", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(50, MinimumLength = 1)]
         [System.ComponentModel.DataAnnotations.RegularExpression(@"^[a-z0-9]+(_[a-z0-9]+)*$")]
         public string PackageCode { get; set; }
     
@@ -4424,7 +4771,12 @@ namespace ShipEngineAPI
         /// &gt; **Note:** Some carriers only allow one package per label.  If you attempt to create a multi-package label for a carrier that doesn't allow it, an error will be returned.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("packages", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.IList<Package> Packages { get; set; }
+        public System.Collections.Generic.IList<Packages> Packages { get; set; }
+    
+        /// <summary>Additional information some carriers may provide by which to identify a given label in their system. 
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("alternative_identifiers", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<AlternativeIdentifier> AlternativeIdentifiers { get; set; }
     
     
     }
@@ -4475,13 +4827,21 @@ namespace ShipEngineAPI
         [Newtonsoft.Json.JsonProperty("tax_identifiers", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Collections.Generic.IList<TaxIdentifier> TaxIdentifiers { get; set; }
     
-        /// <summary>You can optionally use this field to store your own identifier for this shipment.
+        /// <summary>A unique user-defined key to identify a shipment.  This can be used to retrieve the shipment.
         /// 
         /// &gt; **Warning:** The `external_shipment_id` is limited to 50 characters. Any additional characters will be truncated.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("external_shipment_id", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.StringLength(50)]
         public string ExternalShipmentId { get; set; }
+    
+        /// <summary>A non-unique user-defined number used to identify a shipment.  If undefined, this will match the external_shipment_id of the shipment.
+        /// 
+        /// &gt; **Warning:** The `shipment_number` is limited to 50 characters. Any additional characters will be truncated.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("shipment_number", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(50)]
+        public string ShipmentNumber { get; set; }
     
         /// <summary>The date that the shipment was (or will be) shippped.  ShipEngine will take the day of week into consideration. For example, if the carrier does not operate on Sundays, then a package that would have shipped on Sunday will ship on Monday instead.
         /// </summary>
@@ -4525,6 +4885,11 @@ namespace ShipEngineAPI
         [Newtonsoft.Json.JsonProperty("return_to", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Address ReturnTo { get; set; }
     
+        /// <summary>An optional indicator if the shipment is intended to be a return. Defaults to false if not provided.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("is_return", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? IsReturn { get; set; }
+    
         /// <summary>The type of delivery confirmation that is required for this shipment.</summary>
         [Newtonsoft.Json.JsonProperty("confirmation", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
@@ -4538,11 +4903,6 @@ namespace ShipEngineAPI
         /// <summary>Advanced shipment options.  These are entirely optional.</summary>
         [Newtonsoft.Json.JsonProperty("advanced_options", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public AdvancedShipmentOptions AdvancedOptions { get; set; }
-    
-        /// <summary>Indicates if the package will be picked up or dropped off by the carrier</summary>
-        [Newtonsoft.Json.JsonProperty("origin_type", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public OriginType? OriginType { get; set; }
     
         /// <summary>The insurance provider to use for any insured packages in the shipment.
         /// </summary>
@@ -4570,6 +4930,10 @@ namespace ShipEngineAPI
         /// <summary>The combined weight of all packages in the shipment</summary>
         [Newtonsoft.Json.JsonProperty("total_weight", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Weight TotalWeight { get; set; }
+    
+        /// <summary>Calculate a rate for this shipment with the requested carrier using a ratecard that differs from the default.  Only supported for UPS and USPS.</summary>
+        [Newtonsoft.Json.JsonProperty("comparison_rate_type", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string ComparisonRateType { get; set; }
     
     
     }
@@ -4719,6 +5083,7 @@ namespace ShipEngineAPI
     /// |:---------  |:-----------------------------------------------------
     /// |`shipper`   | The shipper is responsible for this tax.
     /// |`recipient` | The recipient of the shipment is responsible for this tax.
+    /// |`ior`       | The importer of records is responsible for tax.
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
     public enum TaxableEntityType
@@ -4729,9 +5094,12 @@ namespace ShipEngineAPI
         [System.Runtime.Serialization.EnumMember(Value = @"recipient")]
         Recipient = 1,
     
+        [System.Runtime.Serialization.EnumMember(Value = @"ior")]
+        Ior = 2,
+    
     }
     
-    /// <summary>Determines how FedEx will pickup your packages
+    /// <summary>Tax identifier type for customs declaration
     /// 
     /// |Pickup Type    | Description
     /// |---------------|-----------------------------------------
@@ -4743,6 +5111,10 @@ namespace ShipEngineAPI
     /// |`ioss`         | The tax identifier is an Import One-Stop Shop (IOSS).
     /// |`pan`          | The tax identifier is a Permanent Account Number (PAN).
     /// |`voec`         | The tax identifier is a Norwegian VAT On E-Commerce(VOEC).
+    /// |`pccc`         | The tax identifier is a Personal Customs Clearance Code (PCCC).
+    /// |`oss`          | The tax identifier is an One-Stop Shop (OSS).
+    /// |`passport`     | The tax identifier is a Passport Number.
+    /// |`abn`          | The tax identifier is an Australian Business Number.
     /// </summary>
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
     public enum IdentifierType
@@ -4771,6 +5143,18 @@ namespace ShipEngineAPI
         [System.Runtime.Serialization.EnumMember(Value = @"voec")]
         Voec = 7,
     
+        [System.Runtime.Serialization.EnumMember(Value = @"pccc")]
+        Pccc = 8,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"oss")]
+        Oss = 9,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"passport")]
+        Passport = 10,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"abn")]
+        Abn = 11,
+    
     }
     
     /// <summary>The possible shipment status values</summary>
@@ -4788,6 +5172,62 @@ namespace ShipEngineAPI
     
         [System.Runtime.Serialization.EnumMember(Value = @"cancelled")]
         Cancelled = 3,
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class ShippingAddressTo : Address
+    {
+        /// <summary>Additional text about how to handle the shipment at this address.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("instructions", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
+        public string Instructions { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("geolocation", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<Geolocation> Geolocation { get; set; }
+    
+    
+    }
+    
+    /// <summary>A complete or partial mailing address.</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class PartialShippingAddressTo 
+    {
+        /// <summary>Additional text about how to handle the shipment at this address.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("instructions", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
+        public string Instructions { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("geolocation", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<Geolocation> Geolocation { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class ShippingAddress : Address
+    {
+        /// <summary>Additional text about how to handle the shipment at this address.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("instructions", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
+        public string Instructions { get; set; }
+    
+    
+    }
+    
+    /// <summary>A complete or partial mailing address.</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class PartialShippingAddress 
+    {
+        /// <summary>Additional text about how to handle the shipment at this address.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("instructions", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
+        public string Instructions { get; set; }
+    
     
     }
     
@@ -4813,6 +5253,9 @@ namespace ShipEngineAPI
         [System.Runtime.Serialization.EnumMember(Value = @"delivery_mailed")]
         DeliveryMailed = 5,
     
+        [System.Runtime.Serialization.EnumMember(Value = @"verbal_confirmation")]
+        VerbalConfirmation = 6,
+    
     }
     
     /// <summary>Options for international shipments, such as customs declarations.</summary>
@@ -4825,14 +5268,33 @@ namespace ShipEngineAPI
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         public PackageContents Contents { get; set; }
     
+        /// <summary>Explanation for contents (required if the `contents` is provided as `other`)</summary>
+        [Newtonsoft.Json.JsonProperty("contents_explanation", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string ContentsExplanation { get; set; }
+    
         /// <summary>Indicates what to do if a package is unable to be delivered.</summary>
         [Newtonsoft.Json.JsonProperty("non_delivery", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         public NonDelivery NonDelivery { get; set; }
     
-        /// <summary>Customs declarations for each item in the shipment.</summary>
+        /// <summary>Specifies the supported terms of trade code (incoterms)</summary>
+        [Newtonsoft.Json.JsonProperty("terms_of_trade_code", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string TermsOfTradeCode { get; set; }
+    
+        /// <summary>Declaration statement to be placed on the commercial invoice</summary>
+        [Newtonsoft.Json.JsonProperty("declaration", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Declaration { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("invoice_additional_details", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public InvoiceAdditionalDetails2 InvoiceAdditionalDetails { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("importer_of_record", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public ImporterOfRecord ImporterOfRecord { get; set; }
+    
+        /// <summary>Customs declarations for each item in the shipment. (Please provide this information under `products` inside `packages`)</summary>
         [Newtonsoft.Json.JsonProperty("customs_items", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.Obsolete]
         public System.Collections.Generic.IList<CustomsItem> CustomsItems { get; set; }
     
     
@@ -4857,6 +5319,9 @@ namespace ShipEngineAPI
         [System.Runtime.Serialization.EnumMember(Value = @"sample")]
         Sample = 4,
     
+        [System.Runtime.Serialization.EnumMember(Value = @"other")]
+        Other = 5,
+    
     }
     
     /// <summary>The possible non delivery values</summary>
@@ -4868,6 +5333,174 @@ namespace ShipEngineAPI
     
         [System.Runtime.Serialization.EnumMember(Value = @"treat_as_abandoned")]
         TreatAsAbandoned = 1,
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public enum AllowedIncoterms
+    {
+        [System.Runtime.Serialization.EnumMember(Value = @"exw")]
+        Exw = 0,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"fca")]
+        Fca = 1,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"cpt")]
+        Cpt = 2,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"cip")]
+        Cip = 3,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"dpu")]
+        Dpu = 4,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"dap")]
+        Dap = 5,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"ddp")]
+        Ddp = 6,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"fas")]
+        Fas = 7,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"fob")]
+        Fob = 8,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"cfr")]
+        Cfr = 9,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"cif")]
+        Cif = 10,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"ddu")]
+        Ddu = 11,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"daf")]
+        Daf = 12,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"deq")]
+        Deq = 13,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"des")]
+        Des = 14,
+    
+    }
+    
+    /// <summary>The additional information to put on commercial invoice 
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class InvoiceAdditionalDetails 
+    {
+        /// <summary>Freight Charge for shipment.</summary>
+        [Newtonsoft.Json.JsonProperty("freight_charge", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public MonetaryValue FreightCharge { get; set; }
+    
+        /// <summary>Insurance Charge for shipment.</summary>
+        [Newtonsoft.Json.JsonProperty("insurance_charge", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public MonetaryValue InsuranceCharge { get; set; }
+    
+        /// <summary>Discount for shipment.</summary>
+        [Newtonsoft.Json.JsonProperty("discount", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public MonetaryValue Discount { get; set; }
+    
+        /// <summary>Other charge for shipment.</summary>
+        [Newtonsoft.Json.JsonProperty("other_charge", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public MonetaryValue OtherCharge { get; set; }
+    
+        /// <summary>Description for the other charge (if provided).</summary>
+        [Newtonsoft.Json.JsonProperty("other_charge_description", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string OtherChargeDescription { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    /// <summary>importer of records address, anywhere in the world.
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class ImporterOfRecords 
+    {
+        /// <summary>The name of a contact person at this address. Either `name` or the `company_name` field should always be set.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string Name { get; set; }
+    
+        /// <summary>The phone number of a contact person at this address.  The format of this phone number varies depending on the country.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("phone", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
+        public string Phone { get; set; }
+    
+        /// <summary>Email for the address owner.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("email", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Email { get; set; }
+    
+        /// <summary>If this is a business address, then the company name should be specified here. Either `name` or the `company_name` field should always be set.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("company_name", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
+        public string CompanyName { get; set; }
+    
+        /// <summary>The first line of the street address.  For some addresses, this may be the only line.  Other addresses may require 2 or 3 lines.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("address_line1", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string AddressLine1 { get; set; }
+    
+        /// <summary>The second line of the street address.  For some addresses, this line may not be needed.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("address_line2", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
+        public string AddressLine2 { get; set; }
+    
+        /// <summary>The third line of the street address.  For some addresses, this line may not be needed.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("address_line3", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
+        public string AddressLine3 { get; set; }
+    
+        /// <summary>The name of the city or locality</summary>
+        [Newtonsoft.Json.JsonProperty("city_locality", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string CityLocality { get; set; }
+    
+        /// <summary>The state or province.  For some countries (including the U.S.) only abbreviations are allowed.  Other countries allow the full name or abbreviation.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("state_province", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
+        public string StateProvince { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("postal_code", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
+        public string PostalCode { get; set; }
+    
+        /// <summary>The two-letter [ISO 3166-1 country code](https://en.wikipedia.org/wiki/ISO_3166-1)
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("country_code", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [System.ComponentModel.DataAnnotations.StringLength(2, MinimumLength = 2)]
+        public string CountryCode { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
     
     }
     
@@ -4891,9 +5524,19 @@ namespace ShipEngineAPI
         [System.ComponentModel.DataAnnotations.Range(0, int.MaxValue)]
         public int? Quantity { get; set; }
     
-        /// <summary>The declared customs value of each item in USD</summary>
+        /// <summary>The monetary amount, in the specified currency.</summary>
         [Newtonsoft.Json.JsonProperty("value", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(0D, double.MaxValue)]
         public double? Value { get; set; }
+    
+        /// <summary>The currencies that are supported by ShipEngine are the ones that specified by ISO 4217: https://www.iso.org/iso-4217-currency-codes.html
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("value_currency", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string ValueCurrency { get; set; }
+    
+        /// <summary>The item weight</summary>
+        [Newtonsoft.Json.JsonProperty("weight", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Weight Weight { get; set; }
     
         /// <summary>The [Harmonized Tariff Code](https://en.wikipedia.org/wiki/Harmonized_System) of this item.</summary>
         [Newtonsoft.Json.JsonProperty("harmonized_tariff_code", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -4916,6 +5559,41 @@ namespace ShipEngineAPI
         [Newtonsoft.Json.JsonProperty("sku_description", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string SkuDescription { get; set; }
     
+    
+    }
+    
+    /// <summary>The weight of a package</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class Weight 
+    {
+        /// <summary>The weight, in the specified unit</summary>
+        [Newtonsoft.Json.JsonProperty("value", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Range(0D, double.MaxValue)]
+        public double Value { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("unit", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public WeightUnit Unit { get; set; }
+    
+    
+    }
+    
+    /// <summary>The possible weight unit values</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public enum WeightUnit
+    {
+        [System.Runtime.Serialization.EnumMember(Value = @"pound")]
+        Pound = 0,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"ounce")]
+        Ounce = 1,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"gram")]
+        Gram = 2,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"kilogram")]
+        Kilogram = 3,
     
     }
     
@@ -4971,6 +5649,10 @@ namespace ShipEngineAPI
         [Newtonsoft.Json.JsonProperty("saturday_delivery", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public bool? SaturdayDelivery { get; set; }
     
+        /// <summary>Provide details for the Fedex freight service</summary>
+        [Newtonsoft.Json.JsonProperty("fedex_freight", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public FedexFreight FedexFreight { get; set; }
+    
         /// <summary>Whether to use [UPS Ground Freight pricing](https://www.shipengine.com/docs/shipping/ups-ground-freight/).  If enabled, then a `freight_class` must also be specified.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("use_ups_ground_freight_pricing", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -5003,11 +5685,28 @@ namespace ShipEngineAPI
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         public OriginType? OriginType { get; set; }
     
+        /// <summary>Indicate to the carrier that this shipment requires additional handling.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("additional_handling", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? AdditionalHandling { get; set; }
+    
         [Newtonsoft.Json.JsonProperty("shipper_release", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public bool? ShipperRelease { get; set; }
     
         [Newtonsoft.Json.JsonProperty("collect_on_delivery", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public CollectOnDelivery CollectOnDelivery { get; set; }
+    
+        /// <summary>Third Party Consignee option is a value-added service that allows the shipper to supply goods without commercial invoices being attached</summary>
+        [Newtonsoft.Json.JsonProperty("third_party_consignee", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? ThirdPartyConsignee { get; set; }
+    
+        /// <summary>Indicates if the Dangerous goods are present in the shipment</summary>
+        [Newtonsoft.Json.JsonProperty("dangerous_goods", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? DangerousGoods { get; set; }
+    
+        /// <summary>Contact information for Dangerous goods</summary>
+        [Newtonsoft.Json.JsonProperty("dangerous_goods_contact", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public DangerousGoodsContact DangerousGoodsContact { get; set; }
     
     
     }
@@ -5021,41 +5720,6 @@ namespace ShipEngineAPI
     
         [System.Runtime.Serialization.EnumMember(Value = @"third_party")]
         ThirdParty = 1,
-    
-    }
-    
-    /// <summary>The weight of a package</summary>
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
-    public partial class Weight 
-    {
-        /// <summary>The weight, in the specified unit</summary>
-        [Newtonsoft.Json.JsonProperty("value", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Range(0D, double.MaxValue)]
-        public double Value { get; set; }
-    
-        [Newtonsoft.Json.JsonProperty("unit", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public WeightUnit Unit { get; set; }
-    
-    
-    }
-    
-    /// <summary>The possible weight unit values</summary>
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
-    public enum WeightUnit
-    {
-        [System.Runtime.Serialization.EnumMember(Value = @"pound")]
-        Pound = 0,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"ounce")]
-        Ounce = 1,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"gram")]
-        Gram = 2,
-    
-        [System.Runtime.Serialization.EnumMember(Value = @"kilogram")]
-        Kilogram = 3,
     
     }
     
@@ -5116,8 +5780,7 @@ namespace ShipEngineAPI
     public partial class PaymentAmount 
     {
         [Newtonsoft.Json.JsonProperty("currency", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public Currency? Currency { get; set; }
+        public string Currency { get; set; }
     
         [Newtonsoft.Json.JsonProperty("amount", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Range(0D, double.MaxValue)]
@@ -5166,15 +5829,29 @@ namespace ShipEngineAPI
     
     }
     
-    /// <summary>A package associated with a [shipping label](https://www.shipengine.com/docs/labels/create-a-label/)</summary>
+    /// <summary>A package associated with a [shipping label](https://www.shipengine.com/docs/labels/create-a-label/)
+    /// </summary>
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
     public partial class Package 
     {
+        /// <summary>A string that uniquely identifies this [package type](https://www.shipengine.com/docs/reference/list-carrier-packages/)</summary>
+        [Newtonsoft.Json.JsonProperty("package_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(25, MinimumLength = 1)]
+        [System.ComponentModel.DataAnnotations.RegularExpression(@"^se(-[a-z0-9]+)+$")]
+        public string PackageId { get; set; }
+    
         /// <summary>The [package type](https://www.shipengine.com/docs/reference/list-carrier-packages/), such as `thick_envelope`, `small_flat_rate_box`, `large_package`, etc.  The code `package` indicates a custom or unknown package type.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("package_code", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(50, MinimumLength = 1)]
         [System.ComponentModel.DataAnnotations.RegularExpression(@"^[a-z0-9]+(_[a-z0-9]+)*$")]
         public string PackageCode { get; set; }
+    
+        /// <summary>A short description of the package content. Required for shipments moving to, from, and through Mexico.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("content_description", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(35, MinimumLength = 1)]
+        public string ContentDescription { get; set; }
     
         /// <summary>The package weight</summary>
         [Newtonsoft.Json.JsonProperty("weight", Required = Newtonsoft.Json.Required.Always)]
@@ -5203,6 +5880,22 @@ namespace ShipEngineAPI
         [Newtonsoft.Json.JsonProperty("external_package_id", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
         public string ExternalPackageId { get; set; }
+    
+        /// <summary>The label download for the package</summary>
+        [Newtonsoft.Json.JsonProperty("label_download", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public LabelDownload LabelDownload { get; set; }
+    
+        /// <summary>The form download for any customs that are needed</summary>
+        [Newtonsoft.Json.JsonProperty("form_download", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public OptionalLink FormDownload { get; set; }
+    
+        /// <summary>Package sequence</summary>
+        [Newtonsoft.Json.JsonProperty("sequence", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int? Sequence { get; set; }
+    
+        /// <summary>Details about products inside packages (Information provided would be used on custom documentation)</summary>
+        [Newtonsoft.Json.JsonProperty("products", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<Products> Products { get; set; }
     
     
     }
@@ -5234,6 +5927,234 @@ namespace ShipEngineAPI
         [Newtonsoft.Json.JsonProperty("reference3", Required = Newtonsoft.Json.Required.AllowNull)]
         public string Reference3 { get; set; }
     
+    
+    }
+    
+    /// <summary>The customs declaration for a single item in the shipment.</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class Products 
+    {
+        /// <summary>A description of the item</summary>
+        [Newtonsoft.Json.JsonProperty("description", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(100)]
+        public string Description { get; set; }
+    
+        /// <summary>The quantity of this item in the shipment.</summary>
+        [Newtonsoft.Json.JsonProperty("quantity", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(0, int.MaxValue)]
+        public int? Quantity { get; set; }
+    
+        /// <summary>The declared value of each item</summary>
+        [Newtonsoft.Json.JsonProperty("value", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public MonetaryValue Value { get; set; }
+    
+        /// <summary>The item weight</summary>
+        [Newtonsoft.Json.JsonProperty("weight", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Weight Weight { get; set; }
+    
+        /// <summary>The [Harmonized Tariff Code](https://en.wikipedia.org/wiki/Harmonized_System) of this item.</summary>
+        [Newtonsoft.Json.JsonProperty("harmonized_tariff_code", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string HarmonizedTariffCode { get; set; }
+    
+        /// <summary>The two-letter [ISO 3166-1 country code](https://en.wikipedia.org/wiki/ISO_3166-1) where this item originated
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("country_of_origin", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(2, MinimumLength = 2)]
+        public string CountryOfOrigin { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("unit_of_measure", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string UnitOfMeasure { get; set; }
+    
+        /// <summary>The SKU (Stock Keeping Unit) of the item</summary>
+        [Newtonsoft.Json.JsonProperty("sku", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Sku { get; set; }
+    
+        /// <summary>Description of the Custom Item's SKU</summary>
+        [Newtonsoft.Json.JsonProperty("sku_description", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string SkuDescription { get; set; }
+    
+        /// <summary>Manufacturers Identification code</summary>
+        [Newtonsoft.Json.JsonProperty("mid_code", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string MidCode { get; set; }
+    
+        /// <summary>link to the item on the seller website</summary>
+        [Newtonsoft.Json.JsonProperty("product_url", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string ProductUrl { get; set; }
+    
+        /// <summary>VAT rate applicable to the item</summary>
+        [Newtonsoft.Json.JsonProperty("vat_rate", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public double? VatRate { get; set; }
+    
+        /// <summary>Details about dangerous goods inside products</summary>
+        [Newtonsoft.Json.JsonProperty("dangerous_goods", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<DangerousGoods> DangerousGoods { get; set; }
+    
+    
+    }
+    
+    /// <summary>Dangerous goods attribute associated with the product
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class DangerousGoods 
+    {
+        /// <summary>UN number to identify the dangerous goods.</summary>
+        [Newtonsoft.Json.JsonProperty("id_number", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string IdNumber { get; set; }
+    
+        /// <summary>Trade description of the dangerous goods.</summary>
+        [Newtonsoft.Json.JsonProperty("shipping_name", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string ShippingName { get; set; }
+    
+        /// <summary>Recognized Technical or chemical name of dangerous goods.</summary>
+        [Newtonsoft.Json.JsonProperty("technical_name", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string TechnicalName { get; set; }
+    
+        /// <summary>Dangerous goods product class based on regulation.</summary>
+        [Newtonsoft.Json.JsonProperty("product_class", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string ProductClass { get; set; }
+    
+        /// <summary>A secondary of product class for substances presenting more than one particular hazard</summary>
+        [Newtonsoft.Json.JsonProperty("product_class_subsidiary", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string ProductClassSubsidiary { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("packaging_group", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public PackagingGroup? PackagingGroup { get; set; }
+    
+        /// <summary>This model represents the amount of the dangerous goods.</summary>
+        [Newtonsoft.Json.JsonProperty("dangerous_amount", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public DangerousAmount DangerousAmount { get; set; }
+    
+        /// <summary>Quantity of dangerous goods.</summary>
+        [Newtonsoft.Json.JsonProperty("quantity", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(0, int.MaxValue)]
+        public int? Quantity { get; set; }
+    
+        /// <summary>The specific standardized packaging instructions from the relevant regulatory agency that have been applied to the parcel/container.</summary>
+        [Newtonsoft.Json.JsonProperty("packaging_instruction", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string PackagingInstruction { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("packaging_instruction_section", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public PackagingInstructionSection? PackagingInstructionSection { get; set; }
+    
+        /// <summary>The type of exterior packaging used to contain the dangerous good.</summary>
+        [Newtonsoft.Json.JsonProperty("packaging_type", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string PackagingType { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("transport_mean", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public TransportMean? TransportMean { get; set; }
+    
+        /// <summary>Transport category assign to dangerous goods for the transport purpose.</summary>
+        [Newtonsoft.Json.JsonProperty("transport_category", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string TransportCategory { get; set; }
+    
+        /// <summary>Name of the regulatory authority.</summary>
+        [Newtonsoft.Json.JsonProperty("regulation_authority", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string RegulationAuthority { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("regulation_level", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public RegulationLevel? RegulationLevel { get; set; }
+    
+        /// <summary>Indication if the substance is radioactive.</summary>
+        [Newtonsoft.Json.JsonProperty("radioactive", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? Radioactive { get; set; }
+    
+        /// <summary>Indication if the substance needs to be reported to regulatory authority based on the quantity.</summary>
+        [Newtonsoft.Json.JsonProperty("reportable_quantity", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? ReportableQuantity { get; set; }
+    
+        /// <summary>Defines which types of tunnels the shipment is allowed to go through</summary>
+        [Newtonsoft.Json.JsonProperty("tunnel_code", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string TunnelCode { get; set; }
+    
+        /// <summary>Provider additonal description regarding the dangerous goods. This is used as a placed holder to provider additional context and varies by carrier</summary>
+        [Newtonsoft.Json.JsonProperty("additional_description", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string AdditionalDescription { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public enum PackagingGroup
+    {
+        [System.Runtime.Serialization.EnumMember(Value = @"i")]
+        I = 0,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"ii")]
+        Ii = 1,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"iii")]
+        Iii = 2,
+    
+    }
+    
+    /// <summary>This model represents the amount of the dangerous goods..</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class DangerousAmount 
+    {
+        /// <summary>The amount of dangerous goods.</summary>
+        [Newtonsoft.Json.JsonProperty("amount", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.Range(0, int.MaxValue)]
+        public int? Amount { get; set; }
+    
+        /// <summary>The unit of dangerous goods.</summary>
+        [Newtonsoft.Json.JsonProperty("unit", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Unit { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public enum PackagingInstructionSection
+    {
+        [System.Runtime.Serialization.EnumMember(Value = @"section_1")]
+        Section1 = 0,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"section_2")]
+        Section2 = 1,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"section_1a")]
+        Section1a = 2,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"section_1b")]
+        Section1b = 3,
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public enum TransportMean
+    {
+        [System.Runtime.Serialization.EnumMember(Value = @"ground")]
+        Ground = 0,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"water")]
+        Water = 1,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"cargo_aircraft_only")]
+        CargoAircraftOnly = 2,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"passenger_aircraft")]
+        PassengerAircraft = 3,
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public enum RegulationLevel
+    {
+        [System.Runtime.Serialization.EnumMember(Value = @"lightly_regulated")]
+        LightlyRegulated = 0,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"fully_regulated")]
+        FullyRegulated = 1,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"limited_quantities")]
+        LimitedQuantities = 2,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"excepted_quantity")]
+        ExceptedQuantity = 3,
     
     }
     
@@ -5300,6 +6221,37 @@ namespace ShipEngineAPI
     
         [System.Runtime.Serialization.EnumMember(Value = @"delivered")]
         Delivered = 3,
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class AlternativeIdentifiers 
+    {
+        /// <summary>Alternative identifiers associated with this package.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("alternative_identifiers", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<AlternativeIdentifier> AlternativeIdentifiers1 { get; set; }
+    
+    
+    }
+    
+    /// <summary>Additional information some carriers may provide by which to identify a given label in their system. 
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class AlternativeIdentifier 
+    {
+        /// <summary>The type of alternative_identifier that corresponds to the value.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("type", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
+        public string Type { get; set; }
+    
+        /// <summary>The value of the alternative_identifier.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("value", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
+        public string Value { get; set; }
+    
     
     }
     
@@ -5475,10 +6427,22 @@ namespace ShipEngineAPI
         [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
         public string TrackingNumber { get; set; }
     
-        /// <summary>Status code</summary>
-        [Newtonsoft.Json.JsonProperty("status_code", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
-        public string StatusCode { get; set; }
+        /// <summary>Carrier Tracking Url, if available</summary>
+        [Newtonsoft.Json.JsonProperty("tracking_url", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string TrackingUrl { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("status_code", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public StatusCode? StatusCode { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("carrier_code", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.RegularExpression(@"^[a-z0-9]+(_[a-z0-9]+)*$")]
+        public string CarrierCode { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("carrier_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(25, MinimumLength = 1)]
+        [System.ComponentModel.DataAnnotations.RegularExpression(@"^se(-[a-z0-9]+)+$")]
+        public string CarrierId { get; set; }
     
         /// <summary>Status description</summary>
         [Newtonsoft.Json.JsonProperty("status_description", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -5489,6 +6453,11 @@ namespace ShipEngineAPI
         [Newtonsoft.Json.JsonProperty("carrier_status_code", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
         public string CarrierStatusCode { get; set; }
+    
+        /// <summary>Carrier detail code</summary>
+        [Newtonsoft.Json.JsonProperty("carrier_detail_code", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
+        public string CarrierDetailCode { get; set; }
     
         /// <summary>carrier status description</summary>
         [Newtonsoft.Json.JsonProperty("carrier_status_description", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -5516,6 +6485,44 @@ namespace ShipEngineAPI
         [Newtonsoft.Json.JsonProperty("events", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Collections.Generic.IList<TrackEvent> Events { get; set; }
     
+    
+    }
+    
+    /// <summary>The tracking status codes
+    /// 
+    /// |Value       |Description
+    /// |:---------  |:-----------------------------------------------------
+    /// |`un` | Unknown
+    /// |`ac` | Accepted
+    /// |`it` | In Transit
+    /// |`de` | Delivered
+    /// |`ex` | Exception
+    /// |`at` | Delivery Attempt
+    /// |`ny` | Not Yet In System
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public enum StatusCode
+    {
+        [System.Runtime.Serialization.EnumMember(Value = @"un")]
+        Un = 0,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"ac")]
+        Ac = 1,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"it")]
+        It = 2,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"de")]
+        De = 3,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"ex")]
+        Ex = 4,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"at")]
+        At = 5,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"ny")]
+        Ny = 6,
     
     }
     
@@ -5573,6 +6580,30 @@ namespace ShipEngineAPI
         [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue)]
         public string EventCode { get; set; }
     
+        /// <summary>Carrier detail code</summary>
+        [Newtonsoft.Json.JsonProperty("carrier_detail_code", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
+        public string CarrierDetailCode { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("status_code", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public StatusCode? StatusCode { get; set; }
+    
+        /// <summary>Event Status Description</summary>
+        [Newtonsoft.Json.JsonProperty("status_description", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
+        public string StatusDescription { get; set; }
+    
+        /// <summary>Carrier status code</summary>
+        [Newtonsoft.Json.JsonProperty("carrier_status_code", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
+        public string CarrierStatusCode { get; set; }
+    
+        /// <summary>carrier status description</summary>
+        [Newtonsoft.Json.JsonProperty("carrier_status_description", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue)]
+        public string CarrierStatusDescription { get; set; }
+    
         /// <summary>Latitude coordinate of tracking event.</summary>
         [Newtonsoft.Json.JsonProperty("latitude", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.Range(-90D, 90D)]
@@ -5599,6 +6630,37 @@ namespace ShipEngineAPI
         [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue)]
         public string Message { get; set; }
     
+        /// <summary>Indicates a normalized reason for the conditions if the void attempt was not approved. Will not populate if approved is true. “unknown” codes may be specified later.</summary>
+        [Newtonsoft.Json.JsonProperty("reason_code", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string ReasonCode { get; set; }
+    
+    
+    }
+    
+    /// <summary>The possible normalized reasons a label void request may not have been approved</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public enum ReasonCode
+    {
+        [System.Runtime.Serialization.EnumMember(Value = @"unknown")]
+        Unknown = 0,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"unspecified")]
+        Unspecified = 1,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"validation_failed")]
+        ValidationFailed = 2,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"label_not_found_within_void_period")]
+        LabelNotFoundWithinVoidPeriod = 3,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"label_already_used")]
+        LabelAlreadyUsed = 4,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"label_already_voided")]
+        LabelAlreadyVoided = 5,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"contact_carrier")]
+        ContactCarrier = 6,
     
     }
     
@@ -5786,6 +6848,10 @@ namespace ShipEngineAPI
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
     public partial class CreateManifestResponseBody : Manifests
     {
+        /// <summary>Resulting manifest requests with statuses</summary>
+        [Newtonsoft.Json.JsonProperty("manifest_requests", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<ManifestRequest> ManifestRequests { get; set; }
+    
         /// <summary>A string that uniquely identifies the manifest</summary>
         [Newtonsoft.Json.JsonProperty("manifest_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.StringLength(25, MinimumLength = 1)]
@@ -5868,9 +6934,50 @@ namespace ShipEngineAPI
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
     public partial class Manifests 
     {
+        /// <summary>Resulting Manifests</summary>
         [Newtonsoft.Json.JsonProperty("manifests", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Collections.Generic.IList<Manifest> Manifests1 { get; set; }
     
+    
+    }
+    
+    /// <summary>An array of manifest requests</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class ManifestsRequests 
+    {
+        /// <summary>Resulting manifest requests with statuses</summary>
+        [Newtonsoft.Json.JsonProperty("manifest_requests", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<ManifestRequest> ManifestRequests { get; set; }
+    
+    
+    }
+    
+    /// <summary>A reference to the manifest request</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class ManifestRequest 
+    {
+        /// <summary>A string that uniquely identifies a manifest request</summary>
+        [Newtonsoft.Json.JsonProperty("manifest_request_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(25, MinimumLength = 1)]
+        [System.ComponentModel.DataAnnotations.RegularExpression(@"^se(-[a-z0-9]+)+$")]
+        public string ManifestRequestId { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("status", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public ManifestRequestStatus? Status { get; set; }
+    
+    
+    }
+    
+    /// <summary>The possible statuses of a manifest request</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public enum ManifestRequestStatus
+    {
+        [System.Runtime.Serialization.EnumMember(Value = @"in_progress")]
+        InProgress = 0,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"completed")]
+        Completed = 1,
     
     }
     
@@ -5942,6 +7049,27 @@ namespace ShipEngineAPI
     
     }
     
+    /// <summary>An error response body</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class ErrorWithLabelIdResponseBody 
+    {
+        /// <summary>A UUID that uniquely identifies the request id.
+        /// This can be given to the support team to help debug non-trivial issues that may occur
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("request_id", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [System.ComponentModel.DataAnnotations.StringLength(36, MinimumLength = 36)]
+        [System.ComponentModel.DataAnnotations.RegularExpression(@"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")]
+        public System.Guid RequestId { get; set; }
+    
+        /// <summary>The errors associated with the failed API call</summary>
+        [Newtonsoft.Json.JsonProperty("errors", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public System.Collections.Generic.IList<Error> Errors { get; set; } = new System.Collections.Generic.List<Error>();
+    
+    
+    }
+    
     /// <summary>A get manifest by id response body</summary>
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
     public partial class GetManifestByIdResponseBody : Manifest
@@ -5985,6 +7113,311 @@ namespace ShipEngineAPI
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
     public partial class UpdatePackageTypeRequestBody : PackageType
     {
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class GetPickupsResponseBody : ListPickupResponseBody
+    {
+        /// <summary>A UUID that uniquely identifies the request id.
+        /// This can be given to the support team to help debug non-trivial issues that may occur
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("request_id", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [System.ComponentModel.DataAnnotations.StringLength(36, MinimumLength = 36)]
+        [System.ComponentModel.DataAnnotations.RegularExpression(@"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")]
+        public System.Guid RequestId { get; set; }
+    
+        /// <summary>The errors associated with the failed API call</summary>
+        [Newtonsoft.Json.JsonProperty("errors", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public System.Collections.Generic.IList<Error> Errors { get; set; } = new System.Collections.Generic.List<Error>();
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    /// <summary>A list pickup response body</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class ListPickupResponseBody 
+    {
+        /// <summary>An array of pickups associated with the user's account.</summary>
+        [Newtonsoft.Json.JsonProperty("pickups", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public System.Collections.Generic.IList<Pickup> Pickups { get; set; } = new System.Collections.Generic.List<Pickup>();
+    
+        /// <summary>The total number of pickups returned</summary>
+        [Newtonsoft.Json.JsonProperty("total", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Range(0D, double.MaxValue)]
+        public long Total { get; set; }
+    
+        /// <summary>Current page of the list pickups results</summary>
+        [Newtonsoft.Json.JsonProperty("page", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Range(1, int.MaxValue)]
+        public int Page { get; set; }
+    
+        /// <summary>Total number of pages for list pickups results</summary>
+        [Newtonsoft.Json.JsonProperty("pages", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Range(1, int.MaxValue)]
+        public int Pages { get; set; }
+    
+        /// <summary>Helpful links to other pages of results</summary>
+        [Newtonsoft.Json.JsonProperty("links", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public PaginationLink Links { get; set; } = new PaginationLink();
+    
+    
+    }
+    
+    /// <summary>The information necessary to schedule a package pickup
+    /// </summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class Pickup 
+    {
+        [Newtonsoft.Json.JsonProperty("pickup_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 4)]
+        public string PickupId { get; set; }
+    
+        /// <summary>Label IDs that will be included in the pickup request</summary>
+        [Newtonsoft.Json.JsonProperty("label_ids", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<string> LabelIds { get; set; }
+    
+        /// <summary>The date and time that the pickup was created in ShipEngine.</summary>
+        [Newtonsoft.Json.JsonProperty("created_at", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.RegularExpression(@"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[-+]\d{2}:\d{2})$")]
+        public System.DateTimeOffset CreatedAt { get; set; }
+    
+        /// <summary>The date and time that the pickup was cancelled in ShipEngine.</summary>
+        [Newtonsoft.Json.JsonProperty("cancelled_at", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.RegularExpression(@"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[-+]\d{2}:\d{2})$")]
+        public System.DateTimeOffset CancelledAt { get; set; }
+    
+        /// <summary>The carrier_id associated with the pickup</summary>
+        [Newtonsoft.Json.JsonProperty("carrier_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(25, MinimumLength = 1)]
+        [System.ComponentModel.DataAnnotations.RegularExpression(@"^se(-[a-z0-9]+)+$")]
+        public string CarrierId { get; set; }
+    
+        /// <summary>The carrier confirmation number for the scheduled pickup.</summary>
+        [Newtonsoft.Json.JsonProperty("confirmation_number", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string ConfirmationNumber { get; set; }
+    
+        /// <summary>The warehouse_id associated with the pickup</summary>
+        [Newtonsoft.Json.JsonProperty("warehouse_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(25, MinimumLength = 1)]
+        [System.ComponentModel.DataAnnotations.RegularExpression(@"^se(-[a-z0-9]+)+$")]
+        public string WarehouseId { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("pickup_address", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Address PickupAddress { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("contact_details", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public ContactDetails ContactDetails { get; set; }
+    
+        /// <summary>Used by some carriers to give special instructions for a package pickup</summary>
+        [Newtonsoft.Json.JsonProperty("pickup_notes", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue)]
+        public string PickupNotes { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("pickup_window", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public PickupWindow PickupWindow { get; set; }
+    
+        /// <summary>An array of available pickup windows. Carriers can return multiple times that they will pickup packages.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("pickup_windows", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<PickupWindows> PickupWindows { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class ContactDetails 
+    {
+        [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public string Name { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("email", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
+        public string Email { get; set; }
+    
+        /// <summary>Phone number associated</summary>
+        [Newtonsoft.Json.JsonProperty("phone", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 7)]
+        public string Phone { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    /// <summary>The desired time range for the package pickup.</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class PickupWindow 
+    {
+        [Newtonsoft.Json.JsonProperty("start_at", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [System.ComponentModel.DataAnnotations.RegularExpression(@"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[-+]\d{2}:\d{2})$")]
+        public System.DateTimeOffset StartAt { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("end_at", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [System.ComponentModel.DataAnnotations.RegularExpression(@"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[-+]\d{2}:\d{2})$")]
+        public System.DateTimeOffset EndAt { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class PickupWindows 
+    {
+        [Newtonsoft.Json.JsonProperty("start_at", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.RegularExpression(@"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[-+]\d{2}:\d{2})$")]
+        public System.DateTimeOffset StartAt { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("end_at", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.RegularExpression(@"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[-+]\d{2}:\d{2})$")]
+        public System.DateTimeOffset EndAt { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    /// <summary>A schedule pickup request body</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class SchedulePickupRequestBody : Pickup
+    {
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class SchedulePickupResponseBody : Pickup
+    {
+        /// <summary>A UUID that uniquely identifies the request id.
+        /// This can be given to the support team to help debug non-trivial issues that may occur
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("request_id", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [System.ComponentModel.DataAnnotations.StringLength(36, MinimumLength = 36)]
+        [System.ComponentModel.DataAnnotations.RegularExpression(@"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")]
+        public System.Guid RequestId { get; set; }
+    
+        /// <summary>The errors associated with the failed API call</summary>
+        [Newtonsoft.Json.JsonProperty("errors", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public System.Collections.Generic.IList<Error> Errors { get; set; } = new System.Collections.Generic.List<Error>();
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class GetPickupByIdResponseBody : PickupResponseBody
+    {
+        /// <summary>A UUID that uniquely identifies the request id.
+        /// This can be given to the support team to help debug non-trivial issues that may occur
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("request_id", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [System.ComponentModel.DataAnnotations.StringLength(36, MinimumLength = 36)]
+        [System.ComponentModel.DataAnnotations.RegularExpression(@"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")]
+        public System.Guid RequestId { get; set; }
+    
+        /// <summary>The errors associated with the failed API call</summary>
+        [Newtonsoft.Json.JsonProperty("errors", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public System.Collections.Generic.IList<Error> Errors { get; set; } = new System.Collections.Generic.List<Error>();
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    /// <summary>A pickup response body</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class PickupResponseBody : Pickup
+    {
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class DeletePickupByIdResponseBody : ErrorResponseBody
+    {
+        [Newtonsoft.Json.JsonProperty("pickup_id", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 4)]
+        public string PickupId { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    /// <summary>A delete scheduled pickup response body</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class DeleteScheduledPickupResponseBody 
+    {
+        [Newtonsoft.Json.JsonProperty("pickup_id", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 4)]
+        public string PickupId { get; set; }
+    
     
     }
     
@@ -6089,13 +7522,21 @@ namespace ShipEngineAPI
         [Newtonsoft.Json.JsonProperty("tax_identifiers", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Collections.Generic.IList<TaxIdentifier> TaxIdentifiers { get; set; }
     
-        /// <summary>You can optionally use this field to store your own identifier for this shipment.
+        /// <summary>A unique user-defined key to identify a shipment.  This can be used to retrieve the shipment.
         /// 
         /// &gt; **Warning:** The `external_shipment_id` is limited to 50 characters. Any additional characters will be truncated.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("external_shipment_id", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [System.ComponentModel.DataAnnotations.StringLength(50)]
         public string ExternalShipmentId { get; set; }
+    
+        /// <summary>A non-unique user-defined number used to identify a shipment.  If undefined, this will match the external_shipment_id of the shipment.
+        /// 
+        /// &gt; **Warning:** The `shipment_number` is limited to 50 characters. Any additional characters will be truncated.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("shipment_number", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(50)]
+        public string ShipmentNumber { get; set; }
     
         /// <summary>The date that the shipment was (or will be) shippped.  ShipEngine will take the day of week into consideration. For example, if the carrier does not operate on Sundays, then a package that would have shipped on Sunday will ship on Monday instead.
         /// </summary>
@@ -6139,6 +7580,11 @@ namespace ShipEngineAPI
         [Newtonsoft.Json.JsonProperty("return_to", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Address ReturnTo { get; set; }
     
+        /// <summary>An optional indicator if the shipment is intended to be a return. Defaults to false if not provided.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("is_return", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? IsReturn { get; set; }
+    
         /// <summary>The type of delivery confirmation that is required for this shipment.</summary>
         [Newtonsoft.Json.JsonProperty("confirmation", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
@@ -6152,11 +7598,6 @@ namespace ShipEngineAPI
         /// <summary>Advanced shipment options.  These are entirely optional.</summary>
         [Newtonsoft.Json.JsonProperty("advanced_options", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public AdvancedShipmentOptions AdvancedOptions { get; set; }
-    
-        /// <summary>Indicates if the package will be picked up or dropped off by the carrier</summary>
-        [Newtonsoft.Json.JsonProperty("origin_type", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public OriginType? OriginType { get; set; }
     
         /// <summary>The insurance provider to use for any insured packages in the shipment.
         /// </summary>
@@ -6184,6 +7625,10 @@ namespace ShipEngineAPI
         /// <summary>The combined weight of all packages in the shipment</summary>
         [Newtonsoft.Json.JsonProperty("total_weight", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Weight TotalWeight { get; set; }
+    
+        /// <summary>Calculate a rate for this shipment with the requested carrier using a ratecard that differs from the default.  Only supported for UPS and USPS.</summary>
+        [Newtonsoft.Json.JsonProperty("comparison_rate_type", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string ComparisonRateType { get; set; }
     
     
     }
@@ -6247,8 +7692,11 @@ namespace ShipEngineAPI
         public bool? CalculateTaxAmount { get; set; }
     
         [Newtonsoft.Json.JsonProperty("preferred_currency", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-        public Currency? PreferredCurrency { get; set; }
+        public string PreferredCurrency { get; set; }
+    
+        /// <summary>Indicate if it's a return shipment</summary>
+        [Newtonsoft.Json.JsonProperty("is_return", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? IsReturn { get; set; }
     
     
     }
@@ -6335,25 +7783,29 @@ namespace ShipEngineAPI
         [System.ComponentModel.DataAnnotations.RegularExpression(@"^se(-[a-z0-9]+)+$")]
         public string CarrierId { get; set; }
     
-        /// <summary>The shipping amount</summary>
+        /// <summary>The shipping amount. Should be added with confirmation_amount, insurance_amount and other_amount to calculate the total purchase price.</summary>
         [Newtonsoft.Json.JsonProperty("shipping_amount", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
         public MonetaryValue ShippingAmount { get; set; } = new MonetaryValue();
     
-        /// <summary>The insurance amount</summary>
+        /// <summary>The insurance amount.  Should be added with shipping_amount, confirmation_amount and other_amount to calculate the total purchase price.</summary>
         [Newtonsoft.Json.JsonProperty("insurance_amount", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
         public MonetaryValue InsuranceAmount { get; set; } = new MonetaryValue();
     
-        /// <summary>The confirmation amount</summary>
+        /// <summary>The confirmation amount.  Should be added with shipping_amount, insurance_amount and other_amount to calculate the total purchase price.</summary>
         [Newtonsoft.Json.JsonProperty("confirmation_amount", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
         public MonetaryValue ConfirmationAmount { get; set; } = new MonetaryValue();
     
-        /// <summary>Any other charges associated with this rate</summary>
+        /// <summary>Any other charges associated with this rate.  Should be added with shipping_amount, insurance_amount and confirmation_amount to calculate the total purchase price.</summary>
         [Newtonsoft.Json.JsonProperty("other_amount", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
         public MonetaryValue OtherAmount { get; set; } = new MonetaryValue();
+    
+        /// <summary>The total shipping cost for the specified comparison_rate_type.</summary>
+        [Newtonsoft.Json.JsonProperty("requested_comparison_amount", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public MonetaryValue RequestedComparisonAmount { get; set; }
     
         /// <summary>Tariff and additional taxes associated with an international shipment.</summary>
         [Newtonsoft.Json.JsonProperty("tax_amount", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -6853,7 +8305,7 @@ namespace ShipEngineAPI
         [Newtonsoft.Json.JsonProperty("trackable", Required = Newtonsoft.Json.Required.Always)]
         public bool Trackable { get; set; }
     
-        /// <summary>carrier code</summary>
+        /// <summary>A [shipping carrier](https://www.shipengine.com/docs/carriers/setup/), such as `fedex`, `dhl_express`, `stamps_com`, etc.</summary>
         [Newtonsoft.Json.JsonProperty("carrier_code", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
         public string CarrierCode { get; set; }
@@ -6890,6 +8342,101 @@ namespace ShipEngineAPI
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
     public partial class GetRateByIdResponseBody : Rate
     {
+    
+    }
+    
+    /// <summary>A get service points request body. Caller must provide exactly one of address_query, address, or lat / long pair.</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class GetServicePointsRequest 
+    {
+        /// <summary>Unstructured text to search for service points by.</summary>
+        [Newtonsoft.Json.JsonProperty("address_query", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string AddressQuery { get; set; }
+    
+        /// <summary>Structured address to search by.</summary>
+        [Newtonsoft.Json.JsonProperty("address", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public Address2 Address { get; set; }
+    
+        /// <summary>An array of shipping service providers and service codes</summary>
+        [Newtonsoft.Json.JsonProperty("providers", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required]
+        public System.Collections.Generic.IList<Providers> Providers { get; set; } = new System.Collections.Generic.List<Providers>();
+    
+        /// <summary>The latitude of the point. Represented as signed degrees. Required if long is provided. http://www.geomidpoint.com/latlon.html</summary>
+        [Newtonsoft.Json.JsonProperty("lat", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public double? Lat { get; set; }
+    
+        /// <summary>The longitude of the point. Represented as signed degrees. Required if lat is provided. http://www.geomidpoint.com/latlon.html</summary>
+        [Newtonsoft.Json.JsonProperty("long", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public double? Long { get; set; }
+    
+        /// <summary>Search radius in kilometers</summary>
+        [Newtonsoft.Json.JsonProperty("radius", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int? Radius { get; set; }
+    
+        /// <summary>The maximum number of service points to return</summary>
+        [Newtonsoft.Json.JsonProperty("max_results", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public int? MaxResults { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    /// <summary>A list service points response body</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class ListServicePointsResponseBody 
+    {
+        /// <summary>The latitude of the point. Represented as signed degrees. Required if long is provided. http://www.geomidpoint.com/latlon.html</summary>
+        [Newtonsoft.Json.JsonProperty("lat", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public double? Lat { get; set; }
+    
+        /// <summary>The longitude of the point. Represented as signed degrees. Required if lat is provided. http://www.geomidpoint.com/latlon.html</summary>
+        [Newtonsoft.Json.JsonProperty("long", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public double? Long { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("service_points", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<ServicePoints> ServicePoints { get; set; }
+    
+        /// <summary>The errors associated with the failed API call</summary>
+        [Newtonsoft.Json.JsonProperty("errors", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<Error> Errors { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    /// <summary>A get service point by ID response body</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class GetServicePointByIdResponseBody 
+    {
+        [Newtonsoft.Json.JsonProperty("service_point", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public ServicePoint ServicePoint { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
     
     }
     
@@ -7100,47 +8647,6 @@ namespace ShipEngineAPI
     
     }
     
-    /// <summary>A shipment errors response body</summary>
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
-    public partial class ListShipmentErrorsResponseBody 
-    {
-        /// <summary>The errors associated with the shipment.</summary>
-        [Newtonsoft.Json.JsonProperty("errors", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        public System.Collections.Generic.IList<ShipmentResponseError> Errors { get; set; } = new System.Collections.Generic.List<ShipmentResponseError>();
-    
-        [Newtonsoft.Json.JsonProperty("links", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        public PaginationLink Links { get; set; } = new PaginationLink();
-    
-    
-    }
-    
-    /// <summary>A shipment response error.</summary>
-    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
-    public partial class ShipmentResponseError 
-    {
-        /// <summary>Shipment error message</summary>
-        [Newtonsoft.Json.JsonProperty("error", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required]
-        public string Error { get; set; }
-    
-        /// <summary>A string that uniquely identifies the shipment.</summary>
-        [Newtonsoft.Json.JsonProperty("shipment_id", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        [System.ComponentModel.DataAnnotations.StringLength(25, MinimumLength = 1)]
-        [System.ComponentModel.DataAnnotations.RegularExpression(@"^se(-[a-z0-9]+)+$")]
-        public string ShipmentId { get; set; }
-    
-        /// <summary>A string that uniquely identifies the external shipment.</summary>
-        [Newtonsoft.Json.JsonProperty("external_shipment_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        [System.ComponentModel.DataAnnotations.StringLength(25, MinimumLength = 1)]
-        [System.ComponentModel.DataAnnotations.RegularExpression(@"^se(-[a-z0-9]+)+$")]
-        public string ExternalShipmentId { get; set; }
-    
-    
-    }
-    
     /// <summary>A list shipment rates response body</summary>
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
     public partial class ListShipmentRatesResponseBody : RatesInformation
@@ -7148,21 +8654,47 @@ namespace ShipEngineAPI
     
     }
     
-    /// <summary>A shipment add tag response body</summary>
+    /// <summary>A request body with shipments and tags</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class UpdateShipmentsTagsRequestBody : UpdateShipmentsTags
+    {
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class UpdateShipmentsTags 
+    {
+        [Newtonsoft.Json.JsonProperty("shipments_tags", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<ShipmentsTags> ShipmentsTags { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    /// <summary>Get shipment tags response body</summary>
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
     public partial class TagShipmentResponseBody 
     {
-        /// <summary>A string that uniquely identifies the shipment</summary>
-        [Newtonsoft.Json.JsonProperty("shipment_id", Required = Newtonsoft.Json.Required.Always)]
-        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
-        [System.ComponentModel.DataAnnotations.StringLength(25, MinimumLength = 1)]
-        [System.ComponentModel.DataAnnotations.RegularExpression(@"^se(-[a-z0-9]+)+$")]
-        public string ShipmentId { get; set; }
-    
-        /// <summary>The tag that is now associated with this shipment</summary>
-        [Newtonsoft.Json.JsonProperty("tag", Required = Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonProperty("tags", Required = Newtonsoft.Json.Required.Always)]
         [System.ComponentModel.DataAnnotations.Required]
-        public Tag Tag { get; set; } = new Tag();
+        public System.Collections.Generic.IList<string> Tags { get; set; } = new System.Collections.Generic.List<string>();
     
     
     }
@@ -7182,6 +8714,38 @@ namespace ShipEngineAPI
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
     public partial class CreateTagResponseBody : Tag
     {
+    
+    }
+    
+    /// <summary>The resource to return a redirect URL to.</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public enum Redirect
+    {
+        [System.Runtime.Serialization.EnumMember(Value = @"shipengine-dashboard")]
+        ShipengineDashboard = 0,
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class Yaml 
+    {
+        /// <summary>The requested token that expires in 10 seconds.</summary>
+        [Newtonsoft.Json.JsonProperty("token", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Token { get; set; }
+    
+        /// <summary>The redirect url formatted with the requested token.</summary>
+        [Newtonsoft.Json.JsonProperty("redirect_url", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string RedirectUrl { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
     
     }
     
@@ -7213,6 +8777,10 @@ namespace ShipEngineAPI
         [System.ComponentModel.DataAnnotations.StringLength(25, MinimumLength = 1)]
         [System.ComponentModel.DataAnnotations.RegularExpression(@"^se(-[a-z0-9]+)+$")]
         public string WarehouseId { get; set; }
+    
+        /// <summary>Designates which single warehouse is the default on the account</summary>
+        [Newtonsoft.Json.JsonProperty("is_default", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? IsDefault { get; set; }
     
         /// <summary>Name of the warehouse</summary>
         [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -7263,6 +8831,17 @@ namespace ShipEngineAPI
     
     }
     
+    /// <summary>An update warehouse settings request body</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class UpdateWarehouseSettingsRequestBody 
+    {
+        /// <summary>The default property on the warehouse.</summary>
+        [Newtonsoft.Json.JsonProperty("is_default", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? IsDefault { get; set; }
+    
+    
+    }
+    
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
     public enum SortBy
     {
@@ -7271,6 +8850,69 @@ namespace ShipEngineAPI
     
         [System.Runtime.Serialization.EnumMember(Value = @"created_at")]
         CreatedAt = 1,
+    
+    }
+    
+    /// <summary>Image</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class Images : AccountSettingsImages2
+    {
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public enum AccountSettingsImagesImageContentType
+    {
+        [System.Runtime.Serialization.EnumMember(Value = @"image/png")]
+        Image_png = 0,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"image/jpeg")]
+        Image_jpeg = 1,
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class ProcessLabels 
+    {
+        /// <summary>When 'true', the batch will be enqueued for processing</summary>
+        [Newtonsoft.Json.JsonProperty("create_batch_and_process_labels", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? CreateBatchAndProcessLabels { get; set; }
+    
+        /// <summary>The Ship date the batch is being processed for</summary>
+        [Newtonsoft.Json.JsonProperty("ship_date", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.RegularExpression(@"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[-+]\d{2}:\d{2})$")]
+        public System.DateTimeOffset ShipDate { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("label_layout", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string LabelLayout { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("label_format", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public LabelFormat? LabelFormat { get; set; }
+    
+        /// <summary>The display format that the label should be shown in.</summary>
+        [Newtonsoft.Json.JsonProperty("display_scheme", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public DisplayScheme? DisplayScheme { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
     
     }
     
@@ -7321,6 +8963,11 @@ namespace ShipEngineAPI
         /// </summary>
         [Newtonsoft.Json.JsonProperty("insurance_cost", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public MonetaryValue InsuranceCost { get; set; }
+    
+        /// <summary>The total shipping cost for the specified comparison_rate_type.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("requested_comparison_amount", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public MonetaryValue RequestedComparisonAmount { get; set; }
     
         /// <summary>The tracking number for the package. Tracking number formats vary across carriers.</summary>
         [Newtonsoft.Json.JsonProperty("tracking_number", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
@@ -7383,6 +9030,7 @@ namespace ShipEngineAPI
         /// <summary>The [package type](https://www.shipengine.com/docs/reference/list-carrier-packages/), such as `thick_envelope`, `small_flat_rate_box`, `large_package`, etc.  The code `package` indicates a custom or unknown package type.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("package_code", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(50, MinimumLength = 1)]
         [System.ComponentModel.DataAnnotations.RegularExpression(@"^[a-z0-9]+(_[a-z0-9]+)*$")]
         public string PackageCode { get; set; }
     
@@ -7461,7 +9109,909 @@ namespace ShipEngineAPI
         /// &gt; **Note:** Some carriers only allow one package per label.  If you attempt to create a multi-package label for a carrier that doesn't allow it, an error will be returned.
         /// </summary>
         [Newtonsoft.Json.JsonProperty("packages", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public System.Collections.Generic.IList<Package> Packages { get; set; }
+        public System.Collections.Generic.IList<Packages2> Packages { get; set; }
+    
+        /// <summary>Additional information some carriers may provide by which to identify a given label in their system. 
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("alternative_identifiers", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<AlternativeIdentifier> AlternativeIdentifiers { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class Packages : Package
+    {
+        /// <summary>Alternative identifiers associated with this package.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("alternative_identifiers", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<AlternativeIdentifier> AlternativeIdentifiers { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class Geolocation 
+    {
+        /// <summary>Enum of available type of geolocation items:
+        ///   - 'what3words' functionality allows to specify a location by providing 3 words that have been assign to the specific location see [link](https://what3words.com/business) for more details.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("type", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public GeolocationType? Type { get; set; }
+    
+        /// <summary>value of the geolocation item</summary>
+        [Newtonsoft.Json.JsonProperty("value", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Value { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class InvoiceAdditionalDetails2 : InvoiceAdditionalDetails
+    {
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class ImporterOfRecord : ImporterOfRecords
+    {
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class FedexFreight 
+    {
+        [Newtonsoft.Json.JsonProperty("shipper_load_and_count", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string ShipperLoadAndCount { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("booking_confirmation", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string BookingConfirmation { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class DangerousGoodsContact 
+    {
+        /// <summary>Name of the contact</summary>
+        [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Name { get; set; }
+    
+        /// <summary>Phone number of the contact</summary>
+        [Newtonsoft.Json.JsonProperty("phone", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Phone { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class Address2 
+    {
+        /// <summary>The first line of the street address. For some addresses, this may be the only line. Other addresses may require 2 or 3 lines.</summary>
+        [Newtonsoft.Json.JsonProperty("address_line1", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string AddressLine1 { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("address_line2", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string AddressLine2 { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("address_line3", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string AddressLine3 { get; set; }
+    
+        /// <summary>The name of the city or locality</summary>
+        [Newtonsoft.Json.JsonProperty("city_locality", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string CityLocality { get; set; }
+    
+        /// <summary>The state or province. For some countries (including the U.S.) only abbreviations are allowed. Other countries allow the full name or abbreviation.</summary>
+        [Newtonsoft.Json.JsonProperty("state_province", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string StateProvince { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("postal_code", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string PostalCode { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("country_code", Required = Newtonsoft.Json.Required.Always)]
+        [System.ComponentModel.DataAnnotations.Required(AllowEmptyStrings = true)]
+        [System.ComponentModel.DataAnnotations.StringLength(2, MinimumLength = 2)]
+        public string CountryCode { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class Providers 
+    {
+        /// <summary>Uniquely identifies a carrier connection</summary>
+        [Newtonsoft.Json.JsonProperty("carrier_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string CarrierId { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("service_code", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<string> ServiceCode { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class ServicePoints 
+    {
+        [Newtonsoft.Json.JsonProperty("carrier_code", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.RegularExpression(@"^[a-z0-9]+(_[a-z0-9]+)*$")]
+        public string CarrierCode { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("service_codes", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<string> ServiceCodes { get; set; }
+    
+        /// <summary>A unique identifier for a carrier drop off point.</summary>
+        [Newtonsoft.Json.JsonProperty("service_point_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string ServicePointId { get; set; }
+    
+        /// <summary>If this is a business address, then the company name should be specified here.</summary>
+        [Newtonsoft.Json.JsonProperty("company_name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string CompanyName { get; set; }
+    
+        /// <summary>The first line of the street address.  For some addresses, this may be the only line.  Other addresses may require 2 or 3 lines.</summary>
+        [Newtonsoft.Json.JsonProperty("address_line1", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string AddressLine1 { get; set; }
+    
+        /// <summary>The name of the city or locality</summary>
+        [Newtonsoft.Json.JsonProperty("city_locality", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string CityLocality { get; set; }
+    
+        /// <summary>The state or province. For some countries (including the U.S.) only abbreviations are allowed. Other countries allow the full name or abbreviation.</summary>
+        [Newtonsoft.Json.JsonProperty("state_province", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string StateProvince { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("postal_code", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
+        public string PostalCode { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("country_code", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(2, MinimumLength = 2)]
+        public string CountryCode { get; set; }
+    
+        /// <summary>Phone number associated</summary>
+        [Newtonsoft.Json.JsonProperty("phone_number", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string PhoneNumber { get; set; }
+    
+        /// <summary>The latitude of the point. Represented as signed degrees. Required if long is provided. http://www.geomidpoint.com/latlon.html</summary>
+        [Newtonsoft.Json.JsonProperty("lat", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public double? Lat { get; set; }
+    
+        /// <summary>The longitude of the point. Represented as signed degrees. Required if lat is provided. http://www.geomidpoint.com/latlon.html</summary>
+        [Newtonsoft.Json.JsonProperty("long", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public double? Long { get; set; }
+    
+        /// <summary>Distance in meters</summary>
+        [Newtonsoft.Json.JsonProperty("distance_in_meters", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public double? DistanceInMeters { get; set; }
+    
+        /// <summary>Hours of operation</summary>
+        [Newtonsoft.Json.JsonProperty("hours_of_operation", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public HoursOfOperation HoursOfOperation { get; set; }
+    
+        /// <summary>Service features</summary>
+        [Newtonsoft.Json.JsonProperty("features", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore, ItemConverterType = typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public System.Collections.Generic.IList<Features> Features { get; set; }
+    
+        /// <summary>Service point type</summary>
+        [Newtonsoft.Json.JsonProperty("type", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public ServicePointsType? Type { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class ServicePoint 
+    {
+        [Newtonsoft.Json.JsonProperty("carrier_code", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.RegularExpression(@"^[a-z0-9]+(_[a-z0-9]+)*$")]
+        public string CarrierCode { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("service_codes", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<string> ServiceCodes { get; set; }
+    
+        /// <summary>A unique identifier for a carrier drop off point.</summary>
+        [Newtonsoft.Json.JsonProperty("service_point_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string ServicePointId { get; set; }
+    
+        /// <summary>If this is a business address, then the company name should be specified here.</summary>
+        [Newtonsoft.Json.JsonProperty("company_name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string CompanyName { get; set; }
+    
+        /// <summary>The first line of the street address.  For some addresses, this may be the only line.  Other addresses may require 2 or 3 lines.</summary>
+        [Newtonsoft.Json.JsonProperty("address_line1", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string AddressLine1 { get; set; }
+    
+        /// <summary>The name of the city or locality</summary>
+        [Newtonsoft.Json.JsonProperty("city_locality", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string CityLocality { get; set; }
+    
+        /// <summary>The state or province. For some countries (including the U.S.) only abbreviations are allowed. Other countries allow the full name or abbreviation.</summary>
+        [Newtonsoft.Json.JsonProperty("state_province", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string StateProvince { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("postal_code", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 1)]
+        public string PostalCode { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("country_code", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(2, MinimumLength = 2)]
+        public string CountryCode { get; set; }
+    
+        /// <summary>Phone number associated</summary>
+        [Newtonsoft.Json.JsonProperty("phone_number", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string PhoneNumber { get; set; }
+    
+        /// <summary>The latitude of the point. Represented as signed degrees. Required if long is provided. http://www.geomidpoint.com/latlon.html</summary>
+        [Newtonsoft.Json.JsonProperty("lat", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public double? Lat { get; set; }
+    
+        /// <summary>The longitude of the point. Represented as signed degrees. Required if lat is provided. http://www.geomidpoint.com/latlon.html</summary>
+        [Newtonsoft.Json.JsonProperty("long", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public double? Long { get; set; }
+    
+        /// <summary>Hours of operation</summary>
+        [Newtonsoft.Json.JsonProperty("hours_of_operation", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public HoursOfOperation2 HoursOfOperation { get; set; }
+    
+        /// <summary>Service features</summary>
+        [Newtonsoft.Json.JsonProperty("features", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore, ItemConverterType = typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public System.Collections.Generic.IList<Features2> Features { get; set; }
+    
+        /// <summary>Service point type</summary>
+        [Newtonsoft.Json.JsonProperty("type", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public ServicePointType? Type { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class ShipmentsTags 
+    {
+        [Newtonsoft.Json.JsonProperty("shipment_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string ShipmentId { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("tags", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<string> Tags { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    /// <summary>A ShipEngine account images body</summary>
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class AccountSettingsImages2 
+    {
+        /// <summary>A string that uniquely identifies the image. This ID is generated by ShipEngine when the image is uploaded.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("label_image_id", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(int.MaxValue, MinimumLength = 4)]
+        public string LabelImageId { get; set; }
+    
+        /// <summary>A human readable name for the image.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("name", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.StringLength(50, MinimumLength = 1)]
+        public string Name { get; set; }
+    
+        /// <summary>Indicates whether this image is set as default.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("is_default", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public bool? IsDefault { get; set; }
+    
+        /// <summary>The file type of the image.</summary>
+        [Newtonsoft.Json.JsonProperty("image_content_type", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public AccountSettingsImages2ImageContentType? ImageContentType { get; set; }
+    
+        /// <summary>A base64 encoded string representation of the image.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("image_data", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string ImageData { get; set; }
+    
+        /// <summary>The date and time that the image was created in ShipEngine.</summary>
+        [Newtonsoft.Json.JsonProperty("created_at", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.RegularExpression(@"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[-+]\d{2}:\d{2})$")]
+        public System.DateTimeOffset CreatedAt { get; set; }
+    
+        /// <summary>The date and time that the image was modified in ShipEngine.</summary>
+        [Newtonsoft.Json.JsonProperty("modified_at", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [System.ComponentModel.DataAnnotations.RegularExpression(@"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?(Z|[-+]\d{2}:\d{2})$")]
+        public System.DateTimeOffset ModifiedAt { get; set; }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class Packages2 : Package
+    {
+        /// <summary>Alternative identifiers associated with this package.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty("alternative_identifiers", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<AlternativeIdentifier> AlternativeIdentifiers { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public enum GeolocationType
+    {
+        [System.Runtime.Serialization.EnumMember(Value = @"what3words")]
+        What3words = 0,
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class HoursOfOperation 
+    {
+        [Newtonsoft.Json.JsonProperty("monday", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<Monday> Monday { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("tuesday", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<Tuesday> Tuesday { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("wednesday", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<Wednesday> Wednesday { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("thursday", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<Thursday> Thursday { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("friday", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<Friday> Friday { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("saturday", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<Saturday> Saturday { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("sunday", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<Sunday> Sunday { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public enum Features
+    {
+        [System.Runtime.Serialization.EnumMember(Value = @"drop_off_point")]
+        DropOffPoint = 0,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"pickup_point")]
+        PickupPoint = 1,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"print_services")]
+        PrintServices = 2,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"after_hours_locker")]
+        AfterHoursLocker = 3,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"after_hours_dropbox")]
+        AfterHoursDropbox = 4,
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public enum ServicePointsType
+    {
+        [System.Runtime.Serialization.EnumMember(Value = @"pudo")]
+        Pudo = 0,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"locker")]
+        Locker = 1,
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class HoursOfOperation2 
+    {
+        [Newtonsoft.Json.JsonProperty("monday", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<Monday2> Monday { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("tuesday", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<Tuesday2> Tuesday { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("wednesday", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<Wednesday2> Wednesday { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("thursday", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<Thursday2> Thursday { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("friday", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<Friday2> Friday { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("saturday", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<Saturday2> Saturday { get; set; }
+    
+        [Newtonsoft.Json.JsonProperty("sunday", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IList<Sunday2> Sunday { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public enum Features2
+    {
+        [System.Runtime.Serialization.EnumMember(Value = @"drop_off_point")]
+        DropOffPoint = 0,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"pickup_point")]
+        PickupPoint = 1,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"print_services")]
+        PrintServices = 2,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"after_hours_locker")]
+        AfterHoursLocker = 3,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"after_hours_dropbox")]
+        AfterHoursDropbox = 4,
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public enum ServicePointType
+    {
+        [System.Runtime.Serialization.EnumMember(Value = @"pudo")]
+        Pudo = 0,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"locker")]
+        Locker = 1,
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public enum AccountSettingsImages2ImageContentType
+    {
+        [System.Runtime.Serialization.EnumMember(Value = @"image/png")]
+        Image_png = 0,
+    
+        [System.Runtime.Serialization.EnumMember(Value = @"image/jpeg")]
+        Image_jpeg = 1,
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class Monday 
+    {
+        /// <summary>Opening time</summary>
+        [Newtonsoft.Json.JsonProperty("open", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Open { get; set; }
+    
+        /// <summary>Closing time</summary>
+        [Newtonsoft.Json.JsonProperty("close", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Close { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class Tuesday 
+    {
+        /// <summary>Opening time</summary>
+        [Newtonsoft.Json.JsonProperty("open", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Open { get; set; }
+    
+        /// <summary>Closing time</summary>
+        [Newtonsoft.Json.JsonProperty("close", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Close { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class Wednesday 
+    {
+        /// <summary>Opening time</summary>
+        [Newtonsoft.Json.JsonProperty("open", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Open { get; set; }
+    
+        /// <summary>Closing time</summary>
+        [Newtonsoft.Json.JsonProperty("close", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Close { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class Thursday 
+    {
+        /// <summary>Opening time</summary>
+        [Newtonsoft.Json.JsonProperty("open", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Open { get; set; }
+    
+        /// <summary>Closing time</summary>
+        [Newtonsoft.Json.JsonProperty("close", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Close { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class Friday 
+    {
+        /// <summary>Opening time</summary>
+        [Newtonsoft.Json.JsonProperty("open", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Open { get; set; }
+    
+        /// <summary>Closing time</summary>
+        [Newtonsoft.Json.JsonProperty("close", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Close { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class Saturday 
+    {
+        /// <summary>Opening time</summary>
+        [Newtonsoft.Json.JsonProperty("open", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Open { get; set; }
+    
+        /// <summary>Closing time</summary>
+        [Newtonsoft.Json.JsonProperty("close", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Close { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class Sunday 
+    {
+        /// <summary>Opening time</summary>
+        [Newtonsoft.Json.JsonProperty("open", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Open { get; set; }
+    
+        /// <summary>Closing time</summary>
+        [Newtonsoft.Json.JsonProperty("close", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Close { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class Monday2 
+    {
+        /// <summary>Opening time</summary>
+        [Newtonsoft.Json.JsonProperty("open", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Open { get; set; }
+    
+        /// <summary>Closing time</summary>
+        [Newtonsoft.Json.JsonProperty("close", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Close { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class Tuesday2 
+    {
+        /// <summary>Opening time</summary>
+        [Newtonsoft.Json.JsonProperty("open", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Open { get; set; }
+    
+        /// <summary>Closing time</summary>
+        [Newtonsoft.Json.JsonProperty("close", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Close { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class Wednesday2 
+    {
+        /// <summary>Opening time</summary>
+        [Newtonsoft.Json.JsonProperty("open", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Open { get; set; }
+    
+        /// <summary>Closing time</summary>
+        [Newtonsoft.Json.JsonProperty("close", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Close { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class Thursday2 
+    {
+        /// <summary>Opening time</summary>
+        [Newtonsoft.Json.JsonProperty("open", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Open { get; set; }
+    
+        /// <summary>Closing time</summary>
+        [Newtonsoft.Json.JsonProperty("close", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Close { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class Friday2 
+    {
+        /// <summary>Opening time</summary>
+        [Newtonsoft.Json.JsonProperty("open", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Open { get; set; }
+    
+        /// <summary>Closing time</summary>
+        [Newtonsoft.Json.JsonProperty("close", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Close { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class Saturday2 
+    {
+        /// <summary>Opening time</summary>
+        [Newtonsoft.Json.JsonProperty("open", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Open { get; set; }
+    
+        /// <summary>Closing time</summary>
+        [Newtonsoft.Json.JsonProperty("close", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Close { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
+    
+    
+    }
+    
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class Sunday2 
+    {
+        /// <summary>Opening time</summary>
+        [Newtonsoft.Json.JsonProperty("open", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Open { get; set; }
+    
+        /// <summary>Closing time</summary>
+        [Newtonsoft.Json.JsonProperty("close", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string Close { get; set; }
+    
+        private System.Collections.Generic.IDictionary<string, object> _additionalProperties = new System.Collections.Generic.Dictionary<string, object>();
+    
+        [Newtonsoft.Json.JsonExtensionData]
+        public System.Collections.Generic.IDictionary<string, object> AdditionalProperties
+        {
+            get { return _additionalProperties; }
+            set { _additionalProperties = value; }
+        }
     
     
     }

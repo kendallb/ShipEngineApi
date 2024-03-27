@@ -52,6 +52,633 @@ namespace ShipEngineAPI
         partial void ProcessResponse(HttpClient client, System.Net.Http.HttpResponseMessage response);
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>List Account Settings</summary>
+        /// <returns>The request was a success.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public async System.Threading.Tasks.Task<GetAccountSettingsResponseBody> ListAccountSettings(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            var urlBuilder_ = new System.Text.StringBuilder();
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/account/settings");
+    
+            var client_ = _httpClient;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+    
+                    PrepareRequest(client_, request_, urlBuilder_);
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+                    PrepareRequest(client_, request_, url_);
+    
+                    while (true)
+                    {
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
+                        {
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
+    
+                            ProcessResponse(client_, response_);
+    
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<GetAccountSettingsResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
+                            }
+                            else
+                            if (status_ == 400)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 404)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 500)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
+                        }
+                        finally
+                        {
+                            if (response_ != null)
+                                response_.Dispose();
+                        }
+                    }
+                }
+            }
+            finally
+            {
+            }
+        }
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>List Account Images</summary>
+        /// <returns>The request was a success.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public async System.Threading.Tasks.Task<ListAccountSettingsImagesResponseBody> ListAccountImages(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            var urlBuilder_ = new System.Text.StringBuilder();
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/account/settings/images");
+    
+            var client_ = _httpClient;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+    
+                    PrepareRequest(client_, request_, urlBuilder_);
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+                    PrepareRequest(client_, request_, url_);
+    
+                    while (true)
+                    {
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
+                        {
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
+    
+                            ProcessResponse(client_, response_);
+    
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ListAccountSettingsImagesResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
+                            }
+                            else
+                            if (status_ == 400)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 404)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 500)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
+                        }
+                        finally
+                        {
+                            if (response_ != null)
+                                response_.Dispose();
+                        }
+                    }
+                }
+            }
+            finally
+            {
+            }
+        }
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>Create an Account Image</summary>
+        /// <returns>The requested object creation was a success.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public async System.Threading.Tasks.Task<GetAccountSettingsImagesResponseBody> CreateAccountImage(CreateAccountSettingsImageRequestBody body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+    
+            var urlBuilder_ = new System.Text.StringBuilder();
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/account/settings/images");
+    
+            var client_ = _httpClient;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var content_ = new System.Net.Http.StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(body, _settings.Value));
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+    
+                    PrepareRequest(client_, request_, urlBuilder_);
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+                    PrepareRequest(client_, request_, url_);
+    
+                    while (true)
+                    {
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
+                        {
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
+    
+                            ProcessResponse(client_, response_);
+    
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<GetAccountSettingsImagesResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
+                            }
+                            else
+                            if (status_ == 400)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 404)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 500)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
+                        }
+                        finally
+                        {
+                            if (response_ != null)
+                                response_.Dispose();
+                        }
+                    }
+                }
+            }
+            finally
+            {
+            }
+        }
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>Get Account Image By ID</summary>
+        /// <param name="label_image_id">Label Image Id</param>
+        /// <returns>The request was a success.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public async System.Threading.Tasks.Task<GetAccountSettingsImagesResponseBody> GetAccountSettingsImagesById(string label_image_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (label_image_id == null)
+                throw new System.ArgumentNullException("label_image_id");
+    
+            var urlBuilder_ = new System.Text.StringBuilder();
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/account/settings/images/{label_image_id}");
+            urlBuilder_.Replace("{label_image_id}", System.Uri.EscapeDataString(ConvertToString(label_image_id, System.Globalization.CultureInfo.InvariantCulture)));
+    
+            var client_ = _httpClient;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+    
+                    PrepareRequest(client_, request_, urlBuilder_);
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+                    PrepareRequest(client_, request_, url_);
+    
+                    while (true)
+                    {
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
+                        {
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
+    
+                            ProcessResponse(client_, response_);
+    
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<GetAccountSettingsImagesResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
+                            }
+                            else
+                            if (status_ == 400)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 404)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 500)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
+                        }
+                        finally
+                        {
+                            if (response_ != null)
+                                response_.Dispose();
+                        }
+                    }
+                }
+            }
+            finally
+            {
+            }
+        }
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>Update Account Image By ID</summary>
+        /// <param name="label_image_id">Label Image Id</param>
+        /// <returns>The request was successful.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public async System.Threading.Tasks.Task<string> UpdateAccountSettingsImagesById(string label_image_id, UpdateAccountSettingsImageRequestBody body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (label_image_id == null)
+                throw new System.ArgumentNullException("label_image_id");
+    
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+    
+            var urlBuilder_ = new System.Text.StringBuilder();
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/account/settings/images/{label_image_id}");
+            urlBuilder_.Replace("{label_image_id}", System.Uri.EscapeDataString(ConvertToString(label_image_id, System.Globalization.CultureInfo.InvariantCulture)));
+    
+            var client_ = _httpClient;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var content_ = new System.Net.Http.StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(body, _settings.Value));
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("PUT");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
+    
+                    PrepareRequest(client_, request_, urlBuilder_);
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+                    PrepareRequest(client_, request_, url_);
+    
+                    while (true)
+                    {
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
+                        {
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
+    
+                            ProcessResponse(client_, response_);
+    
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 204)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
+                            }
+                            else
+                            if (status_ == 400)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 404)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 500)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
+                        }
+                        finally
+                        {
+                            if (response_ != null)
+                                response_.Dispose();
+                        }
+                    }
+                }
+            }
+            finally
+            {
+            }
+        }
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>Delete Account Image By Id</summary>
+        /// <param name="label_image_id">Label Image Id</param>
+        /// <returns>The request was successful.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public async System.Threading.Tasks.Task<string> DeleteAccountImageById(string label_image_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (label_image_id == null)
+                throw new System.ArgumentNullException("label_image_id");
+    
+            var urlBuilder_ = new System.Text.StringBuilder();
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/account/settings/images/{label_image_id}");
+            urlBuilder_.Replace("{label_image_id}", System.Uri.EscapeDataString(ConvertToString(label_image_id, System.Globalization.CultureInfo.InvariantCulture)));
+    
+            var client_ = _httpClient;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("DELETE");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
+    
+                    PrepareRequest(client_, request_, urlBuilder_);
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+                    PrepareRequest(client_, request_, url_);
+    
+                    while (true)
+                    {
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
+                        {
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
+    
+                            ProcessResponse(client_, response_);
+    
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 204)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
+                            }
+                            else
+                            if (status_ == 400)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 404)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 500)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
+                        }
+                        finally
+                        {
+                            if (response_ != null)
+                                response_.Dispose();
+                        }
+                    }
+                }
+            }
+            finally
+            {
+            }
+        }
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Parse an address</summary>
         /// <param name="body">The only required field is `text`, which is the text to be parsed. You can optionally also provide an `address` containing already-known values. For example, you may already know the recipient's name, city, and country, and only want to parse the street address into separate lines.</param>
         /// <returns>Returns the parsed address, as well as a confidence score and a list of all the entities that were recognized in the text.</returns>
@@ -367,7 +994,7 @@ namespace ShipEngineAPI
         /// <summary>Create A Batch</summary>
         /// <returns>The requested object creation was a success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<CreateBatchResponseBody> CreateBatch(CreateBatchRequestBody body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<CreateBatchResponseBody> CreateBatch(CreateBatchRequest body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (body == null)
                 throw new System.ArgumentNullException("body");
@@ -407,6 +1034,16 @@ namespace ShipEngineAPI
     
                             var status_ = (int)response_.StatusCode;
                             if (status_ == 200)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<CreateBatchResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
+                            }
+                            else
+                            if (status_ == 207)
                             {
                                 var objectResponse_ = await ReadObjectResponseAsync<CreateBatchResponseBody>(response_, headers_).ConfigureAwait(false);
                                 if (objectResponse_.Object == null)
@@ -1513,6 +2150,111 @@ namespace ShipEngineAPI
         }
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>Disconnect Carrier by ID</summary>
+        /// <param name="carrier_id">Carrier ID</param>
+        /// <returns>The request was successful.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public async System.Threading.Tasks.Task<string> DisconnectCarrierById(string carrier_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (carrier_id == null)
+                throw new System.ArgumentNullException("carrier_id");
+    
+            var urlBuilder_ = new System.Text.StringBuilder();
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/carriers/{carrier_id}");
+            urlBuilder_.Replace("{carrier_id}", System.Uri.EscapeDataString(ConvertToString(carrier_id, System.Globalization.CultureInfo.InvariantCulture)));
+    
+            var client_ = _httpClient;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("DELETE");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
+    
+                    PrepareRequest(client_, request_, urlBuilder_);
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+                    PrepareRequest(client_, request_, url_);
+    
+                    while (true)
+                    {
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
+                        {
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
+    
+                            ProcessResponse(client_, response_);
+    
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 204)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
+                            }
+                            else
+                            if (status_ == 400)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 404)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 500)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
+                        }
+                        finally
+                        {
+                            if (response_ != null)
+                                response_.Dispose();
+                        }
+                    }
+                }
+            }
+            finally
+            {
+            }
+        }
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Add Funds To Carrier</summary>
         /// <param name="carrier_id">Carrier ID</param>
         /// <returns>The request was a success.</returns>
@@ -2145,7 +2887,7 @@ namespace ShipEngineAPI
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Get carrier settings</summary>
-        /// <param name="carrier_name">The carrier name, such as `stamps_com`, `ups`, `fedex`, or `dhl_express`.</param>
+        /// <param name="carrier_name">The carrier name, such as `ups`, `fedex`, or `dhl_express`.</param>
         /// <param name="carrier_id">Carrier ID</param>
         /// <returns>The request was a success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -2245,7 +2987,7 @@ namespace ShipEngineAPI
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Update carrier settings</summary>
-        /// <param name="carrier_name">The carrier name, such as `stamps_com`, `ups`, `fedex`, or `dhl_express`.</param>
+        /// <param name="carrier_name">The carrier name, such as `ups`, `fedex`, or `dhl_express`.</param>
         /// <param name="carrier_id">Carrier ID</param>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -4716,6 +5458,111 @@ namespace ShipEngineAPI
         }
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>Get Manifest Request By Id</summary>
+        /// <param name="manifest_request_id">The Manifest Request Id</param>
+        /// <returns>The request was a success.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public async System.Threading.Tasks.Task<CreateManifestResponseBody> GetManifestRequestById(string manifest_request_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (manifest_request_id == null)
+                throw new System.ArgumentNullException("manifest_request_id");
+    
+            var urlBuilder_ = new System.Text.StringBuilder();
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/manifests/requests/{manifest_request_id}");
+            urlBuilder_.Replace("{manifest_request_id}", System.Uri.EscapeDataString(ConvertToString(manifest_request_id, System.Globalization.CultureInfo.InvariantCulture)));
+    
+            var client_ = _httpClient;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+    
+                    PrepareRequest(client_, request_, urlBuilder_);
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+                    PrepareRequest(client_, request_, url_);
+    
+                    while (true)
+                    {
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
+                        {
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
+    
+                            ProcessResponse(client_, response_);
+    
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<CreateManifestResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
+                            }
+                            else
+                            if (status_ == 400)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 404)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 500)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
+                        }
+                        finally
+                        {
+                            if (response_ != null)
+                                response_.Dispose();
+                        }
+                    }
+                }
+            }
+            finally
+            {
+            }
+        }
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>List Custom Package Types</summary>
         /// <returns>The request was a success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -5221,6 +6068,451 @@ namespace ShipEngineAPI
         }
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>List Scheduled Pickups</summary>
+        /// <param name="carrier_id">Carrier ID</param>
+        /// <param name="warehouse_id">Warehouse ID</param>
+        /// <param name="created_at_start">Only return scheduled pickups that were created on or after a specific date/time</param>
+        /// <param name="created_at_end">Only return scheduled pickups that were created on or before a specific date/time</param>
+        /// <param name="page">Return a specific page of results. Defaults to the first page. If set to a number that's greater than the number of pages of results, an empty page is returned.</param>
+        /// <param name="page_size">The number of results to return per response.</param>
+        /// <returns>The request was a success.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public async System.Threading.Tasks.Task<GetPickupsResponseBody> ListScheduledPickups(string carrier_id = null, string warehouse_id = null, System.DateTimeOffset? created_at_start = null, System.DateTimeOffset? created_at_end = null, int? page = null, int? page_size = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            var urlBuilder_ = new System.Text.StringBuilder();
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/pickups?");
+            if (carrier_id != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("carrier_id") + "=").Append(System.Uri.EscapeDataString(ConvertToString(carrier_id, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (warehouse_id != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("warehouse_id") + "=").Append(System.Uri.EscapeDataString(ConvertToString(warehouse_id, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (created_at_start != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("created_at_start") + "=").Append(System.Uri.EscapeDataString(created_at_start.Value.ToString("s", System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (created_at_end != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("created_at_end") + "=").Append(System.Uri.EscapeDataString(created_at_end.Value.ToString("s", System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (page != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("page") + "=").Append(System.Uri.EscapeDataString(ConvertToString(page, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (page_size != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("page_size") + "=").Append(System.Uri.EscapeDataString(ConvertToString(page_size, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            urlBuilder_.Length--;
+    
+            var client_ = _httpClient;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+    
+                    PrepareRequest(client_, request_, urlBuilder_);
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+                    PrepareRequest(client_, request_, url_);
+    
+                    while (true)
+                    {
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
+                        {
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
+    
+                            ProcessResponse(client_, response_);
+    
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<GetPickupsResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
+                            }
+                            else
+                            if (status_ == 400)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 404)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 500)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
+                        }
+                        finally
+                        {
+                            if (response_ != null)
+                                response_.Dispose();
+                        }
+                    }
+                }
+            }
+            finally
+            {
+            }
+        }
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>Schedule a Pickup</summary>
+        /// <returns>The request was a success.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public async System.Threading.Tasks.Task<SchedulePickupResponseBody> SchedulePickup(SchedulePickupRequestBody body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+    
+            var urlBuilder_ = new System.Text.StringBuilder();
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/pickups");
+    
+            var client_ = _httpClient;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var content_ = new System.Net.Http.StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(body, _settings.Value));
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+    
+                    PrepareRequest(client_, request_, urlBuilder_);
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+                    PrepareRequest(client_, request_, url_);
+    
+                    while (true)
+                    {
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
+                        {
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
+    
+                            ProcessResponse(client_, response_);
+    
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<SchedulePickupResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
+                            }
+                            else
+                            if (status_ == 400)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 404)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 500)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
+                        }
+                        finally
+                        {
+                            if (response_ != null)
+                                response_.Dispose();
+                        }
+                    }
+                }
+            }
+            finally
+            {
+            }
+        }
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>Get Pickup By ID</summary>
+        /// <returns>The request was a success.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public async System.Threading.Tasks.Task<GetPickupByIdResponseBody> GetPickupById(string pickup_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (pickup_id == null)
+                throw new System.ArgumentNullException("pickup_id");
+    
+            var urlBuilder_ = new System.Text.StringBuilder();
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/pickups/{pickup_id}");
+            urlBuilder_.Replace("{pickup_id}", System.Uri.EscapeDataString(ConvertToString(pickup_id, System.Globalization.CultureInfo.InvariantCulture)));
+    
+            var client_ = _httpClient;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+    
+                    PrepareRequest(client_, request_, urlBuilder_);
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+                    PrepareRequest(client_, request_, url_);
+    
+                    while (true)
+                    {
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
+                        {
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
+    
+                            ProcessResponse(client_, response_);
+    
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<GetPickupByIdResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
+                            }
+                            else
+                            if (status_ == 400)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 404)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 500)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
+                        }
+                        finally
+                        {
+                            if (response_ != null)
+                                response_.Dispose();
+                        }
+                    }
+                }
+            }
+            finally
+            {
+            }
+        }
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>Delete a Scheduled Pickup</summary>
+        /// <returns>Return the `pickup_id` of the scheduled pickup that was successfully deleted</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public async System.Threading.Tasks.Task<DeletePickupByIdResponseBody> DeleteScheduledPickup(string pickup_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (pickup_id == null)
+                throw new System.ArgumentNullException("pickup_id");
+    
+            var urlBuilder_ = new System.Text.StringBuilder();
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/pickups/{pickup_id}");
+            urlBuilder_.Replace("{pickup_id}", System.Uri.EscapeDataString(ConvertToString(pickup_id, System.Globalization.CultureInfo.InvariantCulture)));
+    
+            var client_ = _httpClient;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("DELETE");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+    
+                    PrepareRequest(client_, request_, urlBuilder_);
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+                    PrepareRequest(client_, request_, url_);
+    
+                    while (true)
+                    {
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
+                        {
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
+    
+                            ProcessResponse(client_, response_);
+    
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<DeletePickupByIdResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
+                            }
+                            else
+                            if (status_ == 400)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 404)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 500)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
+                        }
+                        finally
+                        {
+                            if (response_ != null)
+                                response_.Dispose();
+                        }
+                    }
+                }
+            }
+            finally
+            {
+            }
+        }
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Get Shipping Rates</summary>
         /// <returns>The request was a success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -5553,6 +6845,226 @@ namespace ShipEngineAPI
                             if (status_ == 200)
                             {
                                 var objectResponse_ = await ReadObjectResponseAsync<GetRateByIdResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
+                            }
+                            else
+                            if (status_ == 400)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 404)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 500)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
+                        }
+                        finally
+                        {
+                            if (response_ != null)
+                                response_.Dispose();
+                        }
+                    }
+                }
+            }
+            finally
+            {
+            }
+        }
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>List Service Points</summary>
+        /// <returns>The request was a success.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public async System.Threading.Tasks.Task<ListServicePointsResponseBody> ServicePointsList(GetServicePointsRequest body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+    
+            var urlBuilder_ = new System.Text.StringBuilder();
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/service_points/list");
+    
+            var client_ = _httpClient;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var content_ = new System.Net.Http.StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(body, _settings.Value));
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+    
+                    PrepareRequest(client_, request_, urlBuilder_);
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+                    PrepareRequest(client_, request_, url_);
+    
+                    while (true)
+                    {
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
+                        {
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
+    
+                            ProcessResponse(client_, response_);
+    
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ListServicePointsResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
+                            }
+                            else
+                            if (status_ == 400)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 404)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 500)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
+                        }
+                        finally
+                        {
+                            if (response_ != null)
+                                response_.Dispose();
+                        }
+                    }
+                }
+            }
+            finally
+            {
+            }
+        }
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>Get Service Point By ID</summary>
+        /// <param name="carrier_code">Carrier code</param>
+        /// <param name="country_code">A two-letter [ISO 3166-1 country code](https://en.wikipedia.org/wiki/ISO_3166-1)</param>
+        /// <returns>The request was a success.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public async System.Threading.Tasks.Task<GetServicePointByIdResponseBody> ServicePointsGetById(string carrier_code, string country_code, string service_point_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (carrier_code == null)
+                throw new System.ArgumentNullException("carrier_code");
+    
+            if (country_code == null)
+                throw new System.ArgumentNullException("country_code");
+    
+            if (service_point_id == null)
+                throw new System.ArgumentNullException("service_point_id");
+    
+            var urlBuilder_ = new System.Text.StringBuilder();
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/service_points/{carrier_code}/{country_code}/{service_point_id}");
+            urlBuilder_.Replace("{carrier_code}", System.Uri.EscapeDataString(ConvertToString(carrier_code, System.Globalization.CultureInfo.InvariantCulture)));
+            urlBuilder_.Replace("{country_code}", System.Uri.EscapeDataString(ConvertToString(country_code, System.Globalization.CultureInfo.InvariantCulture)));
+            urlBuilder_.Replace("{service_point_id}", System.Uri.EscapeDataString(ConvertToString(service_point_id, System.Globalization.CultureInfo.InvariantCulture)));
+    
+            var client_ = _httpClient;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+    
+                    PrepareRequest(client_, request_, urlBuilder_);
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+                    PrepareRequest(client_, request_, url_);
+    
+                    while (true)
+                    {
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
+                        {
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
+    
+                            ProcessResponse(client_, response_);
+    
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<GetServicePointByIdResponseBody>(response_, headers_).ConfigureAwait(false);
                                 if (objectResponse_.Object == null)
                                 {
                                     throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -6386,26 +7898,22 @@ namespace ShipEngineAPI
         }
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>Get Shipment Errors</summary>
+        /// <summary>Get Shipment Rates</summary>
         /// <param name="shipment_id">Shipment ID</param>
-        /// <param name="page">Return a specific page of results. Defaults to the first page. If set to a number that's greater than the number of pages of results, an empty page is returned.</param>
+        /// <param name="created_at_start">Used to create a filter for when a resource was created (ex. A shipment that was created after a certain time)</param>
         /// <returns>The request was a success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<ListShipmentErrorsResponseBody> ListShipmentErrors(string shipment_id, int? page = null, int? pagesize = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<ListShipmentRatesResponseBody> ListShipmentRates(string shipment_id, System.DateTimeOffset? created_at_start = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (shipment_id == null)
                 throw new System.ArgumentNullException("shipment_id");
     
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/shipments/{shipment_id}/errors?");
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/shipments/{shipment_id}/rates?");
             urlBuilder_.Replace("{shipment_id}", System.Uri.EscapeDataString(ConvertToString(shipment_id, System.Globalization.CultureInfo.InvariantCulture)));
-            if (page != null)
+            if (created_at_start != null)
             {
-                urlBuilder_.Append(System.Uri.EscapeDataString("page") + "=").Append(System.Uri.EscapeDataString(ConvertToString(page, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
-            }
-            if (pagesize != null)
-            {
-                urlBuilder_.Append(System.Uri.EscapeDataString("pagesize") + "=").Append(System.Uri.EscapeDataString(ConvertToString(pagesize, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+                urlBuilder_.Append(System.Uri.EscapeDataString("created_at_start") + "=").Append(System.Uri.EscapeDataString(created_at_start.Value.ToString("s", System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
             urlBuilder_.Length--;
     
@@ -6439,7 +7947,7 @@ namespace ShipEngineAPI
                             var status_ = (int)response_.StatusCode;
                             if (status_ == 200)
                             {
-                                var objectResponse_ = await ReadObjectResponseAsync<ListShipmentErrorsResponseBody>(response_, headers_).ConfigureAwait(false);
+                                var objectResponse_ = await ReadObjectResponseAsync<ListShipmentRatesResponseBody>(response_, headers_).ConfigureAwait(false);
                                 if (objectResponse_.Object == null)
                                 {
                                     throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -6501,24 +8009,118 @@ namespace ShipEngineAPI
         }
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>Get Shipment Rates</summary>
+        /// <summary>Update Shipments Tags</summary>
+        /// <returns>NoContent</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public async System.Threading.Tasks.Task ShipmentsUpdateTags(UpdateShipmentsTagsRequestBody body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+    
+            var urlBuilder_ = new System.Text.StringBuilder();
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/shipments/tags");
+    
+            var client_ = _httpClient;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var content_ = new System.Net.Http.StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(body, _settings.Value));
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("PUT");
+    
+                    PrepareRequest(client_, request_, urlBuilder_);
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+                    PrepareRequest(client_, request_, url_);
+    
+                    while (true)
+                    {
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
+                        {
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
+    
+                            ProcessResponse(client_, response_);
+    
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 204)
+                            {
+                                return;
+                            }
+                            else
+                            if (status_ == 400)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 404)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 500)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
+                        }
+                        finally
+                        {
+                            if (response_ != null)
+                                response_.Dispose();
+                        }
+                    }
+                }
+            }
+            finally
+            {
+            }
+        }
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>Get Shipment Tags</summary>
         /// <param name="shipment_id">Shipment ID</param>
-        /// <param name="created_at_start">Used to create a filter for when a resource was created (ex. A shipment that was created after a certain time)</param>
         /// <returns>The request was a success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<ListShipmentRatesResponseBody> ListShipmentRates(string shipment_id, System.DateTimeOffset? created_at_start = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<TagShipmentResponseBody> ShipmentsListTags(string shipment_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (shipment_id == null)
                 throw new System.ArgumentNullException("shipment_id");
     
             var urlBuilder_ = new System.Text.StringBuilder();
-            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/shipments/{shipment_id}/rates?");
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/shipments/{shipment_id}/tags");
             urlBuilder_.Replace("{shipment_id}", System.Uri.EscapeDataString(ConvertToString(shipment_id, System.Globalization.CultureInfo.InvariantCulture)));
-            if (created_at_start != null)
-            {
-                urlBuilder_.Append(System.Uri.EscapeDataString("created_at_start") + "=").Append(System.Uri.EscapeDataString(created_at_start.Value.ToString("s", System.Globalization.CultureInfo.InvariantCulture))).Append("&");
-            }
-            urlBuilder_.Length--;
     
             var client_ = _httpClient;
             try
@@ -6550,7 +8152,7 @@ namespace ShipEngineAPI
                             var status_ = (int)response_.StatusCode;
                             if (status_ == 200)
                             {
-                                var objectResponse_ = await ReadObjectResponseAsync<ListShipmentRatesResponseBody>(response_, headers_).ConfigureAwait(false);
+                                var objectResponse_ = await ReadObjectResponseAsync<TagShipmentResponseBody>(response_, headers_).ConfigureAwait(false);
                                 if (objectResponse_.Object == null)
                                 {
                                     throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
@@ -7231,8 +8833,85 @@ namespace ShipEngineAPI
         }
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>Get Ephemeral Token</summary>
+        /// <param name="redirect">Include a redirect url to the application formatted with the ephemeral token.</param>
+        /// <returns>OK</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public async System.Threading.Tasks.Task<Yaml> TokensGetEphemeralToken(Redirect? redirect = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            var urlBuilder_ = new System.Text.StringBuilder();
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/tokens/ephemeral?");
+            if (redirect != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("redirect") + "=").Append(System.Uri.EscapeDataString(ConvertToString(redirect, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            urlBuilder_.Length--;
+    
+            var client_ = _httpClient;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Content = new System.Net.Http.StringContent(string.Empty, System.Text.Encoding.UTF8, "application/json");
+                    request_.Method = new System.Net.Http.HttpMethod("POST");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+    
+                    PrepareRequest(client_, request_, urlBuilder_);
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+                    PrepareRequest(client_, request_, url_);
+    
+                    while (true)
+                    {
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
+                        {
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
+    
+                            ProcessResponse(client_, response_);
+    
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 200)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<Yaml>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
+                            }
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
+                        }
+                        finally
+                        {
+                            if (response_ != null)
+                                response_.Dispose();
+                        }
+                    }
+                }
+            }
+            finally
+            {
+            }
+        }
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Get Tracking Information</summary>
-        /// <param name="carrier_code">Carrier code used to retrieve tracking information</param>
+        /// <param name="carrier_code">A [shipping carrier](https://www.shipengine.com/docs/carriers/setup/), such as `fedex`, `dhl_express`, `stamps_com`, etc.</param>
         /// <param name="tracking_number">The tracking number associated with a shipment</param>
         /// <returns>The request was a success.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -7343,7 +9022,7 @@ namespace ShipEngineAPI
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Start Tracking a Package</summary>
-        /// <param name="carrier_code">Carrier code used to retrieve tracking information</param>
+        /// <param name="carrier_code">A [shipping carrier](https://www.shipengine.com/docs/carriers/setup/), such as `fedex`, `dhl_express`, `stamps_com`, etc.</param>
         /// <param name="tracking_number">The tracking number associated with a shipment</param>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -7449,7 +9128,7 @@ namespace ShipEngineAPI
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>Stop Tracking a Package</summary>
-        /// <param name="carrier_code">Carrier code used to retrieve tracking information</param>
+        /// <param name="carrier_code">A [shipping carrier](https://www.shipengine.com/docs/carriers/setup/), such as `fedex`, `dhl_express`, `stamps_com`, etc.</param>
         /// <param name="tracking_number">The tracking number associated with a shipment</param>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -7865,7 +9544,7 @@ namespace ShipEngineAPI
         }
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
-        /// <summary>Update WareHouse By Id</summary>
+        /// <summary>Update Warehouse By Id</summary>
         /// <param name="warehouse_id">Warehouse ID</param>
         /// <returns>The request was successful.</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -8013,6 +9692,117 @@ namespace ShipEngineAPI
                             if (status_ == 204)
                             {
                                 return;
+                            }
+                            else
+                            if (status_ == 400)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The request contained errors.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 404)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("The specified resource does not exist.", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 500)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<ErrorResponseBody>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                throw new ApiException<ErrorResponseBody>("An error occurred on ShipEngine\'s side.\n\n> This error will automatically be reported to our engineers.\n", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            }
+                            else
+                            if (status_ == 429 && headers_.TryGetValue("Retry-After", out var retryAfter) && int.TryParse(retryAfter.First(), out var retrySeconds))
+                            {
+                                await System.Threading.Tasks.Task.Delay(retrySeconds * 1000);
+                            }
+                            else
+                            {
+                                var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                                throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                            }
+                        }
+                        finally
+                        {
+                            if (response_ != null)
+                                response_.Dispose();
+                        }
+                    }
+                }
+            }
+            finally
+            {
+            }
+        }
+    
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>Update Warehouse Settings</summary>
+        /// <param name="warehouse_id">Warehouse ID</param>
+        /// <returns>The request was successful.</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public async System.Threading.Tasks.Task<string> UpdateWarehouseSettings(UpdateWarehouseSettingsRequestBody body, string warehouse_id, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (warehouse_id == null)
+                throw new System.ArgumentNullException("warehouse_id");
+    
+            if (body == null)
+                throw new System.ArgumentNullException("body");
+    
+            var urlBuilder_ = new System.Text.StringBuilder();
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/v1/warehouses/{warehouse_id}/settings");
+            urlBuilder_.Replace("{warehouse_id}", System.Uri.EscapeDataString(ConvertToString(warehouse_id, System.Globalization.CultureInfo.InvariantCulture)));
+    
+            var client_ = _httpClient;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    var content_ = new System.Net.Http.StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(body, _settings.Value));
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
+                    request_.Content = content_;
+                    request_.Method = new System.Net.Http.HttpMethod("PUT");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("text/plain"));
+    
+                    PrepareRequest(client_, request_, urlBuilder_);
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+                    PrepareRequest(client_, request_, url_);
+    
+                    while (true)
+                    {
+                        var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                        try
+                        {
+                            var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                            if (response_.Content != null && response_.Content.Headers != null)
+                            {
+                                foreach (var item_ in response_.Content.Headers)
+                                    headers_[item_.Key] = item_.Value;
+                            }
+    
+                            ProcessResponse(client_, response_);
+    
+                            var status_ = (int)response_.StatusCode;
+                            if (status_ == 204)
+                            {
+                                var objectResponse_ = await ReadObjectResponseAsync<string>(response_, headers_).ConfigureAwait(false);
+                                if (objectResponse_.Object == null)
+                                {
+                                    throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                                }
+                                return objectResponse_.Object;
                             }
                             else
                             if (status_ == 400)
