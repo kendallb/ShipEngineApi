@@ -342,21 +342,24 @@ namespace ShipEngineTest
                                 Width = 2,
                                 Height = 3,
                             },
+                            Products = new List<Products> {
+                                new Products {
+                                    Description = "Product name",
+                                    Quantity = 2,
+                                    Value = new MonetaryValue {
+                                        Currency = "USD",
+                                        Amount = 42.99,
+                                    },
+                                    HarmonizedTariffCode = "",
+                                    CountryOfOrigin = "US",
+                                    Sku = "PRODUCT_SKU",
+                                },
+                            },
                         },
                     },
                     Customs = new InternationalShipmentOptions {
                         Contents = PackageContents.Merchandise,
                         NonDelivery = NonDelivery.ReturnToSender,
-                        CustomsItems = new List<CustomsItem> {
-                            new CustomsItem {
-                                Description = "Product name",
-                                Quantity = 2,
-                                Value = 42.99,
-                                HarmonizedTariffCode = "",
-                                CountryOfOrigin = "US",
-                                Sku = "PRODUCT_SKU",
-                            },
-                        },
                     },
                 },
                 RateOptions = new RateRequestBody {
